@@ -1,0 +1,8 @@
+# don't commit bin directory
+bin/
+
+# neither gen directory
+gen/
+
+# temporal files 
+*~
