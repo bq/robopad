@@ -4,5 +4,8 @@ bin/
 # neither gen directory
 gen/
 
+# .setting is only for eclipse settings
+.settings/
+
 # temporal files 
 *~
