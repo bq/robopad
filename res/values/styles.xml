@@ -1,20 +1,26 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--
-        Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    -->
-    <style name="AppBaseTheme" parent="android:Theme.Light">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
+    <style name="green_button">
+        <item name="android:background">@drawable/green_button_btn_default_holo_light</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
     </style>
-
-    <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    
+    <style name="green_button_large" parent="green_button">
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingLeft">40dp</item>
+        <item name="android:paddingRight">40dp</item>
+    </style>
+    
+    <style name="green_button_large.connect_button">
+        
+        <item name="android:text">@string/connect</item>
+    </style>
+    
+    <style name="green_button_large.disconnect_button">
+        <item name="android:text">@string/disconnect</item>
+        <item name="android:visibility">gone</item>
     </style>
 
 </resources>
