@@ -1,3 +1,26 @@
+/*
+* This file is part of the GamePad
+*
+* Copyright (C) 2013 Mundo Reader S.L.
+* 
+* Date: February 2014
+* Author: Estefanía Sarasola Elvira <estefania.sarasola@bq.com>
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
+*
+*/
+
 package com.bq.robotic.gamepad.fragments;
 
 import android.app.Activity;
@@ -11,13 +34,21 @@ import android.view.View.OnTouchListener;
 import com.bq.robotic.gamepad.GamePadConstants;
 import com.bq.robotic.gamepad.RobotListener;
 
+
+/**
+ * Base fragment for all the robot fragments
+ * 
+ * @author Estefanía Sarasola Elvira
+ *
+ */
+
 public abstract class RobotFragment extends Fragment {
 
 	// Debugging
 	private static final String LOG_TAG = "RobotFragment";
 
-	protected boolean isClick;
-	protected boolean isConnected = false;
+	protected boolean mIsClick;
+	protected boolean mIsConnected = false;
 
 	protected RobotListener listener;
 
@@ -91,13 +122,13 @@ public abstract class RobotFragment extends Fragment {
 			case MotionEvent.ACTION_DOWN:
 
 				if(listener != null && !listener.onCheckIsConnected()) {
-					isConnected = false;
+					mIsConnected = false;
 					break;
 				} else {
-					isConnected = true;
+					mIsConnected = true;
 				}
 
-				isClick = false;					
+				mIsClick = false;					
 				sendActionThread = createSendActionThread(view.getId());										
 				sendActionThread.start();
 
@@ -106,11 +137,11 @@ public abstract class RobotFragment extends Fragment {
 			case MotionEvent.ACTION_UP:
 			case MotionEvent.ACTION_CANCEL:
 
-				if(!isConnected) {
+				if(!mIsConnected) {
 					break;
 				}
 
-				isClick = true;
+				mIsClick = true;
 				if (listener != null) {
 					listener.onSendMessage(GamePadConstants.STOP_COMMAND);
 				}
@@ -142,13 +173,13 @@ public abstract class RobotFragment extends Fragment {
 			public void run() {
 				try {
 
-					if(!isClick) {
+					if(!mIsClick) {
 						controlButtonActionDown(actionId);
 					}
 
 					sleep(GamePadConstants.CLICK_SLEEP_TIME);
 
-					if(isClick && listener != null) {
+					if(mIsClick && listener != null) {
 						Log.e(LOG_TAG, "stop command in thread send");
 						listener.onSendMessage(GamePadConstants.STOP_COMMAND);
 					}

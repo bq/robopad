@@ -1,3 +1,26 @@
+/*
+* This file is part of the GamePad
+*
+* Copyright (C) 2013 Mundo Reader S.L.
+* 
+* Date: February 2014
+* Author: Estefanía Sarasola Elvira <estefania.sarasola@bq.com>
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
+*
+*/
+
 package com.bq.robotic.gamepad;
 
 import android.app.AlertDialog;
@@ -24,16 +47,21 @@ import com.bq.robotic.gamepad.fragments.RhinoFragment;
 import com.bq.robotic.gamepad.fragments.RobotFragment;
 import com.bq.robotic.gamepad.fragments.SelectBotFragment;
 
+
+/**
+ * Main activity of the app that contains the different fragments to show to the user 
+ */
+
 public class GamePad extends BaseBluetoothConnectionActivity implements RobotListener, SelectBotListener {
 	
 	// Debugging
     private static final String LOG_TAG = "GamePad";
     
-    private ActionBar actionBar;   
-    private ImageButton selectBotButton;
-    private ImageView gamePadIcon; 
-    TextView bottomTitleBar;
-    private FragmentManager fragmentManager;
+    private ActionBar mActionBar;   
+    private ImageButton mSelectBotButton;
+    private ImageView mGamePadIcon; 
+    private TextView mBottomTitleBar;
+    private FragmentManager mFragmentManager;
     
 
     @Override
@@ -41,30 +69,30 @@ public class GamePad extends BaseBluetoothConnectionActivity implements RobotLis
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_gamepad);
 		
-		fragmentManager = getSupportFragmentManager();
-		actionBar = getSupportActionBar();
+		mFragmentManager = getSupportFragmentManager();
+		mActionBar = getSupportActionBar();
 		// Hide the action bar
-		actionBar.hide();
+		mActionBar.hide();
 		
-		selectBotButton = (ImageButton) findViewById(R.id.select_bot_button);
-		gamePadIcon = (ImageView) findViewById(R.id.pad_button);
-		bottomTitleBar = (TextView) findViewById(R.id.title_view);
+		mSelectBotButton = (ImageButton) findViewById(R.id.select_bot_button);
+		mGamePadIcon = (ImageView) findViewById(R.id.pad_button);
+		mBottomTitleBar = (TextView) findViewById(R.id.title_view);
 		
 		// If we're being restored from a previous state,
         // then we don't need to do anything and should return or else
         // we could end up with overlapping fragments.
         if (savedInstanceState != null) {
         	
-        	if(fragmentManager.findFragmentById(R.id.game_pad_container) instanceof RobotFragment) {
-    			selectBotButton.setClickable(true);
-    			gamePadIcon.setVisibility(View.VISIBLE);
+        	if(mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof RobotFragment) {
+    			mSelectBotButton.setClickable(true);
+    			mGamePadIcon.setVisibility(View.VISIBLE);
         	} 
        
             return;
         }
 		
         // Show the select robot fragment
-		FragmentTransaction ft = fragmentManager.beginTransaction();
+		FragmentTransaction ft = mFragmentManager.beginTransaction();
 		ft.replace(R.id.game_pad_container, new SelectBotFragment());
 		ft.commit();
 			
@@ -77,7 +105,7 @@ public class GamePad extends BaseBluetoothConnectionActivity implements RobotLis
 	 * @param textId the text to put in the bottom title bar
 	 */
     public void setFragmentTitle(int textId) {
-    	bottomTitleBar.setText(textId);
+    	mBottomTitleBar.setText(textId);
     }
     
     
@@ -112,12 +140,14 @@ public class GamePad extends BaseBluetoothConnectionActivity implements RobotLis
      */
     private void changeButtonConnectionState(int connectionState) {
     	
-    	if(! (fragmentManager.findFragmentById(R.id.game_pad_container) instanceof RobotFragment)) {
+    	if(! (mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof RobotFragment)) {
     		return;
     	}
     	
-        Button connectbutton = (Button) fragmentManager.findFragmentById(R.id.game_pad_container).getView().findViewById(R.id.connect_button);
-        Button disconnectButton = (Button) fragmentManager.findFragmentById(R.id.game_pad_container).getView().findViewById(R.id.disconnect_button);
+        Button connectbutton = (Button) mFragmentManager.findFragmentById(R.id.game_pad_container)
+        		.getView().findViewById(R.id.connect_button);
+        Button disconnectButton = (Button) mFragmentManager.findFragmentById(R.id.game_pad_container)
+        		.getView().findViewById(R.id.disconnect_button);
         
         switch (connectionState) {
         	case AndroidinoConstants.STATE_CONNECTED:
@@ -139,7 +169,7 @@ public class GamePad extends BaseBluetoothConnectionActivity implements RobotLis
      * @param textId The text id in the R.xml file 
      */
     private final void setStatus(int textId) {
-    	bottomTitleBar.setText(textId);
+    	mBottomTitleBar.setText(textId);
     }
     
     
@@ -150,7 +180,7 @@ public class GamePad extends BaseBluetoothConnectionActivity implements RobotLis
      */
     private final void setStatus(CharSequence subTitle) {
         if (subTitle != null) {
-        	bottomTitleBar.setText(subTitle);
+        	mBottomTitleBar.setText(subTitle);
         }
     }
 
@@ -214,17 +244,17 @@ public class GamePad extends BaseBluetoothConnectionActivity implements RobotLis
 	 * Replaces the current RobotFragment with the SelectBotFragment 
 	 */
 	private void showSelectBotFragment() {
-		FragmentTransaction ft = fragmentManager.beginTransaction();		
+		FragmentTransaction ft = mFragmentManager.beginTransaction();		
 		SelectBotFragment selectBotFragment = new SelectBotFragment();
 		ft.replace(R.id.game_pad_container, selectBotFragment);
 		ft.commit();
 		
 		// the select_bot_button must be no clickable when the SelectBotFragment is showed
 		// and the gamepad icon must be hidden too
-		selectBotButton.setClickable(false);
-		gamePadIcon.setVisibility(View.GONE);
+		mSelectBotButton.setClickable(false);
+		mGamePadIcon.setVisibility(View.GONE);
 		
-		bottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0); 
+		mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0); 
 	}
 
 	
@@ -271,8 +301,8 @@ public class GamePad extends BaseBluetoothConnectionActivity implements RobotLis
 
 	
 	/**
-	 * Callback from the RobotFragment for initializing the search of Arduino's bluetooths and connecting
-	 * with the one selected by the user 
+	 * Callback from the RobotFragment for initializing the search of Arduino's bluetooths and 
+	 * connecting with the one selected by the user 
 	 */
 	@Override
 	public void onConnectRobot() {
@@ -308,23 +338,23 @@ public class GamePad extends BaseBluetoothConnectionActivity implements RobotLis
 	@Override
 	public void onRobotSelected(robotType botType) {
 
-		FragmentTransaction ft = fragmentManager.beginTransaction();
+		FragmentTransaction ft = mFragmentManager.beginTransaction();
 		RobotFragment robotFragment = null;
 
 		if (botType == robotType.POLLYWOG) {
-			bottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_pollywog_action_bar_icon, 0, 0, 0);
+			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_pollywog_action_bar_icon, 0, 0, 0);
 			robotFragment = new PollywogFragment();
 
 		} else if (botType == robotType.BEETLE) {
-			bottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_beetle_action_bar_icon, 0, 0, 0);
+			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_beetle_action_bar_icon, 0, 0, 0);
 			robotFragment = new BeetleFragment();
 
 		} else if (botType == robotType.RHINO) {	
-			bottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_rhino_action_bar_icon, 0, 0, 0);
+			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_rhino_action_bar_icon, 0, 0, 0);
 			robotFragment = new RhinoFragment();
 
 		} else if (botType == robotType.GENERIC_ROBOT) {
-			bottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_generic_action_bar_icon, 0, 0, 0);
+			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_generic_action_bar_icon, 0, 0, 0);
 			robotFragment = new GenericRobotFragment();
 		}
 		
@@ -334,8 +364,8 @@ public class GamePad extends BaseBluetoothConnectionActivity implements RobotLis
 
 			// the select_bot_button must be clickable when the RobotFragment is showed
 			// and the gamepad icon must be visible too
-			selectBotButton.setClickable(true);
-			gamePadIcon.setVisibility(View.VISIBLE);
+			mSelectBotButton.setClickable(true);
+			mGamePadIcon.setVisibility(View.VISIBLE);
 		}
 
 	}

@@ -1,3 +1,26 @@
+/*
+* This file is part of the GamePad
+*
+* Copyright (C) 2013 Mundo Reader S.L.
+* 
+* Date: February 2014
+* Author: Estefanía Sarasola Elvira <estefania.sarasola@bq.com>
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
+*
+*/
+
 package com.bq.robotic.gamepad.fragments;
 
 import android.os.Bundle;
@@ -15,13 +38,21 @@ import com.bq.robotic.gamepad.GamePadConstants;
 import com.bq.robotic.gamepad.R;
 import com.bq.robotic.gamepad.SliderView;
 
+
+/**
+ * Fragment of the game pad controller for the rhino robot.
+ * 
+ * @author Estefanía Sarasola Elvira
+ *
+ */
+
 public class RhinoFragment extends RobotFragment {
 
 	// Debugging
 	private static final String LOG_TAG = "PollywogFragment";
 	
-	private SliderView leftSlider;
-	private SliderView rightSlider;
+	private SliderView mLeftSlider;
+	private SliderView mRightSlider;
 
 
 	@Override
@@ -47,8 +78,8 @@ public class RhinoFragment extends RobotFragment {
 	 */
 	@Override
 	public void onDestroy() {	
-		leftSlider.setProgress(90);
-		rightSlider.setProgress(90);
+		mLeftSlider.setProgress(90);
+		mRightSlider.setProgress(90);
 		
 		super.onDestroy();
 	}
@@ -60,8 +91,8 @@ public class RhinoFragment extends RobotFragment {
 	 */
 	@Override
 	public void onPause() {	
-		leftSlider.setProgress(90);
-		rightSlider.setProgress(90);
+		mLeftSlider.setProgress(90);
+		mRightSlider.setProgress(90);
 		
 		super.onPause();
 	}
@@ -69,8 +100,8 @@ public class RhinoFragment extends RobotFragment {
 	
 	/**
 	 * Set the listeners to the views that need them. It must be done here in the fragment in order
-	 * to get the callback here and not in the FragmentActivity, that would be a mess with all the callbacks 
-	 * of all the possible fragments
+	 * to get the callback here and not in the FragmentActivity, that would be a mess with all the 
+	 * callbacks of all the possible fragments
 	 * 
 	 * @param The view used as the main container for this fragment
 	 */
@@ -89,11 +120,11 @@ public class RhinoFragment extends RobotFragment {
 		Button chargeButton = (Button) containerLayout.findViewById(R.id.charge_button);
 		chargeButton.setOnClickListener(onButtonClick);
 
-		leftSlider = (SliderView) containerLayout.findViewById(R.id.left_slider);
-		leftSlider.setOnSeekBarChangeListener(sliderListener);
+		mLeftSlider = (SliderView) containerLayout.findViewById(R.id.left_slider);
+		mLeftSlider.setOnSeekBarChangeListener(sliderListener);
 
-		rightSlider = (SliderView) containerLayout.findViewById(R.id.right_slider);
-		rightSlider.setOnSeekBarChangeListener(sliderListener);
+		mRightSlider = (SliderView) containerLayout.findViewById(R.id.right_slider);
+		mRightSlider.setOnSeekBarChangeListener(sliderListener);
 
 	}
 
@@ -118,22 +149,22 @@ public class RhinoFragment extends RobotFragment {
 				break;
 
 			case R.id.disconnect_button:
-				leftSlider.setProgress(90);
-				rightSlider.setProgress(90);
+				mLeftSlider.setProgress(90);
+				mRightSlider.setProgress(90);
 				
 				listener.onDisconnectRobot();    				
 				break;
 
 			case R.id.stop_button:
 				listener.onSendMessage(GamePadConstants.STOP_COMMAND);
-				leftSlider.setProgress(90);
-				rightSlider.setProgress(90);
+				mLeftSlider.setProgress(90);
+				mRightSlider.setProgress(90);
 				break;
 			
 			case R.id.charge_button:
 				listener.onSendMessage(GamePadConstants.CHARGE_COMMAND);
-				leftSlider.setProgress(90);
-				rightSlider.setProgress(90);
+				mLeftSlider.setProgress(90);
+				mRightSlider.setProgress(90);
 				break;
 			}
 		}
@@ -152,11 +183,15 @@ public class RhinoFragment extends RobotFragment {
 			if(listener != null && listener.onCheckIsConnectedWithoutToast()) {
 				switch (seekBar.getId()) {
 					case R.id.left_slider:
-						listener.onSendMessage(GamePadConstants.COMMAND_DIVISOR + GamePadConstants.LEFT_COMMAND + (180 - progress) + GamePadConstants.COMMAND_DIVISOR);
+						listener.onSendMessage(GamePadConstants.COMMAND_DIVISOR 
+								+ GamePadConstants.LEFT_COMMAND + (180 - progress) 
+								+ GamePadConstants.COMMAND_DIVISOR);
 						break;
 	
 					case R.id.right_slider:
-						listener.onSendMessage(GamePadConstants.COMMAND_DIVISOR + GamePadConstants.RIGHT_COMMAND + progress + GamePadConstants.COMMAND_DIVISOR);
+						listener.onSendMessage(GamePadConstants.COMMAND_DIVISOR 
+								+ GamePadConstants.RIGHT_COMMAND + progress 
+								+ GamePadConstants.COMMAND_DIVISOR);
 						break;
 				}
 

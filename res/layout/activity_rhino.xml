@@ -29,7 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_centerVertical="true"
         android:background="@drawable/btn_green_selector"
         android:src="@drawable/stop_button" />
 
@@ -37,10 +38,9 @@
         android:id="@+id/charge_button"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_above="@id/stop_button"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/green_button_btn_default_holo_light"
+        android:layout_centerVertical="true"
+        android:background="@drawable/green_button_btn_default_holo_dark"
         android:text="@string/charge"
         android:textColor="@android:color/white" />
 

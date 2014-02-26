@@ -1,3 +1,26 @@
+/*
+* This file is part of the GamePad
+*
+* Copyright (C) 2013 Mundo Reader S.L.
+* 
+* Date: February 2014
+* Author: Estefanía Sarasola Elvira <estefania.sarasola@bq.com>
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
+*
+*/
+
 package com.bq.robotic.gamepad;
 
 import android.content.Context;
@@ -8,7 +31,6 @@ import android.widget.SeekBar;
 
 /**
  * Class for the vertical sliders, used the SeekBar as the base class
- *
  */
 
 public class SliderView extends SeekBar {
@@ -35,6 +57,8 @@ public class SliderView extends SeekBar {
 	@Override 
 	public synchronized void setProgress(int progress) { 
 		super.setProgress(progress); 
+		
+		// this line is needed in order to update the thumb position too
 		onSizeChanged(getWidth(), getHeight(), 0, 0); 
 	}
 
@@ -52,7 +76,10 @@ public class SliderView extends SeekBar {
 		setMeasuredDimension(getMeasuredHeight(), getMeasuredWidth());
 	}
 
-
+	
+	/**
+	 * Rotate the base seekbar -90 degrees to put it in vertical
+	 */
 	protected void onDraw(Canvas c) {
 		c.rotate(-90);
 		c.translate(-getHeight(), 0);

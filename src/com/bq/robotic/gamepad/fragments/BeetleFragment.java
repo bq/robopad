@@ -1,3 +1,26 @@
+/*
+* This file is part of the GamePad
+*
+* Copyright (C) 2013 Mundo Reader S.L.
+* 
+* Date: February 2014
+* Author: Estefanía Sarasola Elvira <estefania.sarasola@bq.com>
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
+*
+*/
+
 package com.bq.robotic.gamepad.fragments;
 
 import android.os.Bundle;
@@ -25,11 +48,11 @@ public class BeetleFragment extends RobotFragment {
 	// Debugging
 	private static final String LOG_TAG = "BeetleFragment";
 
-	private int clawPosition; // Current position of the claw 
+	private int mClawPosition; // Current position of the claw 
 
-	Button fullOpenClawButton;
-	Button openStepClawButton;
-	Button closeStepClawButton;
+	private Button mFullOpenClawButton;
+	private Button mOpenStepClawButton;
+	private Button mCloseStepClawButton;
 
 
 	@Override
@@ -44,7 +67,7 @@ public class BeetleFragment extends RobotFragment {
 		}
 		
 		// Put the servo of the claws in a initial position 
-		clawPosition = GamePadConstants.INIT_CLAW_POS; // default open 30 (values from 5 to 50) 
+		mClawPosition = GamePadConstants.INIT_CLAW_POS; // default open 30 (values from 5 to 50) 
 
 		setUiListeners(layout);
 
@@ -55,8 +78,8 @@ public class BeetleFragment extends RobotFragment {
 	
 	/**
 	 * Set the listeners to the views that need them. It must be done here in the fragment in order
-	 * to get the callback here and not in the FragmentActivity, that would be a mess with all the callbacks 
-	 * of all the possible fragments
+	 * to get the callback here and not in the FragmentActivity, that would be a mess with all the
+	 * callbacks of all the possible fragments
 	 * 
 	 * @param The view used as the main container for this fragment
 	 */
@@ -72,14 +95,14 @@ public class BeetleFragment extends RobotFragment {
 		ImageButton stopButton = (ImageButton) containerLayout.findViewById(R.id.stop_button);
 		stopButton.setOnClickListener(onButtonClick);
 
-		fullOpenClawButton = (Button) containerLayout.findViewById(R.id.full_open_claw_button);
-		fullOpenClawButton.setOnClickListener(onButtonClick);
+		mFullOpenClawButton = (Button) containerLayout.findViewById(R.id.full_open_claw_button);
+		mFullOpenClawButton.setOnClickListener(onButtonClick);
 
-		openStepClawButton = (Button) containerLayout.findViewById(R.id.open_claw_button);
-		openStepClawButton.setOnClickListener(onButtonClick);
+		mOpenStepClawButton = (Button) containerLayout.findViewById(R.id.open_claw_button);
+		mOpenStepClawButton.setOnClickListener(onButtonClick);
 
-		closeStepClawButton = (Button) containerLayout.findViewById(R.id.close_claw_button);
-		closeStepClawButton.setOnClickListener(onButtonClick);
+		mCloseStepClawButton = (Button) containerLayout.findViewById(R.id.close_claw_button);
+		mCloseStepClawButton.setOnClickListener(onButtonClick);
 
 		ImageButton upButton = (ImageButton) containerLayout.findViewById(R.id.up_button);
 		upButton.setOnTouchListener(buttonOnTouchListener);
@@ -163,21 +186,24 @@ public class BeetleFragment extends RobotFragment {
 
 			case R.id.full_open_claw_button: 
 				if(listener != null && listener.onCheckIsConnected()) {
-					listener.onSendMessage(GamePadConstants.CLAW_COMMAND + getNextClawPostion(Claw_next_state.FULL_OPEN) 
+					listener.onSendMessage(GamePadConstants.CLAW_COMMAND 
+							+ getNextClawPostion(Claw_next_state.FULL_OPEN) 
 							+ GamePadConstants.COMMAND_DIVISOR);
 				}
 				break;
 
 			case R.id.open_claw_button:  
 				if(listener != null && listener.onCheckIsConnected()) {
-					listener.onSendMessage(GamePadConstants.CLAW_COMMAND + getNextClawPostion(Claw_next_state.OPEN_STEP)
+					listener.onSendMessage(GamePadConstants.CLAW_COMMAND 
+							+ getNextClawPostion(Claw_next_state.OPEN_STEP)
 							+ GamePadConstants.COMMAND_DIVISOR);
 				}
 				break;
 
 			case R.id.close_claw_button:
 				if(listener != null && listener.onCheckIsConnected()) {
-					listener.onSendMessage(GamePadConstants.CLAW_COMMAND + getNextClawPostion(Claw_next_state.CLOSE_STEP)
+					listener.onSendMessage(GamePadConstants.CLAW_COMMAND 
+							+ getNextClawPostion(Claw_next_state.CLOSE_STEP)
 							+ GamePadConstants.COMMAND_DIVISOR);
 				}
 				break;	
@@ -197,39 +223,45 @@ public class BeetleFragment extends RobotFragment {
 	private String getNextClawPostion(Claw_next_state nextState) {
 
 		// Show buttons enabled or disabled if the claw gets to max or min position
-		if(clawPosition == GamePadConstants.MAX_OPEN_CLAW_POS && nextState == Claw_next_state.CLOSE_STEP) {
-			openStepClawButton.setEnabled(true);
-			fullOpenClawButton.setEnabled(true);
+		if(mClawPosition == GamePadConstants.MAX_OPEN_CLAW_POS 
+				&& nextState == Claw_next_state.CLOSE_STEP) {
+			
+			mOpenStepClawButton.setEnabled(true);
+			mFullOpenClawButton.setEnabled(true);
 
-		} else if(clawPosition == GamePadConstants.MIN_CLOSE_CLAW_POS && (nextState == Claw_next_state.OPEN_STEP || nextState == Claw_next_state.FULL_OPEN) ) {
-			closeStepClawButton.setEnabled(true);
+		} else if(mClawPosition == GamePadConstants.MIN_CLOSE_CLAW_POS 
+				&& (nextState == Claw_next_state.OPEN_STEP 
+				|| nextState == Claw_next_state.FULL_OPEN) ) {
+			
+			mCloseStepClawButton.setEnabled(true);
 		}
 
 		if (nextState == Claw_next_state.OPEN_STEP) {
-			clawPosition -= GamePadConstants.CLAW_STEP;
+			mClawPosition -= GamePadConstants.CLAW_STEP;
 
 		} else if (nextState == Claw_next_state.CLOSE_STEP) {
-			clawPosition += GamePadConstants.CLAW_STEP;
+			mClawPosition += GamePadConstants.CLAW_STEP;
 
 		} else if (nextState == Claw_next_state.FULL_OPEN) {
-			clawPosition = GamePadConstants.MAX_OPEN_CLAW_POS;
+			mClawPosition = GamePadConstants.MAX_OPEN_CLAW_POS;
 
 		}
 
-		// Don't exceed the limits
-		if (clawPosition <= GamePadConstants.MAX_OPEN_CLAW_POS) {
+		// Don't exceed the limits of the claw
+		if (mClawPosition <= GamePadConstants.MAX_OPEN_CLAW_POS) {
 
-			clawPosition = GamePadConstants.MAX_OPEN_CLAW_POS;	
-			openStepClawButton.setEnabled(false);
-			fullOpenClawButton.setEnabled(false);
+			mClawPosition = GamePadConstants.MAX_OPEN_CLAW_POS;	
+			mOpenStepClawButton.setEnabled(false);
+			mFullOpenClawButton.setEnabled(false);
 
-		} else if (clawPosition >= GamePadConstants.MIN_CLOSE_CLAW_POS) {
+		} else if (mClawPosition >= GamePadConstants.MIN_CLOSE_CLAW_POS) {
 
-			clawPosition = GamePadConstants.MIN_CLOSE_CLAW_POS; 
-			closeStepClawButton.setEnabled(false);
+			mClawPosition = GamePadConstants.MIN_CLOSE_CLAW_POS; 
+			mCloseStepClawButton.setEnabled(false);
+			
 		}
 
-		return String.valueOf(clawPosition);
+		return String.valueOf(mClawPosition);
 
 	}
 

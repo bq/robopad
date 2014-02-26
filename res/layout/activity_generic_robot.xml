@@ -8,6 +8,8 @@
     android:paddingTop="@dimen/activity_vertical_margin" >
 
     <include
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/pad_layout_view"
         android:layout_centerVertical="true"
         layout="@layout/pad_layout" />
@@ -17,7 +19,8 @@
         style="@style/green_button_large.connect_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/pad_layout_view"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
         android:layout_centerHorizontal="true"
         android:textAllCaps="true" />
 
@@ -26,7 +29,8 @@
         style="@style/green_button_large.disconnect_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/pad_layout_view"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
         android:layout_centerHorizontal="true"
         android:textAllCaps="true" />
 
@@ -103,7 +107,7 @@
         android:id="@+id/stop_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/pad_layout_view"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="15dp"
         android:background="@drawable/btn_green_selector"

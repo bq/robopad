@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignTop="@id/pad_layout_view"
+        android:layout_centerVertical="true"
         android:orientation="vertical" >
 
         <Button
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/green_button_btn_default_holo_light"
+            android:background="@drawable/green_button_btn_default_holo_dark"
             android:text="@string/full_open_claw"
             android:textColor="@android:color/white" />
 
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/green_button_btn_default_holo_light"
+            android:background="@drawable/green_button_btn_default_holo_dark"
             android:text="@string/open_claw"
             android:textColor="@android:color/white" />
 
@@ -64,8 +64,8 @@
             android:id="@+id/close_claw_button"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/green_button_btn_default_holo_light"
+
+            android:background="@drawable/green_button_btn_default_holo_dark"
             android:text="@string/close_claw"
             android:textColor="@android:color/white" />
     </LinearLayout>
