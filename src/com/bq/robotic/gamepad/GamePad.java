@@ -37,7 +37,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bq.robotic.androidino.activities.BaseBluetoothConnectionActivity;
+import com.bq.robotic.androidino.activities.BaseBluetoothSendOnlyActivity;
 import com.bq.robotic.androidino.utils.AndroidinoConstants;
 import com.bq.robotic.gamepad.GamePadConstants.robotType;
 import com.bq.robotic.gamepad.fragments.BeetleFragment;
@@ -52,7 +52,7 @@ import com.bq.robotic.gamepad.fragments.SelectBotFragment;
  * Main activity of the app that contains the different fragments to show to the user 
  */
 
-public class GamePad extends BaseBluetoothConnectionActivity implements RobotListener, SelectBotListener {
+public class GamePad extends BaseBluetoothSendOnlyActivity implements RobotListener, SelectBotListener {
 	
 	// Debugging
     private static final String LOG_TAG = "GamePad";
@@ -183,18 +183,6 @@ public class GamePad extends BaseBluetoothConnectionActivity implements RobotLis
         	mBottomTitleBar.setText(subTitle);
         }
     }
-
-    
-    /**
-     * Callback method invoked when the device receives a message from the Arduino
-     * through the bluetooth connection
-     * 
-     * @param message The message received from the Arduino
-     */
-	@Override
-	public void onNewMessage(String message) {
-		// Nothing to be done here		
-	}
 	
 	
 	/**
@@ -257,6 +245,7 @@ public class GamePad extends BaseBluetoothConnectionActivity implements RobotLis
 		mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0); 
 	}
 
+	
 	
 	/**************************************************************************************
 	 **************************   ROBOTLISTENER CALLBACKS   *******************************
