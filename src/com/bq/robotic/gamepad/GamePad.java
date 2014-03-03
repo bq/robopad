@@ -37,8 +37,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bq.robotic.androidino.activities.BaseBluetoothSendOnlyActivity;
-import com.bq.robotic.androidino.utils.AndroidinoConstants;
+import com.bq.robotic.droid2ino.activities.BaseBluetoothSendOnlyActivity;
+import com.bq.robotic.droid2ino.utils.AndroidinoConstants;
 import com.bq.robotic.gamepad.GamePadConstants.robotType;
 import com.bq.robotic.gamepad.fragments.BeetleFragment;
 import com.bq.robotic.gamepad.fragments.GenericRobotFragment;
