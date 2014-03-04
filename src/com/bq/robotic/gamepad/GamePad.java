@@ -39,6 +39,7 @@ import android.widget.TextView;
 
 import com.bq.robotic.droid2ino.activities.BaseBluetoothSendOnlyActivity;
 import com.bq.robotic.droid2ino.utils.AndroidinoConstants;
+import com.bq.robotic.droid2ino.utils.DeviceListDialogStyle;
 import com.bq.robotic.gamepad.GamePadConstants.robotType;
 import com.bq.robotic.gamepad.fragments.BeetleFragment;
 import com.bq.robotic.gamepad.fragments.GenericRobotFragment;
@@ -295,12 +296,12 @@ public class GamePad extends BaseBluetoothSendOnlyActivity implements RobotListe
 	 */
 	@Override
 	public void onConnectRobot() {
-		requestDeviceConnection();
+		DeviceListDialogStyle deviceListDialogStyle = requestDeviceConnection();
 		
-		// Style the search bluetooth devices dialog
-//		DeviceListDialogStyle deviceListDialogStyle = requestDeviceConnection();
-//		deviceListDialogStyle.getSearchDevicesTitleView().setTextColor(Color.MAGENTA);
-//		deviceListDialogStyle.getDevicesPairedTitleView().setBackgroundResource(R.color.holo_green_dark);
+		// Style the search bluetooth devices dialog			
+		deviceListDialogStyle.getSearchDevicesTitleView().setTextColor(getResources().getColor(R.color.holo_green_dark));
+		deviceListDialogStyle.getDevicesPairedTitleView().setBackgroundResource(R.color.holo_green_dark);
+		deviceListDialogStyle.getNewDevicesTitleView().setBackgroundResource(R.color.holo_green_dark);	
 	}
 	
 	
