@@ -30,8 +30,10 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.Button;
 
 import com.bq.robotic.gamepad.GamePadConstants;
+import com.bq.robotic.gamepad.R;
 import com.bq.robotic.gamepad.RobotListener;
 
 
@@ -65,7 +67,25 @@ public abstract class RobotFragment extends Fragment {
 	 */
 	protected abstract void controlButtonActionDown(int viewId);
 
-
+	
+	/**
+	 * Callback method called from the activity when the Bluetooth change its status to connected
+	 */
+	public void onBluetoothConnected() {
+        ((Button) getView().findViewById(R.id.connect_button)).setVisibility(View.GONE);
+        ((Button) getView().findViewById(R.id.disconnect_button)).setVisibility(View.VISIBLE);
+	}
+	
+	
+	/**
+	 * Callback method called from the activity when the Bluetooth change its status to disconnected
+	 */
+	public void onBluetoothDisconnected() {
+        ((Button) getView().findViewById(R.id.connect_button)).setVisibility(View.VISIBLE);
+        ((Button) getView().findViewById(R.id.disconnect_button)).setVisibility(View.GONE);
+	}
+	
+	
 	/**
 	 * Set the fragmentActivity listener. Right now it is not necessary because the 
 	 * fragment activity that contains the fragments is the one that implements the listener

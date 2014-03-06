@@ -53,7 +53,7 @@
         android:max="180"
         android:progress="90"
         android:progressDrawable="@color/holo_green_light"
-        android:thumb="@drawable/indicator_code_lock_point_area_green"
+        android:thumb="@drawable/slider_thumbs_selector"
         android:thumbOffset="16dp" />
 
     <com.bq.robotic.gamepad.SliderView
@@ -65,7 +65,7 @@
         android:max="180"
         android:progress="90"
         android:progressDrawable="@color/holo_green_light"
-        android:thumb="@drawable/indicator_code_lock_point_area_green"
+        android:thumb="@drawable/slider_thumbs_selector"
         android:thumbOffset="16dp" />
 
 </RelativeLayout>

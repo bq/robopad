@@ -122,10 +122,33 @@ public class RhinoFragment extends RobotFragment {
 
 		mLeftSlider = (SliderView) containerLayout.findViewById(R.id.left_slider);
 		mLeftSlider.setOnSeekBarChangeListener(sliderListener);
+		mLeftSlider.setEnabled(false);
 
 		mRightSlider = (SliderView) containerLayout.findViewById(R.id.right_slider);
 		mRightSlider.setOnSeekBarChangeListener(sliderListener);
+		mRightSlider.setEnabled(false);
 
+	}
+
+
+	@Override
+	public void onBluetoothConnected() {
+		super.onBluetoothConnected();
+			
+		mLeftSlider.setProgress(90);
+		mRightSlider.setProgress(90);
+		
+		mLeftSlider.setEnabled(true);
+		mRightSlider.setEnabled(true);
+	}
+
+
+	@Override
+	public void onBluetoothDisconnected() {
+		super.onBluetoothDisconnected();
+		
+		mLeftSlider.setEnabled(false);
+		mRightSlider.setEnabled(false);
 	}
 
 
@@ -195,7 +218,7 @@ public class RhinoFragment extends RobotFragment {
 						break;
 				}
 
-			}
+			} 
 
 		}
 

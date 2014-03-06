@@ -32,7 +32,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -120,7 +119,9 @@ public class GamePad extends BaseBluetoothSendOnlyActivity implements RobotListe
       switch (connectionState) {
         case AndroidinoConstants.STATE_CONNECTED:
             setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
-            changeButtonConnectionState(connectionState);
+            if(mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof RobotFragment) {
+            	((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothConnected();
+            }
             break;
         case AndroidinoConstants.STATE_CONNECTING:
             setStatus(R.string.title_connecting);
@@ -128,39 +129,11 @@ public class GamePad extends BaseBluetoothSendOnlyActivity implements RobotListe
         case AndroidinoConstants.STATE_LISTEN:
         case AndroidinoConstants.STATE_NONE:
             setStatus(R.string.title_not_connected);
-            changeButtonConnectionState(connectionState);
+            if(mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof RobotFragment) {
+            	((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothDisconnected();
+            }
             break;
       }
-    }
-    
-    
-    /**
-     * Change the button in the current RobotFragment from 'Connect' to 'Disconnect' and vice versa
-     * 
-     * @param connectionState The state of the bluetooth connection
-     */
-    private void changeButtonConnectionState(int connectionState) {
-    	
-    	if(! (mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof RobotFragment)) {
-    		return;
-    	}
-    	
-        Button connectbutton = (Button) mFragmentManager.findFragmentById(R.id.game_pad_container)
-        		.getView().findViewById(R.id.connect_button);
-        Button disconnectButton = (Button) mFragmentManager.findFragmentById(R.id.game_pad_container)
-        		.getView().findViewById(R.id.disconnect_button);
-        
-        switch (connectionState) {
-        	case AndroidinoConstants.STATE_CONNECTED:
-        		connectbutton.setVisibility(View.GONE);
-        		disconnectButton.setVisibility(View.VISIBLE);
-        		break;
-        	
-        	case AndroidinoConstants.STATE_LISTEN:
-        	case AndroidinoConstants.STATE_NONE:
-        		connectbutton.setVisibility(View.VISIBLE);
-        		disconnectButton.setVisibility(View.GONE);
-        }
     }
 
     
