@@ -3,16 +3,16 @@
  *     ********************************************************
  *     ********************************************************
  *     ***                                                  ***
- *     ***                   Beetle Droid                   ***
+ *     ***                Pollywog Droid                   ***
  *     ***                                                  ***
  *     ******************************************************** 
  *     ********************************************************
  *
- *    Arduino code for the Beetle robot for using with the
+ *    Arduino code for the Pollywog robot for using with the
  *    Android GamePad app. 
  *     
  *   ****************************************************
- *   * Fecha: 04/03/2014                                *
+ *   * Fecha: 05/03/2014                                *
  *   * Autor:Estefana Sarasola Elvira                   *
  *   * Mail: estefania.sarasola@bq.com                  *
  *   * Licencia: GNU General Public License v3 or later *
@@ -36,10 +36,8 @@
  ******************************************************************/
 
 /* Pin definition of the board to be used */
-
-#define pinLeftWheel   6   
-#define pinRightWheel  9   
-#define pinClaw       11
+#define pinLeftWheel 6
+#define pinRightWheel 9
 
 /* Definition of the values ​​that can take continuous rotation servo,
  that is, the wheels */
@@ -50,12 +48,11 @@
 #define rightWheelBackwardsValue 0
 
 /* Size of the received data buffer */
-#define bufferSize 20
+#define bufferSize 1
 
 /* A object from the Servo class is created for each servo */
 Servo leftWheel;                       /*  Values from 0 to 180  */
 Servo rightWheel;                      /*  Values from 0 to 180  */
-Servo claw;                            /*  Values from 10 to 50  */
 
 /*  A char buffer to storage the received data from the Bluetooth
     Serial */
@@ -65,10 +62,7 @@ char dataBuffer[bufferSize];
 int i = 0;
 
 /* Number of characters availables in the Serial */
-int numChar = 0;    
-
-/* Received postion for the claw */
-int posClaw = 0; 
+int numChar = 0;
 
 
 /******************************************************************
@@ -83,7 +77,6 @@ void stopWheels() {
   delay(3);
 }
 
-
 void goForwards() {
   leftWheel.write(leftWheelFordwardValue);
   delay(3);
@@ -91,7 +84,6 @@ void goForwards() {
   rightWheel.write(rightWheelFordwardValue);
   delay(3);
 }
-
 
 void goBackwards() {
   leftWheel.write(leftWheelBackwardsValue);
@@ -101,7 +93,6 @@ void goBackwards() {
   delay(3);
 }
 
-
 void goLeft() {
   leftWheel.write(wheelStopValue);
   delay(3);
@@ -109,7 +100,6 @@ void goLeft() {
   rightWheel.write(rightWheelFordwardValue);
   delay(3);
 }
-
 
 void goRight() {
   leftWheel.write(leftWheelFordwardValue);
@@ -119,79 +109,51 @@ void goRight() {
   delay(3);
 }
 
-
-void moveClaw() {
-  claw.write(posClaw);
-  delay(3);
-}
-
-
-/* Perform the action required by the user of the Android app */
+/*
+  Perform the action required by the user of the Android app
+*/
 void setAction(char* data) {
   
   switch(data[0]) {
-
-    // Claw button pressed
-    case 'C':
-      posClaw = strtol(data+1, NULL, 10);
-      moveClaw();
-      break;
-  }
-}
-
-
-/* Manage the buffer of data */
-void checkData(char* data){  
-  
-  if (data[0] == 'S') {
-    /* Stop button pressed */
-    stopWheels();
-  
-  } else if (data[0] == 'U') {
-    /* Up button pressed */
-    goForwards();
-  
-  } else if (data[0] == 'D') {
-    /* Down button pressed */
-    goBackwards();
-    
-  } else if (data[0] == 'L') {
-    /* Left button pressed */ 
-    goLeft();
-    
-  } else if (data[0] == 'R') {
-    /* Right button pressed */ 
-    goRight();
-    
-  } else {
    
-    /* Divide the full instruction line with all the 
-       configuration instructions in single configuration 
-       instructions. All the command line, example: _C40_C35_ */
-    char* full_instruction_line = {0};  
-     
-    full_instruction_line = strtok(data, "_");
-     
-    while(full_instruction_line != NULL) {
-                 
-      setAction(full_instruction_line);   
-       
-      full_instruction_line = strtok(NULL, "_");
-     
-    }
+    /* Stop button pressed */
+    case 'S':
+      stopWheels();
+      break;
+
+    /* Up button pressed  */
+    case 'U':
+      goForwards();
+      break;
+
+    /* Down button pressed  */ 
+    case 'D':
+      goBackwards();
+      break;
+
+    /* Left button pressed  */
+    case 'L':
+      goLeft();
+      break;
+
+    /* Right button pressed  */
+    case 'R':
+      goRight();
+      break;
+   
   }
-
-  /* Empty the Serial */   
-  Serial.flush();
-
-}
     
+  /* Empty the Serial */      
+  Serial.flush();
+    
+}
+
 
 /******************************************************************
  *                             Setup                              *
  ******************************************************************/
 
-void setup() {
+void setup(){
   
   /* Open the Bluetooth Serial and empty it */
   Serial.begin(38400); 
@@ -200,15 +162,9 @@ void setup() {
   /* Define the appropiate pin to each object */
   leftWheel.attach(pinLeftWheel);
   rightWheel.attach(pinRightWheel);
-  claw.attach(pinClaw);
 
   /* The robot is stopped at the beginning */
   stopWheels();
-  
-  /* Put the claw in a intermediate position at the beginning */
-  posClaw = 30;
-  moveClaw();
-
 }
 
 
@@ -251,9 +207,9 @@ void loop() {
         delay(3);
     } 
 
-    /* Manage the data */   
-    checkData(dataBuffer);
+    /* Manage the data */
+    setAction(dataBuffer);
     
   }
 }  
-  
+ 
