@@ -21,10 +21,10 @@
 *
 */
 
-package com.bq.robotic.gamepad;
+package com.bq.robotic.robopad;
 
 
-public class GamePadConstants {
+public class RoboPadConstants {
 	
     // Debugging
     public static final boolean D = true;

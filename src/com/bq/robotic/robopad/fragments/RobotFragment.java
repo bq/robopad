@@ -21,7 +21,7 @@
 *
 */
 
-package com.bq.robotic.gamepad.fragments;
+package com.bq.robotic.robopad.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -32,9 +32,9 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 
-import com.bq.robotic.gamepad.GamePadConstants;
-import com.bq.robotic.gamepad.R;
-import com.bq.robotic.gamepad.RobotListener;
+import com.bq.robotic.robopad.RoboPadConstants;
+import com.bq.robotic.robopad.R;
+import com.bq.robotic.robopad.RobotListener;
 
 
 /**
@@ -163,7 +163,7 @@ public abstract class RobotFragment extends Fragment {
 
 				mIsClick = true;
 				if (listener != null) {
-					listener.onSendMessage(GamePadConstants.STOP_COMMAND);
+					listener.onSendMessage(RoboPadConstants.STOP_COMMAND);
 				}
 
 				break;
@@ -197,11 +197,11 @@ public abstract class RobotFragment extends Fragment {
 						controlButtonActionDown(actionId);
 					}
 
-					sleep(GamePadConstants.CLICK_SLEEP_TIME);
+					sleep(RoboPadConstants.CLICK_SLEEP_TIME);
 
 					if(mIsClick && listener != null) {
 						Log.e(LOG_TAG, "stop command in thread send");
-						listener.onSendMessage(GamePadConstants.STOP_COMMAND);
+						listener.onSendMessage(RoboPadConstants.STOP_COMMAND);
 					}
 
 				} catch (InterruptedException e) {

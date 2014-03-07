@@ -21,7 +21,7 @@
 *
 */
 
-package com.bq.robotic.gamepad.fragments;
+package com.bq.robotic.robopad.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -34,9 +34,9 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
-import com.bq.robotic.gamepad.GamePadConstants;
-import com.bq.robotic.gamepad.R;
-import com.bq.robotic.gamepad.SliderView;
+import com.bq.robotic.robopad.RoboPadConstants;
+import com.bq.robotic.robopad.R;
+import com.bq.robotic.robopad.SliderView;
 
 
 /**
@@ -49,7 +49,7 @@ import com.bq.robotic.gamepad.SliderView;
 public class RhinoFragment extends RobotFragment {
 
 	// Debugging
-	private static final String LOG_TAG = "PollywogFragment";
+	private static final String LOG_TAG = "RhinoFragment";
 	
 	private SliderView mLeftSlider;
 	private SliderView mRightSlider;
@@ -78,8 +78,8 @@ public class RhinoFragment extends RobotFragment {
 	 */
 	@Override
 	public void onDestroy() {	
-		mLeftSlider.setProgress(90);
-		mRightSlider.setProgress(90);
+		mLeftSlider.setProgress(1);
+		mRightSlider.setProgress(1);
 		
 		super.onDestroy();
 	}
@@ -91,8 +91,8 @@ public class RhinoFragment extends RobotFragment {
 	 */
 	@Override
 	public void onPause() {	
-		mLeftSlider.setProgress(90);
-		mRightSlider.setProgress(90);
+		mLeftSlider.setProgress(1);
+		mRightSlider.setProgress(1);
 		
 		super.onPause();
 	}
@@ -135,8 +135,8 @@ public class RhinoFragment extends RobotFragment {
 	public void onBluetoothConnected() {
 		super.onBluetoothConnected();
 			
-		mLeftSlider.setProgress(90);
-		mRightSlider.setProgress(90);
+		mLeftSlider.setProgress(1);
+		mRightSlider.setProgress(1);
 		
 		mLeftSlider.setEnabled(true);
 		mRightSlider.setEnabled(true);
@@ -172,22 +172,22 @@ public class RhinoFragment extends RobotFragment {
 				break;
 
 			case R.id.disconnect_button:
-				mLeftSlider.setProgress(90);
-				mRightSlider.setProgress(90);
+				mLeftSlider.setProgress(1);
+				mRightSlider.setProgress(1);
 				
 				listener.onDisconnectRobot();    				
 				break;
 
 			case R.id.stop_button:
-				listener.onSendMessage(GamePadConstants.STOP_COMMAND);
-				mLeftSlider.setProgress(90);
-				mRightSlider.setProgress(90);
+				listener.onSendMessage(RoboPadConstants.STOP_COMMAND);
+				mLeftSlider.setProgress(1);
+				mRightSlider.setProgress(1);
 				break;
 			
 			case R.id.charge_button:
-				listener.onSendMessage(GamePadConstants.CHARGE_COMMAND);
-				mLeftSlider.setProgress(90);
-				mRightSlider.setProgress(90);
+				listener.onSendMessage(RoboPadConstants.CHARGE_COMMAND);
+				mLeftSlider.setProgress(1);
+				mRightSlider.setProgress(1);
 				break;
 			}
 		}
@@ -204,19 +204,53 @@ public class RhinoFragment extends RobotFragment {
 				boolean fromUser) {
 
 			if(listener != null && listener.onCheckIsConnectedWithoutToast()) {
-				switch (seekBar.getId()) {
-					case R.id.left_slider:
-						listener.onSendMessage(GamePadConstants.COMMAND_DIVISOR 
-								+ GamePadConstants.LEFT_COMMAND + (180 - progress) 
-								+ GamePadConstants.COMMAND_DIVISOR);
-						break;
-	
-					case R.id.right_slider:
-						listener.onSendMessage(GamePadConstants.COMMAND_DIVISOR 
-								+ GamePadConstants.RIGHT_COMMAND + progress 
-								+ GamePadConstants.COMMAND_DIVISOR);
-						break;
+				
+				String valueToSend = null;
+				if(progress == 1) {
+					valueToSend = "S";
+				} else if (progress == 2) {
+					valueToSend = "U";
+				} else if (progress == 0) {
+					valueToSend = "D";
 				}
+				
+				Log.e(LOG_TAG, "progress: " + progress);
+				Log.e(LOG_TAG, "valueToSend: " + valueToSend);
+				
+				if(valueToSend == null) {
+					Log.e(LOG_TAG, "progress was not a valid number: " + progress);
+					return;
+				}
+				
+				switch (seekBar.getId()) {
+//					case R.id.left_slider:
+//						listener.onSendMessage(GamePadConstants.COMMAND_DIVISOR 
+//								+ GamePadConstants.LEFT_COMMAND + (180 - progress) 
+//								+ GamePadConstants.COMMAND_DIVISOR);
+//						break;
+//	
+//					case R.id.right_slider:
+//						listener.onSendMessage(GamePadConstants.COMMAND_DIVISOR 
+//								+ GamePadConstants.RIGHT_COMMAND + progress 
+//								+ GamePadConstants.COMMAND_DIVISOR);
+//						Log.e(LOG_TAG, "progress: " + progress);
+//						break;
+				
+				case R.id.left_slider:					
+					listener.onSendMessage(RoboPadConstants.LEFT_COMMAND + valueToSend);
+					break;
+
+				case R.id.right_slider:
+					listener.onSendMessage(RoboPadConstants.RIGHT_COMMAND + valueToSend);
+					break;
+				}
+				
+				
+//				listener.onSendMessage(GamePadConstants.COMMAND_DIVISOR 
+//								+ GamePadConstants.LEFT_COMMAND + (180 - mLeftSlider.getProgress()) 
+//								+ GamePadConstants.COMMAND_DIVISOR
+//								+ GamePadConstants.RIGHT_COMMAND + mRightSlider.getProgress()
+//								+ GamePadConstants.COMMAND_DIVISOR);
 
 			} 
 

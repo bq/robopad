@@ -21,7 +21,7 @@
 *
 */
 
-package com.bq.robotic.gamepad;
+package com.bq.robotic.robopad;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -39,20 +39,20 @@ import android.widget.TextView;
 import com.bq.robotic.droid2ino.activities.BaseBluetoothSendOnlyActivity;
 import com.bq.robotic.droid2ino.utils.AndroidinoConstants;
 import com.bq.robotic.droid2ino.utils.DeviceListDialogStyle;
-import com.bq.robotic.gamepad.GamePadConstants.robotType;
-import com.bq.robotic.gamepad.fragments.BeetleFragment;
-import com.bq.robotic.gamepad.fragments.GenericRobotFragment;
-import com.bq.robotic.gamepad.fragments.PollywogFragment;
-import com.bq.robotic.gamepad.fragments.RhinoFragment;
-import com.bq.robotic.gamepad.fragments.RobotFragment;
-import com.bq.robotic.gamepad.fragments.SelectBotFragment;
+import com.bq.robotic.robopad.RoboPadConstants.robotType;
+import com.bq.robotic.robopad.fragments.BeetleFragment;
+import com.bq.robotic.robopad.fragments.GenericRobotFragment;
+import com.bq.robotic.robopad.fragments.PollywogFragment;
+import com.bq.robotic.robopad.fragments.RhinoFragment;
+import com.bq.robotic.robopad.fragments.RobotFragment;
+import com.bq.robotic.robopad.fragments.SelectBotFragment;
 
 
 /**
  * Main activity of the app that contains the different fragments to show to the user 
  */
 
-public class GamePad extends BaseBluetoothSendOnlyActivity implements RobotListener, SelectBotListener {
+public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListener, SelectBotListener {
 	
 	// Debugging
     private static final String LOG_TAG = "GamePad";
@@ -258,7 +258,7 @@ public class GamePad extends BaseBluetoothSendOnlyActivity implements RobotListe
 	 */
 	@Override
 	public void onSendMessage(String message) {
-//		Log.e(LOG_TAG, "message to send to arduino: " + message);
+		Log.e(LOG_TAG, "message to send to arduino: " + message);
 		sendMessage(message);
 	}
 

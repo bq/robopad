@@ -21,9 +21,9 @@
 *
 */
 
-package com.bq.robotic.gamepad;
+package com.bq.robotic.robopad;
 
-import com.bq.robotic.gamepad.GamePadConstants.robotType;
+import com.bq.robotic.robopad.RoboPadConstants.robotType;
 
 /**
  * Listener for the select robot fragment to communicate with the fragment activity that manage the 

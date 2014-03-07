@@ -21,7 +21,7 @@
 *
 */
 
-package com.bq.robotic.gamepad;
+package com.bq.robotic.robopad;
 
 import android.content.Context;
 import android.graphics.Canvas;

@@ -21,7 +21,7 @@
 *
 */
 
-package com.bq.robotic.gamepad.fragments;
+package com.bq.robotic.robopad.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -33,9 +33,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.bq.robotic.gamepad.GamePadConstants;
-import com.bq.robotic.gamepad.R;
-import com.bq.robotic.gamepad.SelectBotListener;
+import com.bq.robotic.robopad.RoboPadConstants;
+import com.bq.robotic.robopad.R;
+import com.bq.robotic.robopad.SelectBotListener;
 
 
 /**
@@ -143,18 +143,18 @@ public class SelectBotFragment extends Fragment {
 			switch(v.getId()) { 
 
 			case R.id.pollywog_button:
-				listener.onRobotSelected(GamePadConstants.robotType.POLLYWOG);    				
+				listener.onRobotSelected(RoboPadConstants.robotType.POLLYWOG);    				
 				break;
 
 			case R.id.beetle_button:
-				listener.onRobotSelected(GamePadConstants.robotType.BEETLE);      				
+				listener.onRobotSelected(RoboPadConstants.robotType.BEETLE);      				
 				break;
 			case R.id.rhino_button:
-				listener.onRobotSelected(GamePadConstants.robotType.RHINO);    				
+				listener.onRobotSelected(RoboPadConstants.robotType.RHINO);    				
 				break;
 
 			case R.id.generic_button:
-				listener.onRobotSelected(GamePadConstants.robotType.GENERIC_ROBOT);      				
+				listener.onRobotSelected(RoboPadConstants.robotType.GENERIC_ROBOT);      				
 				break;
 
 			}

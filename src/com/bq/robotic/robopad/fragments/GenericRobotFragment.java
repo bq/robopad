@@ -21,7 +21,7 @@
 *
 */
 
-package com.bq.robotic.gamepad.fragments;
+package com.bq.robotic.robopad.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -32,21 +32,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-import com.bq.robotic.gamepad.GamePadConstants;
-import com.bq.robotic.gamepad.R;
+import com.bq.robotic.robopad.RoboPadConstants;
+import com.bq.robotic.robopad.R;
 
 
 /**
- * Fragment of the game pad controller for the Pollywog robot.
+ * Fragment of the game pad controller for a generic robot.
  * 
  * @author Estefanía Sarasola Elvira
  *
  */
 
-public class PollywogFragment extends RobotFragment {
+public class GenericRobotFragment extends RobotFragment {
 
 	// Debugging
-	private static final String LOG_TAG = "PollywogFragment";
+	private static final String LOG_TAG = "GenericRobotFragment";
 
 
 	@Override
@@ -54,10 +54,10 @@ public class PollywogFragment extends RobotFragment {
 			ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View layout = inflater.inflate(R.layout.activity_pollywog, container, false);
+		View layout = inflater.inflate(R.layout.activity_generic_robot, container, false);
 
 		if(listener != null) {
-			listener.onSetFragmentTitle(R.string.pollywog);
+			listener.onSetFragmentTitle(R.string.generic_robot);
 		}
 
 		setUiListeners(layout);
@@ -97,6 +97,24 @@ public class PollywogFragment extends RobotFragment {
 
 		ImageButton rightButton = (ImageButton) containerLayout.findViewById(R.id.right_button);
 		rightButton.setOnTouchListener(buttonOnTouchListener);
+
+		Button commandButton1 = (Button) containerLayout.findViewById(R.id.command_button_1);
+		commandButton1.setOnClickListener(onButtonClick);
+
+		Button commandButton2 = (Button) containerLayout.findViewById(R.id.command_button_2);
+		commandButton2.setOnClickListener(onButtonClick);
+
+		Button commandButton3 = (Button) containerLayout.findViewById(R.id.command_button_3);
+		commandButton3.setOnClickListener(onButtonClick);
+
+		Button commandButton4 = (Button) containerLayout.findViewById(R.id.command_button_4);
+		commandButton4.setOnClickListener(onButtonClick);
+
+		Button commandButton5 = (Button) containerLayout.findViewById(R.id.command_button_5);
+		commandButton5.setOnClickListener(onButtonClick);
+
+		Button commandButton6 = (Button) containerLayout.findViewById(R.id.command_button_6);
+		commandButton6.setOnClickListener(onButtonClick);
 	}
 
 
@@ -116,22 +134,22 @@ public class PollywogFragment extends RobotFragment {
 		switch(viewId) { 	
 
 		case R.id.up_button:
-			listener.onSendMessage(GamePadConstants.UP_COMMAND);
+			listener.onSendMessage(RoboPadConstants.UP_COMMAND);
 			//	    			Log.e(LOG_TAG, "up command send");
 			break;
 
 		case R.id.down_button:
-			listener.onSendMessage(GamePadConstants.DOWN_COMMAND);
+			listener.onSendMessage(RoboPadConstants.DOWN_COMMAND);
 			//	    			Log.e(LOG_TAG, "down command send");
 			break;
 
 		case R.id.left_button:
-			listener.onSendMessage(GamePadConstants.LEFT_COMMAND);	
+			listener.onSendMessage(RoboPadConstants.LEFT_COMMAND);	
 			//	    			Log.e(LOG_TAG, "left command send");
 			break;
 
 		case R.id.right_button:
-			listener.onSendMessage(GamePadConstants.RIGHT_COMMAND);
+			listener.onSendMessage(RoboPadConstants.RIGHT_COMMAND);
 			//	    			Log.e(LOG_TAG, "right command send");
 			break;
 
@@ -163,13 +181,37 @@ public class PollywogFragment extends RobotFragment {
 				break;
 
 			case R.id.stop_button:
-				listener.onSendMessage(GamePadConstants.STOP_COMMAND);    				
+				listener.onSendMessage(RoboPadConstants.STOP_COMMAND);    				
 				break;
+
+			case R.id.command_button_1: 
+				listener.onSendMessage(RoboPadConstants.COMMAND_1); 
+				break;
+
+			case R.id.command_button_2: 
+				listener.onSendMessage(RoboPadConstants.COMMAND_2); 
+				break;
+
+			case R.id.command_button_3: 
+				listener.onSendMessage(RoboPadConstants.COMMAND_3); 
+				break;
+
+			case R.id.command_button_4: 
+				listener.onSendMessage(RoboPadConstants.COMMAND_4); 
+				break;
+
+			case R.id.command_button_5: 
+				listener.onSendMessage(RoboPadConstants.COMMAND_5); 
+				break;
+
+			case R.id.command_button_6: 
+				listener.onSendMessage(RoboPadConstants.COMMAND_6); 
+				break;
+
 			}
 
 		}
 	};
-
 
 
 }

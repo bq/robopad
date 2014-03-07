@@ -1,8 +1,8 @@
 =======
-GAMEPAD
+RoboPad
 =======
 
-GamePad is an Android app that consists on a robots controller via the device's Bluetooth. You have several types of robots with differents types of control for each of them. The robots must be controlled by a Arduino board with a Bluetooth module.
+RoboPad is an Android app that consists on a robots controller via the device's Bluetooth. You have several types of robots with differents types of control for each of them. The robots must be controlled by a Arduino board with a Bluetooth module.
 
 Right now, the type of robot that you can choose are the printbots designed in the Bq company or whichever robot with an Arduino board. 
 
@@ -35,7 +35,7 @@ Installation
 
 #. Follow the instructions in the github page of `droid2ino <https://github.com/bq/droid2ino>`_ in order to install the android SDK and the droid2ino library.
 
-#. Import the GamePad project in Eclipse in ``File`` > ``Import`` > ``Existing Projects into Workspace`` and browse to the GamePad project.
+#. Import the RoboPad project in Eclipse in ``File`` > ``Import`` > ``Existing Projects into Workspace`` and browse to the RoboPad project.
 
 #. Maybe, you will need to update the reference of droid2ino this way:  
 	
@@ -79,4 +79,4 @@ Limitations
 License
 =======
 
-GamePad is distributed in terms of GPL license. See http://www.gnu.org/licenses/ for more details.
+RoboPad is distributed in terms of GPL license. See http://www.gnu.org/licenses/ for more details.

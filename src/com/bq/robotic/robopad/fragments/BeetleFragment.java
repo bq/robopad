@@ -21,7 +21,7 @@
 *
 */
 
-package com.bq.robotic.gamepad.fragments;
+package com.bq.robotic.robopad.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -32,9 +32,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-import com.bq.robotic.gamepad.GamePadConstants;
-import com.bq.robotic.gamepad.GamePadConstants.Claw_next_state;
-import com.bq.robotic.gamepad.R;
+import com.bq.robotic.robopad.RoboPadConstants;
+import com.bq.robotic.robopad.RoboPadConstants.Claw_next_state;
+import com.bq.robotic.robopad.R;
 
 /**
  * Fragment of the game pad controller for the Beetle robot.
@@ -67,7 +67,7 @@ public class BeetleFragment extends RobotFragment {
 		}
 		
 		// Put the servo of the claws in a initial position 
-		mClawPosition = GamePadConstants.INIT_CLAW_POS; // default open 30 (values from 5 to 50) 
+		mClawPosition = RoboPadConstants.INIT_CLAW_POS; // default open 30 (values from 5 to 50) 
 
 		setUiListeners(layout);
 
@@ -134,22 +134,22 @@ public class BeetleFragment extends RobotFragment {
 		switch(viewId) { 	
 
 		case R.id.up_button:
-			listener.onSendMessage(GamePadConstants.UP_COMMAND);
+			listener.onSendMessage(RoboPadConstants.UP_COMMAND);
 			//	    			Log.e(LOG_TAG, "up command send");
 			break;
 
 		case R.id.down_button:
-			listener.onSendMessage(GamePadConstants.DOWN_COMMAND);
+			listener.onSendMessage(RoboPadConstants.DOWN_COMMAND);
 			//	    			Log.e(LOG_TAG, "down command send");
 			break;
 
 		case R.id.left_button:
-			listener.onSendMessage(GamePadConstants.LEFT_COMMAND);	
+			listener.onSendMessage(RoboPadConstants.LEFT_COMMAND);	
 			//	    			Log.e(LOG_TAG, "left command send");
 			break;
 
 		case R.id.right_button:
-			listener.onSendMessage(GamePadConstants.RIGHT_COMMAND);
+			listener.onSendMessage(RoboPadConstants.RIGHT_COMMAND);
 			//	    			Log.e(LOG_TAG, "right command send");
 			break;
 
@@ -181,30 +181,30 @@ public class BeetleFragment extends RobotFragment {
 				break;
 
 			case R.id.stop_button:
-				listener.onSendMessage(GamePadConstants.STOP_COMMAND);    				
+				listener.onSendMessage(RoboPadConstants.STOP_COMMAND);    				
 				break;
 
 			case R.id.full_open_claw_button: 
 				if(listener != null && listener.onCheckIsConnected()) {
-					listener.onSendMessage(GamePadConstants.CLAW_COMMAND 
+					listener.onSendMessage(RoboPadConstants.CLAW_COMMAND 
 							+ getNextClawPostion(Claw_next_state.FULL_OPEN) 
-							+ GamePadConstants.COMMAND_DIVISOR);
+							+ RoboPadConstants.COMMAND_DIVISOR);
 				}
 				break;
 
 			case R.id.open_claw_button:  
 				if(listener != null && listener.onCheckIsConnected()) {
-					listener.onSendMessage(GamePadConstants.CLAW_COMMAND 
+					listener.onSendMessage(RoboPadConstants.CLAW_COMMAND 
 							+ getNextClawPostion(Claw_next_state.OPEN_STEP)
-							+ GamePadConstants.COMMAND_DIVISOR);
+							+ RoboPadConstants.COMMAND_DIVISOR);
 				}
 				break;
 
 			case R.id.close_claw_button:
 				if(listener != null && listener.onCheckIsConnected()) {
-					listener.onSendMessage(GamePadConstants.CLAW_COMMAND 
+					listener.onSendMessage(RoboPadConstants.CLAW_COMMAND 
 							+ getNextClawPostion(Claw_next_state.CLOSE_STEP)
-							+ GamePadConstants.COMMAND_DIVISOR);
+							+ RoboPadConstants.COMMAND_DIVISOR);
 				}
 				break;	
 
@@ -223,13 +223,13 @@ public class BeetleFragment extends RobotFragment {
 	private String getNextClawPostion(Claw_next_state nextState) {
 
 		// Show buttons enabled or disabled if the claw gets to max or min position
-		if(mClawPosition == GamePadConstants.MAX_OPEN_CLAW_POS 
+		if(mClawPosition == RoboPadConstants.MAX_OPEN_CLAW_POS 
 				&& nextState == Claw_next_state.CLOSE_STEP) {
 			
 			mOpenStepClawButton.setEnabled(true);
 			mFullOpenClawButton.setEnabled(true);
 
-		} else if(mClawPosition == GamePadConstants.MIN_CLOSE_CLAW_POS 
+		} else if(mClawPosition == RoboPadConstants.MIN_CLOSE_CLAW_POS 
 				&& (nextState == Claw_next_state.OPEN_STEP 
 				|| nextState == Claw_next_state.FULL_OPEN) ) {
 			
@@ -237,26 +237,26 @@ public class BeetleFragment extends RobotFragment {
 		}
 
 		if (nextState == Claw_next_state.OPEN_STEP) {
-			mClawPosition -= GamePadConstants.CLAW_STEP;
+			mClawPosition -= RoboPadConstants.CLAW_STEP;
 
 		} else if (nextState == Claw_next_state.CLOSE_STEP) {
-			mClawPosition += GamePadConstants.CLAW_STEP;
+			mClawPosition += RoboPadConstants.CLAW_STEP;
 
 		} else if (nextState == Claw_next_state.FULL_OPEN) {
-			mClawPosition = GamePadConstants.MAX_OPEN_CLAW_POS;
+			mClawPosition = RoboPadConstants.MAX_OPEN_CLAW_POS;
 
 		}
 
 		// Don't exceed the limits of the claw
-		if (mClawPosition <= GamePadConstants.MAX_OPEN_CLAW_POS) {
+		if (mClawPosition <= RoboPadConstants.MAX_OPEN_CLAW_POS) {
 
-			mClawPosition = GamePadConstants.MAX_OPEN_CLAW_POS;	
+			mClawPosition = RoboPadConstants.MAX_OPEN_CLAW_POS;	
 			mOpenStepClawButton.setEnabled(false);
 			mFullOpenClawButton.setEnabled(false);
 
-		} else if (mClawPosition >= GamePadConstants.MIN_CLOSE_CLAW_POS) {
+		} else if (mClawPosition >= RoboPadConstants.MIN_CLOSE_CLAW_POS) {
 
-			mClawPosition = GamePadConstants.MIN_CLOSE_CLAW_POS; 
+			mClawPosition = RoboPadConstants.MIN_CLOSE_CLAW_POS; 
 			mCloseStepClawButton.setEnabled(false);
 			
 		}

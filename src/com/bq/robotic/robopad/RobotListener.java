@@ -21,7 +21,7 @@
 *
 */
 
-package com.bq.robotic.gamepad;
+package com.bq.robotic.robopad;
 
 /**
  * Listener for robot fragments to communicate with the fragment activity that manage the bluetooth 
