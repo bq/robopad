@@ -214,46 +214,23 @@ public class RhinoFragment extends RobotFragment {
 					valueToSend = "D";
 				}
 				
-				Log.e(LOG_TAG, "progress: " + progress);
-				Log.e(LOG_TAG, "valueToSend: " + valueToSend);
-				
 				if(valueToSend == null) {
 					Log.e(LOG_TAG, "progress was not a valid number: " + progress);
 					return;
 				}
 				
 				switch (seekBar.getId()) {
-//					case R.id.left_slider:
-//						listener.onSendMessage(GamePadConstants.COMMAND_DIVISOR 
-//								+ GamePadConstants.LEFT_COMMAND + (180 - progress) 
-//								+ GamePadConstants.COMMAND_DIVISOR);
-//						break;
-//	
-//					case R.id.right_slider:
-//						listener.onSendMessage(GamePadConstants.COMMAND_DIVISOR 
-//								+ GamePadConstants.RIGHT_COMMAND + progress 
-//								+ GamePadConstants.COMMAND_DIVISOR);
-//						Log.e(LOG_TAG, "progress: " + progress);
-//						break;
 				
-				case R.id.left_slider:					
-					listener.onSendMessage(RoboPadConstants.LEFT_COMMAND + valueToSend);
-					break;
-
-				case R.id.right_slider:
-					listener.onSendMessage(RoboPadConstants.RIGHT_COMMAND + valueToSend);
-					break;
+					case R.id.left_slider:					
+						listener.onSendMessage(RoboPadConstants.LEFT_COMMAND + valueToSend);
+						break;
+	
+					case R.id.right_slider:
+						listener.onSendMessage(RoboPadConstants.RIGHT_COMMAND + valueToSend);
+						break;
 				}
+			}
 				
-				
-//				listener.onSendMessage(GamePadConstants.COMMAND_DIVISOR 
-//								+ GamePadConstants.LEFT_COMMAND + (180 - mLeftSlider.getProgress()) 
-//								+ GamePadConstants.COMMAND_DIVISOR
-//								+ GamePadConstants.RIGHT_COMMAND + mRightSlider.getProgress()
-//								+ GamePadConstants.COMMAND_DIVISOR);
-
-			} 
-
 		}
 
 		@Override

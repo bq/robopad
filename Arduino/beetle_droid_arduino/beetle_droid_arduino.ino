@@ -50,7 +50,7 @@
 #define rightWheelBackwardsValue 0
 
 /* Size of the received data buffer */
-#define bufferSize 20
+#define bufferSize 5
 
 /* A object from the Servo class is created for each servo */
 Servo leftWheel;                       /*  Values from 0 to 180  */

@@ -258,7 +258,7 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
 	 */
 	@Override
 	public void onSendMessage(String message) {
-		Log.e(LOG_TAG, "message to send to arduino: " + message);
+//		Log.e(LOG_TAG, "message to send to arduino: " + message);
 		sendMessage(message);
 	}
 

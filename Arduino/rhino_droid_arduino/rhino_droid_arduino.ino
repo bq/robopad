@@ -47,7 +47,7 @@
 #define rightWheelBackwardsValue 0
 
 /* Size of the received data buffer */
-#define bufferSize 20
+#define bufferSize 2
 
 /* A object from the Servo class is created for each servo */
 Servo leftWheel;                       /*  Values from 0 to 180  */
@@ -80,55 +80,39 @@ void stopWheels() {
 }
 
 
-void goForwards() {
+void moveLeftWheelUp() {
   leftWheel.write(leftWheelFordwardValue);
   delay(3);
+}
 
+
+void moveRightWheelUp() {
   rightWheel.write(rightWheelFordwardValue);
   delay(3);
 }
 
-
-void goBackwards() {
+void moveLeftWheelDown() {
   leftWheel.write(leftWheelBackwardsValue);
   delay(3);
+}
 
+
+void moveRightWheelDown() {
   rightWheel.write(rightWheelBackwardsValue);
   delay(3);
 }
 
-
-void moveLeftWheel() {
-  leftWheel.write(sliderPos);
+void moveLeftWheelStop() {
+  leftWheel.write(wheelStopValue);
   delay(3);
 }
 
 
-void moveRightWheel() {
-  rightWheel.write(sliderPos);
+void moveRightWheelStop() {
+  rightWheel.write(wheelStopValue);
   delay(3);
 }
 
-
-/* Perform the action required by the user of the Android app */
-void setAction(char* data) {
-  
-  switch(data[0]) {
-
-  // left slider
-  case 'L':
-    sliderPos=strtol(data+1, NULL, 10);
-    moveLeftWheel();
-    break;
-
-  // right slider
-  case 'R':
-    sliderPos=strtol(data+1, NULL, 10);
-    moveRightWheel();
-    break;
-  }
-    
-}
 
 
 /* Manage the buffer of data */
@@ -141,28 +125,32 @@ void checkData(char* data){
     
   } else if (data[0] == 'C') {
     /* Charge button pressed */
-    goBackwards();
-    delay(900);
-    goForwards();
-    delay(1500);
+    moveLeftWheelDown();
+    moveRightWheelDown();
+    delay(800);
+    moveLeftWheelUp();
+    moveRightWheelUp();
+    delay(1400);
     stopWheels();
     
-  } else {
-       
-    /* Divide the full instruction line with all the 
-       configuration instructions in single configuration 
-       instructions. All the command line, example: _C40_C35_ */
-    char* full_instruction_line = {0}; 
-     
-    full_instruction_line = strtok(data, "_");
-     
-    while(full_instruction_line != NULL) {
-                 
-      setAction(full_instruction_line);   
-       
-      full_instruction_line = strtok(NULL, "_");
-     
-    }
+  } else if (data[0] == 'L') {
+       if(data[1] == 'U') {
+         moveLeftWheelUp();
+       } else if (data[1] == 'D') {
+          moveLeftWheelDown();
+       } else if (data[1] == 'S') {
+          moveLeftWheelStop();
+       } 
+
+  }  else if (data[0] == 'R') {
+       if(data[1] == 'U') {
+        moveRightWheelUp();
+       } else if (data[1] == 'D') {
+        moveRightWheelDown();
+       } else if (data[1] == 'S') {
+          moveRightWheelStop();
+       } 
+
   }
       
   /* Empty the Serial */  
