@@ -33,17 +33,28 @@ Características
 Instalación
 ===========
 
-#. Sigue las instrucciones del proyecto en github de `droid2ino <https://github.com/bq/droid2ino>`_ para instalar la librería droid2ino, el Android SDK y la librería de compatibilidad de Android v7.
+#. RoboPad depende de la biblioteca droid2ino. Clona el repositorio droid2ino::
 
-#. Importa el proyecto RoboPad en Eclipse in ``File`` > ``Import`` > ``Existing Projects into Workspace`` and busca el proyecto RoboPad.
+    git clone https://github.com/bq/droid2ino.git
 
-#. Puede que tengas que actualizar la referencia de la librería droid2ino del siguiente modo:  
+#. Instala la biblioteca droid2ino en tu repositorio local::
+  
+    cd droid2ino/droid2ino
+    gradle install
+
+#. Instala `Android Studio <https://developer.android.com/sdk/installing/studio.html>`_ y `Gradle <http://www.gradle.org/downloads>`_.
+
+#. Si usas Linux de 64 bits, necesitarás instalar ia32-libs-multiarch::
+
+	sudo apt-get update
+	sudo apt-get upgrade
+	sudo apt-get install ia32-libs-multiarch 
+
+#. Clona el repositorio RoboPad::
 	
-   - En Eclipse, selecciona tu proyecto en la ventana de ``Package Explorer`` > ``File`` > ``Properties`` > ``Android``
+	git clone https://github.com/bq/robopad.git
 
-   - Elimina la referencia errónea de la librería droid2ino
-
-   - Pulsa en el botón de ``Add`` y selecciona la librería droid2ino
+#. En Android Studio, ve a ``File`` > ``Open`` y selecciona el proyecto RoboPad clonado previamente.
 
 #. Sube el código Arduino adecuado a tu robot. Puedes encontrarlo en la carpeta Arduino de este proyecto o en la `web de DIY de Bq  <http://diy.bq.com/printbots/>`_ (el código no está disponible aún en la web).
 
@@ -51,13 +62,16 @@ Instalación
 Requisitos
 ==========
 
-- Android SDK
 
-- Eclipse IDE (recomendado)
+- `Java JDK <http://www.oracle.com/technetwork/es/java/javase/downloads/jdk7-downloads-1880260.html>`_ 
 
-- Arduino IDE
+- `Android Studio <https://developer.android.com/sdk/installing/studio.html>`_ 
+
+- `Gradle <http://www.gradle.org/downloads>`_ recommended version 1.10
   
-- Placa Arduino con módulo Bluetooth
+- `Arduino IDE <http://arduino.cc/en/Main/Software#.UzBT5HX5Pj4>`_ 
+
+- La placa Arduino con un módulo Bluetooth
 
 
 Limitaciones
