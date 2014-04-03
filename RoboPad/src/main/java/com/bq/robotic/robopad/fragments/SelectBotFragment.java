@@ -93,23 +93,10 @@ public class SelectBotFragment extends Fragment {
 	}
 	
 	
-    /**
-     * Set the fragmentActivity listener. Right now it is not necessary because the 
-     * fragment activity that contains the fragments is the one that implements the listener
-     * so it is done in the onAttach of RobotFragment. But with this method can be another class 
-     * witch implements the listener not the container fragment activity.
-     * 
-     * @param listener The SelectBotListener
-     */
-    public void setSelectRobotListener(SelectBotListener listener) {
-    	this.listener = listener;
-    }
-
-
 	/**
 	 * Send the message to the Arduino board depending on the button pressed
 	 * 
-	 * @param viewId The id of the view pressed
+	 * @param containerLayout The inflated layout
 	 */
 	protected void setUiListeners(View containerLayout) {
 
@@ -121,6 +108,9 @@ public class SelectBotFragment extends Fragment {
 
 		Button rhinoButton = (Button) containerLayout.findViewById(R.id.rhino_button);
 		rhinoButton.setOnClickListener(onButtonClick);
+
+        Button crabButton = (Button) containerLayout.findViewById(R.id.crab_button);
+        crabButton.setOnClickListener(onButtonClick);
 
 		Button genericRobotButton = (Button) containerLayout.findViewById(R.id.generic_button);
 		genericRobotButton.setOnClickListener(onButtonClick);
@@ -152,6 +142,10 @@ public class SelectBotFragment extends Fragment {
 				case R.id.rhino_button:
 					listener.onRobotSelected(RoboPadConstants.robotType.RHINO);    				
 					break;
+
+                case R.id.crab_button:
+                    listener.onRobotSelected(RoboPadConstants.robotType.CRAB);
+                    break;
 	
 				case R.id.generic_button:
 					listener.onRobotSelected(RoboPadConstants.robotType.GENERIC_ROBOT);      				

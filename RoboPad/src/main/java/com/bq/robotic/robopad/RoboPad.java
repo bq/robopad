@@ -27,27 +27,31 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bq.robotic.droid2ino.activities.BaseBluetoothSendOnlyActivity;
 import com.bq.robotic.droid2ino.utils.AndroidinoConstants;
 import com.bq.robotic.droid2ino.utils.DeviceListDialogStyle;
 import com.bq.robotic.robopad.fragments.BeetleFragment;
+import com.bq.robotic.robopad.fragments.CrabFragment;
 import com.bq.robotic.robopad.fragments.GenericRobotFragment;
 import com.bq.robotic.robopad.fragments.PollywogFragment;
 import com.bq.robotic.robopad.fragments.RhinoFragment;
 import com.bq.robotic.robopad.fragments.RobotFragment;
 import com.bq.robotic.robopad.fragments.SelectBotFragment;
+import com.bq.robotic.robopad.utils.RoboPadConstants.robotType;
 import com.bq.robotic.robopad.utils.RobotListener;
 import com.bq.robotic.robopad.utils.SelectBotListener;
-import com.bq.robotic.robopad.utils.RoboPadConstants.robotType;
 
 
 /**
@@ -62,8 +66,13 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
     private ActionBar mActionBar;   
     private ImageButton mSelectBotButton;
     private ImageView mGamePadButton; 
-    private TextView mBottomTitleBar;
+//    private TextView mBottomTitleBar;
     private FragmentManager mFragmentManager;
+
+    private ImageButton connectButton;
+    private ImageButton disconnectButton;
+
+    private Animation anim;
     
 
     @Override
@@ -78,7 +87,10 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
 		
 		mSelectBotButton = (ImageButton) findViewById(R.id.select_bot_button);
 		mGamePadButton = (ImageView) findViewById(R.id.pad_button);
-		mBottomTitleBar = (TextView) findViewById(R.id.title_view);
+        connectButton = (ImageButton) findViewById(R.id.connect_button);
+        disconnectButton = (ImageButton) findViewById(R.id.disconnect_button);
+//		mBottomTitleBar = (TextView) findViewById(R.id.title_view);
+        anim = AnimationUtils.loadAnimation(this, R.anim.bluetooth_spiner);
 		
 		// If we're being restored from a previous state,
         // then we don't need to do anything and should return or else
@@ -88,7 +100,12 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
         	if(mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof RobotFragment) {
     			mSelectBotButton.setClickable(true);
     			mGamePadButton.setVisibility(View.VISIBLE);
-        	} 
+
+            } else if(mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof SelectBotFragment) {
+                connectButton.setVisibility(View.GONE);
+                disconnectButton.setVisibility(View.GONE);
+                return;
+            }
        
             return;
         }
@@ -97,8 +114,37 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
 		FragmentTransaction ft = mFragmentManager.beginTransaction();
 		ft.replace(R.id.game_pad_container, new SelectBotFragment());
 		ft.commit();
+
+        connectButton.setVisibility(View.GONE);
+        disconnectButton.setVisibility(View.GONE);
 			
 	}
+
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        super.onAttachFragment(fragment);
+
+        if(connectButton == null && disconnectButton == null) {
+            return;
+        }
+
+        if(mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof SelectBotFragment) {
+            connectButton.setVisibility(View.GONE);
+            disconnectButton.setVisibility(View.GONE);
+            return;
+        }
+
+        // Check the status for the connect / disconnect buttons
+        if(isConnectedWithoutToast()) {
+            connectButton.setVisibility(View.GONE);
+            disconnectButton.setVisibility(View.VISIBLE);
+        } else {
+            connectButton.setVisibility(View.VISIBLE);
+            disconnectButton.setVisibility(View.GONE);
+        }
+
+    }
 	
 	
 	/**
@@ -107,7 +153,7 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
 	 * @param textId the text to put in the bottom title bar
 	 */
     public void setFragmentTitle(int textId) {
-    	mBottomTitleBar.setText(textId);
+//    	mBottomTitleBar.setText(textId);
     }
     
     
@@ -120,32 +166,90 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
     public void onConnectionStatusUpdate(int connectionState) {
       switch (connectionState) {
         case AndroidinoConstants.STATE_CONNECTED:
-            setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
+            setStatus(R.string.title_connected_to);
             if(mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof RobotFragment) {
             	((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothConnected();
             }
             break;
+
         case AndroidinoConstants.STATE_CONNECTING:
             setStatus(R.string.title_connecting);
             break;
+
         case AndroidinoConstants.STATE_LISTEN:
         case AndroidinoConstants.STATE_NONE:
             setStatus(R.string.title_not_connected);
             if(mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof RobotFragment) {
-            	((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothDisconnected();
+                ((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothDisconnected();
             }
             break;
       }
+        changeViewsVisibility(connectionState);
     }
 
-    
+
+    /**
+     * Change the visibility of some views as the connect/disconnect button depending on the
+     * bluetooth connection state The state of the bluetooth connection
+     *
+     * @param connectionState
+     */
+    private void changeViewsVisibility(int connectionState) {
+
+        switch (connectionState) {
+
+            case AndroidinoConstants.STATE_CONNECTED:
+                findViewById(R.id.bluetooth_spinner_view).setVisibility(View.INVISIBLE);
+                findViewById(R.id.bluetooth_spinner_view).clearAnimation();
+
+                connectButton.setVisibility(View.GONE);
+                disconnectButton.setVisibility(View.VISIBLE);
+                break;
+
+            case AndroidinoConstants.STATE_CONNECTING:
+
+                if(anim != null) {
+                    anim.setInterpolator(new Interpolator() {
+                        private final int frameCount = 8;
+
+                        @Override
+                        public float getInterpolation(float input) {
+                            return (float) Math.floor(input * frameCount) / frameCount;
+                        }
+                    });
+
+                    findViewById(R.id.bluetooth_spinner_view).setVisibility(View.VISIBLE);
+                    findViewById(R.id.bluetooth_spinner_view).startAnimation(anim);
+                } else {
+                    Log.e(LOG_TAG, "Anim null!!!");
+                }
+
+                break;
+
+            case AndroidinoConstants.STATE_LISTEN:
+            case AndroidinoConstants.STATE_NONE:
+                findViewById(R.id.bluetooth_spinner_view).setVisibility(View.INVISIBLE);
+                findViewById(R.id.bluetooth_spinner_view).clearAnimation();
+
+                if(mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof SelectBotFragment) {
+                    connectButton.setVisibility(View.GONE);
+                    disconnectButton.setVisibility(View.GONE);
+                } else {
+                    connectButton.setVisibility(View.VISIBLE);
+                    disconnectButton.setVisibility(View.GONE);
+                }
+                break;
+        }
+    }
+
+
     /**
      * Put the status of the connection in the bottom title bar
-     * 
-     * @param textId The text id in the R.xml file 
+     *
+     * @param textId The text id in the R.xml file
      */
     private final void setStatus(int textId) {
-    	mBottomTitleBar.setText(textId);
+//    	mBottomTitleBar.setText(textId);
     }
     
     
@@ -156,7 +260,32 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
      */
     private final void setStatus(CharSequence subTitle) {
         if (subTitle != null) {
-        	mBottomTitleBar.setText(subTitle);
+//        	mBottomTitleBar.setText(subTitle);
+        }
+    }
+
+
+    /**
+     * Callback for the connect and disconnect buttons
+     * @param v
+     */
+    public void onChangeConnection(View v) {
+
+        switch (v.getId()) {
+
+            case R.id.connect_button:
+                //TODO:
+                DeviceListDialogStyle deviceListDialogStyle = requestDeviceConnection();
+
+//                // Style the search bluetooth devices dialog
+//                deviceListDialogStyle.getSearchDevicesTitleView().setTextColor(getResources().getColor(R.color.holo_green_dark));
+//                deviceListDialogStyle.getDevicesPairedTitleView().setBackgroundResource(R.color.holo_green_dark);
+//                deviceListDialogStyle.getNewDevicesTitleView().setBackgroundResource(R.color.holo_green_dark);
+                break;
+
+            case R.id.disconnect_button:
+                stopBluetoothConnection();
+                break;
         }
     }
 	
@@ -218,8 +347,11 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
 		mSelectBotButton.setClickable(false);
 		mGamePadButton.setVisibility(View.GONE);
 		mGamePadButton.setSelected(false);
+
+        connectButton.setVisibility(View.GONE);
+        disconnectButton.setVisibility(View.GONE);
 		
-		mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0); 
+//		mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 	}
 
 	
@@ -257,7 +389,7 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
 	 * Callback from the RobotFragment for sending a message to the Arduino through the bluetooth 
 	 * connection. 
 	 * 
-	 * @param The message to be send to the Arduino
+	 * @param message to be send to the Arduino
 	 */
 	@Override
 	public void onSendMessage(String message) {
@@ -308,19 +440,23 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
 		RobotFragment robotFragment = null;
 
 		if (botType == robotType.POLLYWOG) {
-			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_pollywog_action_bar_icon, 0, 0, 0);
+//			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_pollywog_action_bar_icon, 0, 0, 0);
 			robotFragment = new PollywogFragment();
 
 		} else if (botType == robotType.BEETLE) {
-			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_beetle_action_bar_icon, 0, 0, 0);
+//			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_beetle_action_bar_icon, 0, 0, 0);
 			robotFragment = new BeetleFragment();
 
 		} else if (botType == robotType.RHINO) {	
-			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_rhino_action_bar_icon, 0, 0, 0);
+//			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_rhino_action_bar_icon, 0, 0, 0);
 			robotFragment = new RhinoFragment();
 
-		} else if (botType == robotType.GENERIC_ROBOT) {
-			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_generic_action_bar_icon, 0, 0, 0);
+		} else if (botType == robotType.CRAB) {
+//            mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_crab_action_bar_icon, 0, 0, 0);
+            robotFragment = new CrabFragment();
+
+        } else if (botType == robotType.GENERIC_ROBOT) {
+//			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_generic_action_bar_icon, 0, 0, 0);
 			robotFragment = new GenericRobotFragment();
 		}
 		
@@ -333,6 +469,9 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
 			mSelectBotButton.setClickable(true);
 			mGamePadButton.setVisibility(View.VISIBLE);
 			mGamePadButton.setSelected(true);
+
+            connectButton.setVisibility(View.VISIBLE);
+            disconnectButton.setVisibility(View.GONE);
 		}
 
 	}

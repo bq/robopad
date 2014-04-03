@@ -7,6 +7,7 @@
     <string name="pollywog">Renacuajo</string>
     <string name="beetle">Escarabajo</string>
     <string name="rhino">Rhino</string>
+    <string name="crab">Cangrejo</string>
     <string name="generic_robot">Robot genérico</string>
     
     <string name="select_robot">SELECCIONAR ROBOT</string>
@@ -22,5 +23,16 @@
     
     <!-- Rhino robot -->
     <string name="charge">Embestir</string>
+
+    <!-- Crab robot -->
+    <!--<string name="amplitude">Amplitud</string>-->
+    <string name="step_size">Tamaño de los pasos</string>
+    <string name="left_amplitude">Amplitud izquierda: </string>
+    <string name="right_amplitude">Amplitud derecha: </string>
+    <string name="speed">Velocidad</string>
+    <string name="period">Período:</string>
+    <string name="legs_coordination">"Coordinación\nentre patas"</string>
+    <string name="phase_difference">Diferencia de fase: </string>
+    <string name="reset">Reinicializar</string>
 
 </resources>

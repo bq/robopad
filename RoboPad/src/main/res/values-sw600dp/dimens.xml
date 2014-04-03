@@ -12,4 +12,11 @@
     <dimen name="pad_margin">25dp</dimen>
     <dimen name="left_right_margin">110dp</dimen>
 
+    <dimen name="pad_size">600dp</dimen>
+    <dimen name="pad_bot_icon_size">475dp</dimen>
+    <dimen name="button_press_padding">13dp</dimen>
+    <dimen name="stop_button_padding">60dp</dimen>
+    <dimen name="stop_button_margin_right">-90dp</dimen>
+    <dimen name="splash_icon_margin">70dp</dimen>
+
 </resources>

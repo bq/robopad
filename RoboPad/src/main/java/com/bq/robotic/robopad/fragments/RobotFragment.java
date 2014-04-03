@@ -30,9 +30,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.widget.Button;
 
-import com.bq.robotic.robopad.R;
 import com.bq.robotic.robopad.utils.RoboPadConstants;
 import com.bq.robotic.robopad.utils.RobotListener;
 
@@ -71,19 +69,13 @@ public abstract class RobotFragment extends Fragment {
 	/**
 	 * Callback method called from the activity when the Bluetooth change its status to connected
 	 */
-	public void onBluetoothConnected() {
-        ((Button) getView().findViewById(R.id.connect_button)).setVisibility(View.GONE);
-        ((Button) getView().findViewById(R.id.disconnect_button)).setVisibility(View.VISIBLE);
-	}
+	public void onBluetoothConnected() {}
 	
 	
 	/**
 	 * Callback method called from the activity when the Bluetooth change its status to disconnected
 	 */
-	public void onBluetoothDisconnected() {
-        ((Button) getView().findViewById(R.id.connect_button)).setVisibility(View.VISIBLE);
-        ((Button) getView().findViewById(R.id.disconnect_button)).setVisibility(View.GONE);
-	}
+	public void onBluetoothDisconnected() {}
 	
 	
 	/**

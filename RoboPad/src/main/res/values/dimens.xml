@@ -7,4 +7,11 @@
     <dimen name="pad_margin">0dp</dimen>
     <dimen name="left_right_margin">30dp</dimen>
 
+    <dimen name="pad_size">300dp</dimen>
+    <dimen name="pad_bot_icon_size">200dp</dimen>
+    <dimen name="button_press_padding">10dp</dimen>
+    <dimen name="stop_button_padding">40dp</dimen>
+    <dimen name="stop_button_margin_right">-70dp</dimen>
+    <dimen name="splash_icon_margin">30dp</dimen>
+
 </resources>

@@ -2,7 +2,7 @@
 RoboPad
 =======
 
-RoboPad is an Android app that consists on a robots controller via the device's Bluetooth. You have several types of robots with differents types of control for each of them. The robots must be controlled by a Arduino board with a Bluetooth module.
+RoboPad is an Android app that consists on a robots controller via the device's Bluetooth. You have several types of robots with differents types of control for each of them. The robots must be controlled by an Arduino board with a Bluetooth module.
 
 Right now, the type of robot that you can choose are the printbots designed in the Bq company or whichever robot with an Arduino board. 
 
@@ -66,6 +66,11 @@ Requirements
 - `Java JDK <http://www.oracle.com/technetwork/es/java/javase/downloads/jdk7-downloads-1880260.html>`_ 
 
 - `Android Studio <https://developer.android.com/sdk/installing/studio.html>`_ 
+
+- `Maven <http://maven.apache.org/download.cgi>`_.  If you use Ubuntu::
+    
+    sudo apt-get update
+    sudo apt-get install maven
 
 - `Gradle <http://www.gradle.org/downloads>`_ recommended version 1.10
   

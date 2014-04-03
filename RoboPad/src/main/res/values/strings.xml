@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources>
 
     <string name="app_name">RoboPad</string>
     <string name="action_settings">Settings</string>
@@ -7,6 +7,7 @@
     <string name="pollywog">Pollywog</string>
     <string name="beetle">Beetle</string>
     <string name="rhino">Rhino</string>
+    <string name="crab">Crab</string>
     <string name="generic_robot">Generic robot</string>
     
     <string name="select_robot">SELECT ROBOT</string>
@@ -22,7 +23,20 @@
     
     <!-- Rhino robot -->
     <string name="charge">Charge</string>
-    
+
+    <!-- Crab robot -->
+    <string name="step_size">Size of steps </string>
+    <string name="left_amplitude">Left amplitude: </string>
+    <string name="right_amplitude">Right amplitude: </string>
+    <string name="speed">Speed</string>
+    <string name="period">Period:</string>
+    <string name="legs_coordination">"Coordination\nbetween legs"</string>
+    <string name="phase_difference">Phase difference: </string>
+    <string name="reset">Reset</string>
+    <string name="default_amplitude">20</string>
+    <string name="default_period">2000</string>
+    <string name="default_phase">-90</string>
+
     <!-- Generic robot -->
     <string name="command_1">1</string>
     <string name="command_2">2</string> 

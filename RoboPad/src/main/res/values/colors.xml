@@ -2,4 +2,11 @@
 <resources>
     <color name="holo_green_dark">#ff669900</color>
     <color name="holo_green_light">#99cc00</color>
+    <color name="holo_green_light_transparent_1">#A099cc00</color>
+    <color name="holo_green_light_transparent_2">#4099cc00</color>
+    <color name="holo_blue_light">#33b5e5</color>
+    <color name="holo_blue_light_transparent_1">#A033b5e5</color>
+    <color name="holo_blue_light_transparent_2">#4033b5e5</color>
+    <color name="holo_turquoise_transparent_1">#A038aeac</color>
+    <color name="holo_turquoise_transparent_2">#4038aeac</color>
 </resources>

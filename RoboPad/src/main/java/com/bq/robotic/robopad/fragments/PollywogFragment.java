@@ -29,8 +29,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.bq.robotic.robopad.R;
 import com.bq.robotic.robopad.utils.RoboPadConstants;
@@ -72,16 +72,10 @@ public class PollywogFragment extends RobotFragment {
 	 * to get the callback here and not in the FragmentActivity, that would be a mess with all the 
 	 * callbacks of all the possible fragments
 	 * 
-	 * @param The view used as the main container for this fragment
+	 * @param containerLayout The view used as the main container for this fragment
 	 */
 	@Override
 	protected void setUiListeners(View containerLayout) {
-
-		Button connectButton = (Button) containerLayout.findViewById(R.id.connect_button);
-		connectButton.setOnClickListener(onButtonClick);
-
-		Button disconnectButton = (Button) containerLayout.findViewById(R.id.disconnect_button);
-		disconnectButton.setOnClickListener(onButtonClick);
 
 		ImageButton stopButton = (ImageButton) containerLayout.findViewById(R.id.stop_button);
 		stopButton.setOnClickListener(onButtonClick);
@@ -171,5 +165,15 @@ public class PollywogFragment extends RobotFragment {
 	};
 
 
+    @Override
+    public void onBluetoothConnected() {
+        ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.bot_pollywog_connected);
+        ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.pollywog_bg_on);
+    }
 
+    @Override
+    public void onBluetoothDisconnected() {
+        ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.bot_pollywog_disconnected);
+        ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.pollywog_bg_off);
+    }
 }
