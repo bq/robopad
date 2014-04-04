@@ -440,7 +440,6 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
 		RobotFragment robotFragment = null;
 
 		if (botType == robotType.POLLYWOG) {
-//			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_pollywog_action_bar_icon, 0, 0, 0);
 			robotFragment = new PollywogFragment();
 
 		} else if (botType == robotType.BEETLE) {

@@ -19,6 +19,8 @@ The buttons send the following character to the Arduino board:
 | Button 5 - '5'
 | Button 6 - '6'
 
+If you have any questions you can contact us through the `DIY forum <http://diy.bq.com/forums/forum/forum/>`_  or sending an email to diy@bq.com.
+
 
 Features
 ========
@@ -59,6 +61,8 @@ Installation
 
 #. Upload the Arduino code to your robot. You can find it in the Arduino folder of this project or in `DIY web of Bq  <http://diy.bq.com/printbots/>`_ (the code in the web is not available yet).
 
+#. In order to install the firmware of the Crab printbot that you will find in the Arduino folder, you have to copy the ``Oscillator`` folder (that is in the Oscillator_Lib folder) in to the ``libraries`` folder in the folder where you have installed the Arduino program. You can find more detailed info for doing this in the `documentation of the Arduino web <http://arduino.cc/en/Guide/Libraries>`_.
+
 
 Requirements
 ============
@@ -67,7 +71,7 @@ Requirements
 
 - `Android Studio <https://developer.android.com/sdk/installing/studio.html>`_ 
 
-- `Maven <http://maven.apache.org/download.cgi>`_.  If you use Ubuntu::
+- `Maven <http://maven.apache.org/download.cgi>`_. If you use Ubuntu::
     
     sudo apt-get update
     sudo apt-get install maven

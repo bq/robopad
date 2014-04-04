@@ -18,7 +18,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="50dp"
         android:layout_marginBottom="20dp"
-        android:src="@drawable/bot_pollywog_disconnected" />
+        android:src="@drawable/bot_pollywog_disconnected_2" />
 
     <ImageButton
         android:id="@+id/stop_button"

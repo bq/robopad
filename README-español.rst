@@ -19,6 +19,8 @@ Estos 6 botones mandan el siguiente carácter a la placa Arduino:
 | Botón 5 - '5'
 | Botón 6 - '6'
 
+Si tienes alguna duda puedes consultarnos a través del `foro de DIY <http://diy.bq.com/forums/forum/forum/>`_ o mandando un correo a diy@bq.com.
+
 
 Características
 ===============
@@ -56,7 +58,9 @@ Instalación
 
 #. En Android Studio, ve a ``File`` > ``Open`` y selecciona el proyecto RoboPad clonado previamente.
 
-#. Sube el código Arduino adecuado a tu robot. Puedes encontrarlo en la carpeta Arduino de este proyecto o en la `web de DIY de Bq  <http://diy.bq.com/printbots/>`_ (el código no está disponible aún en la web).
+#. Mete el código Arduino adecuado a tu robot. Puedes encontrarlo en la carpeta Arduino de este proyecto o en la `web de DIY de Bq  <http://diy.bq.com/printbots/>`_ (el código no está disponible aún en la web).
+   
+#. Para instalar el firmware del printbot Cangrejo que se encuentra en la carpeta de Arduino, tienes que copiar la carpeta ``Oscillator`` (que está en la carpeta Oscillator_Lib) en la carpeta ``libraries``  en la carpeta donde has instalado el programa de Arduino. Puedes encontrar información más detallada para hacer esto en la  `documentación de la web de Arduino <http://arduino.cc/en/Guide/Libraries>`_. 
 
 
 Requisitos
@@ -66,6 +70,11 @@ Requisitos
 - `Java JDK <http://www.oracle.com/technetwork/es/java/javase/downloads/jdk7-downloads-1880260.html>`_ 
 
 - `Android Studio <https://developer.android.com/sdk/installing/studio.html>`_ 
+  
+- `Maven <http://maven.apache.org/download.cgi>`_. Si estás en Ubuntu::
+    
+    sudo apt-get update
+    sudo apt-get install maven
 
 - `Gradle <http://www.gradle.org/downloads>`_ recommended version 1.10
   

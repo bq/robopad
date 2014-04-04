@@ -167,13 +167,13 @@ public class PollywogFragment extends RobotFragment {
 
     @Override
     public void onBluetoothConnected() {
-        ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.bot_pollywog_connected);
+        ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.bot_pollywog_connected_2);
         ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.pollywog_bg_on);
     }
 
     @Override
     public void onBluetoothDisconnected() {
-        ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.bot_pollywog_disconnected);
+        ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.bot_pollywog_disconnected_2);
         ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.pollywog_bg_off);
     }
 }

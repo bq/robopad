@@ -9,12 +9,12 @@
  *     ********************************************************
  *
  *    Arduino code for the Pollywog robot for using with the
- *    Android GamePad app. 
+ *    Android RoboPad app. 
  *     
  *   ****************************************************
  *   * Fecha: 05/03/2014                                *
  *   * Autor:Estefana Sarasola Elvira                   *
- *   * Mail: estefania.sarasola@bq.com                  *
+ *   * Mail: diy@bq.com                                 *
  *   * Licencia: GNU General Public License v3 or later *
  *   ****************************************************
  */

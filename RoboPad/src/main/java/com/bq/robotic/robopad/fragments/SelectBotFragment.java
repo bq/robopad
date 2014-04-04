@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.bq.robotic.robopad.R;
 import com.bq.robotic.robopad.utils.RoboPadConstants;
@@ -100,7 +101,7 @@ public class SelectBotFragment extends Fragment {
 	 */
 	protected void setUiListeners(View containerLayout) {
 
-		Button pollywogButton = (Button) containerLayout.findViewById(R.id.pollywog_button);
+		ImageButton pollywogButton = (ImageButton) containerLayout.findViewById(R.id.pollywog_button);
 		pollywogButton.setOnClickListener(onButtonClick);
 
 		Button beetleButton = (Button) containerLayout.findViewById(R.id.beetle_button);
