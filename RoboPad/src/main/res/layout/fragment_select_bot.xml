@@ -25,8 +25,9 @@
                 android:id="@+id/pollywog_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/menu_pollywog_printbot" />
+                android:background="@drawable/menu_pollywog_icon_pressed_selector"
+                android:src="@drawable/menu_pollywog_icon_selector"
+                android:padding="20dp"/>
 
             <Button
                 android:id="@+id/beetle_button"
@@ -37,7 +38,8 @@
                 android:drawableTop="@drawable/bot_beetle"
                 android:text="@string/beetle"
                 android:textColor="@android:color/white"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/rhino_button"
@@ -48,7 +50,8 @@
                 android:drawableTop="@drawable/bot_rhino"
                 android:text="@string/rhino"
                 android:textColor="@android:color/white"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/crab_button"
@@ -59,7 +62,8 @@
                 android:drawableTop="@drawable/bot_crab"
                 android:text="@string/crab"
                 android:textColor="@android:color/white"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/generic_button"
@@ -70,7 +74,8 @@
                 android:drawableTop="@drawable/bot_generic"
                 android:text="@string/generic_robot"
                 android:textColor="@android:color/white"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
         </LinearLayout>
 
