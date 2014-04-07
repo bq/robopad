@@ -58,10 +58,6 @@ public class CrabFragment extends RobotFragment {
 
 		View layout = inflater.inflate(R.layout.fragment_crab, container, false);
 
-		if(listener != null) {
-			listener.onSetFragmentTitle(R.string.crab);
-		}
-
 		setUiListeners(layout);
 
 		return layout;

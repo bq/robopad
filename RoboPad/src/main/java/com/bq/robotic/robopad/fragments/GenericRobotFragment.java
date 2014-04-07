@@ -56,10 +56,6 @@ public class GenericRobotFragment extends RobotFragment {
 
 		View layout = inflater.inflate(R.layout.fragment_generic_robot, container, false);
 
-		if(listener != null) {
-			listener.onSetFragmentTitle(R.string.generic_robot);
-		}
-
 		setUiListeners(layout);
 
 		return layout;

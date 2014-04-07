@@ -29,16 +29,13 @@
                 android:src="@drawable/menu_pollywog_icon_selector"
                 android:padding="20dp"/>
 
-            <Button
+            <ImageButton
                 android:id="@+id/beetle_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:background="@drawable/btn_green_selector"
-                android:drawableTop="@drawable/bot_beetle"
-                android:text="@string/beetle"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
+                android:padding="20dp"
+                android:background="@drawable/menu_beetle_icon_pressed_selector"
+                android:src="@drawable/menu_beetle_icon_selector"
                 android:visibility="gone"/>
 
             <Button

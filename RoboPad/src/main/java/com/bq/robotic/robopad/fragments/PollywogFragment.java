@@ -56,10 +56,6 @@ public class PollywogFragment extends RobotFragment {
 
 		View layout = inflater.inflate(R.layout.fragment_pollywog, container, false);
 
-		if(listener != null) {
-			listener.onSetFragmentTitle(R.string.pollywog);
-		}
-
 		setUiListeners(layout);
 
 		return layout;
@@ -148,13 +144,13 @@ public class PollywogFragment extends RobotFragment {
 
 			switch(v.getId()) { 
 
-			case R.id.connect_button:
-				listener.onConnectRobot();    				
-				break;
-
-			case R.id.disconnect_button:
-				listener.onDisconnectRobot();    				
-				break;
+//			case R.id.connect_button:
+//				listener.onConnectRobot();
+//				break;
+//
+//			case R.id.disconnect_button:
+//				listener.onDisconnectRobot();
+//				break;
 
 			case R.id.stop_button:
 				listener.onSendMessage(RoboPadConstants.STOP_COMMAND);    				

@@ -62,10 +62,6 @@ public class RhinoFragment extends RobotFragment {
 
 		View layout = inflater.inflate(R.layout.fragment_rhino, container, false);
 
-		if(listener != null) {
-			listener.onSetFragmentTitle(R.string.rhino);
-		}
-
 		setUiListeners(layout);
 
 		return layout;

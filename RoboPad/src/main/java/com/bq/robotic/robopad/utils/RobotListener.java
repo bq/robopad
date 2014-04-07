@@ -60,14 +60,6 @@ public interface RobotListener {
 
 	
 	/**
-	 * Callback from the RobotFragment for changing the bottom title bar.
-	 * 
-	 * @param titleId The text resource id
-	 */
-	void onSetFragmentTitle(int titleId);
-	
-	
-	/**
 	 * Callback from the RobotFragment for initializing the search of Arduino's bluetooths and 
 	 * connecting with the one selected by the user 
 	 */

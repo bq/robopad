@@ -145,16 +145,6 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
         }
 
     }
-	
-	
-	/**
-	 * Put the text in the title bar in the bottom of the screen
-	 * 
-	 * @param textId the text to put in the bottom title bar
-	 */
-    public void setFragmentTitle(int textId) {
-//    	mBottomTitleBar.setText(textId);
-    }
     
     
     /**
@@ -166,19 +156,16 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
     public void onConnectionStatusUpdate(int connectionState) {
       switch (connectionState) {
         case AndroidinoConstants.STATE_CONNECTED:
-            setStatus(R.string.title_connected_to);
             if(mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof RobotFragment) {
             	((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothConnected();
             }
             break;
 
         case AndroidinoConstants.STATE_CONNECTING:
-            setStatus(R.string.title_connecting);
             break;
 
         case AndroidinoConstants.STATE_LISTEN:
         case AndroidinoConstants.STATE_NONE:
-            setStatus(R.string.title_not_connected);
             if(mFragmentManager.findFragmentById(R.id.game_pad_container) instanceof RobotFragment) {
                 ((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothDisconnected();
             }
@@ -192,7 +179,7 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
      * Change the visibility of some views as the connect/disconnect button depending on the
      * bluetooth connection state The state of the bluetooth connection
      *
-     * @param connectionState
+     * @param connectionState the state of the current bluetooth connection
      */
     private void changeViewsVisibility(int connectionState) {
 
@@ -244,43 +231,15 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
 
 
     /**
-     * Put the status of the connection in the bottom title bar
-     *
-     * @param textId The text id in the R.xml file
-     */
-    private final void setStatus(int textId) {
-//    	mBottomTitleBar.setText(textId);
-    }
-    
-    
-    /**
-     * Put the status of the connection in the bottom title bar
-     * 
-     * @param subTitle The text string
-     */
-    private final void setStatus(CharSequence subTitle) {
-        if (subTitle != null) {
-//        	mBottomTitleBar.setText(subTitle);
-        }
-    }
-
-
-    /**
      * Callback for the connect and disconnect buttons
-     * @param v
+     * @param v view pressed
      */
     public void onChangeConnection(View v) {
 
         switch (v.getId()) {
 
             case R.id.connect_button:
-                //TODO:
-                DeviceListDialogStyle deviceListDialogStyle = requestDeviceConnection();
-
-//                // Style the search bluetooth devices dialog
-//                deviceListDialogStyle.getSearchDevicesTitleView().setTextColor(getResources().getColor(R.color.holo_green_dark));
-//                deviceListDialogStyle.getDevicesPairedTitleView().setBackgroundResource(R.color.holo_green_dark);
-//                deviceListDialogStyle.getNewDevicesTitleView().setBackgroundResource(R.color.holo_green_dark);
+                requestDeviceConnection();
                 break;
 
             case R.id.disconnect_button:
@@ -351,7 +310,6 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
         connectButton.setVisibility(View.GONE);
         disconnectButton.setVisibility(View.GONE);
 		
-//		mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 	}
 
 	
@@ -443,19 +401,15 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
 			robotFragment = new PollywogFragment();
 
 		} else if (botType == robotType.BEETLE) {
-//			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_beetle_action_bar_icon, 0, 0, 0);
 			robotFragment = new BeetleFragment();
 
 		} else if (botType == robotType.RHINO) {	
-//			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_rhino_action_bar_icon, 0, 0, 0);
 			robotFragment = new RhinoFragment();
 
 		} else if (botType == robotType.CRAB) {
-//            mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_crab_action_bar_icon, 0, 0, 0);
             robotFragment = new CrabFragment();
 
         } else if (botType == robotType.GENERIC_ROBOT) {
-//			mBottomTitleBar.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bot_generic_action_bar_icon, 0, 0, 0);
 			robotFragment = new GenericRobotFragment();
 		}
 		
@@ -474,22 +428,5 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
 		}
 
 	}
-	
-	
-	
-	/********************************************************************************************
-	 ****************************   BOTH LISTENER CALLBACKS   *******************************
-	 ********************************************************************************************/
-	
-	/**
-	 * Callback from the RobotFragment or SelectBotFragment for changing the bottom title bar.
-	 * 
-	 * @param titleId The text resource id
-	 */
-	@Override
-	public void onSetFragmentTitle(int titleId) {
-		setFragmentTitle(titleId);		
-	}
-
 
 }

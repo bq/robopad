@@ -31,6 +31,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.bq.robotic.robopad.utils.RoboPadConstants;
 import com.bq.robotic.robopad.utils.RoboPadConstants.Claw_next_state;
@@ -62,11 +63,7 @@ public class BeetleFragment extends RobotFragment {
 
 		View layout = inflater.inflate(R.layout.fragment_beetle, container, false);
 
-		if(listener != null) {
-			listener.onSetFragmentTitle(R.string.beetle);
-		}
-		
-		// Put the servo of the claws in a initial position 
+		// Put the servo of the claws in a initial position
 		mClawPosition = RoboPadConstants.INIT_CLAW_POS; // default open 30 (values from 5 to 50) 
 
 		setUiListeners(layout);
@@ -85,12 +82,6 @@ public class BeetleFragment extends RobotFragment {
 	 */
 	@Override
 	protected void setUiListeners(View containerLayout) {
-
-		Button connectButton = (Button) containerLayout.findViewById(R.id.connect_button);
-		connectButton.setOnClickListener(onButtonClick);
-
-		Button disconnectButton = (Button) containerLayout.findViewById(R.id.disconnect_button);
-		disconnectButton.setOnClickListener(onButtonClick);
 
 		ImageButton stopButton = (ImageButton) containerLayout.findViewById(R.id.stop_button);
 		stopButton.setOnClickListener(onButtonClick);
@@ -116,6 +107,20 @@ public class BeetleFragment extends RobotFragment {
 		ImageButton rightButton = (ImageButton) containerLayout.findViewById(R.id.right_button);
 		rightButton.setOnTouchListener(buttonOnTouchListener);
 	}
+
+
+    // FIXME: change the background image for the beetle
+    @Override
+    public void onBluetoothConnected() {
+        ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.bot_beetle_connected);
+        ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.pollywog_bg_on);
+    }
+
+    @Override
+    public void onBluetoothDisconnected() {
+        ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.bot_beetle_disconnected);
+        ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.pollywog_bg_off);
+    }
 
 
 	/**
@@ -170,40 +175,32 @@ public class BeetleFragment extends RobotFragment {
 				return;
 			}
 
-			switch(v.getId()) { 
-
-				case R.id.connect_button:
-					listener.onConnectRobot();    				
-					break;
-	
-				case R.id.disconnect_button:
-					listener.onDisconnectRobot();    				
-					break;
+			switch(v.getId()) {
 	
 				case R.id.stop_button:
 					listener.onSendMessage(RoboPadConstants.STOP_COMMAND);    				
 					break;
 	
 				case R.id.full_open_claw_button: 
-					if(listener != null && listener.onCheckIsConnected()) {
+					if(listener.onCheckIsConnected()) {
 						listener.onSendMessage(RoboPadConstants.CLAW_COMMAND 
-								+ getNextClawPostion(Claw_next_state.FULL_OPEN) 
+								+ getNextClawPosition(Claw_next_state.FULL_OPEN)
 								+ RoboPadConstants.COMMAND_DIVISOR);
 					}
 					break;
 	
 				case R.id.open_claw_button:  
-					if(listener != null && listener.onCheckIsConnected()) {
+					if(listener.onCheckIsConnected()) {
 						listener.onSendMessage(RoboPadConstants.CLAW_COMMAND 
-								+ getNextClawPostion(Claw_next_state.OPEN_STEP)
+								+ getNextClawPosition(Claw_next_state.OPEN_STEP)
 								+ RoboPadConstants.COMMAND_DIVISOR);
 					}
 					break;
 	
 				case R.id.close_claw_button:
-					if(listener != null && listener.onCheckIsConnected()) {
+					if(listener.onCheckIsConnected()) {
 						listener.onSendMessage(RoboPadConstants.CLAW_COMMAND 
-								+ getNextClawPostion(Claw_next_state.CLOSE_STEP)
+								+ getNextClawPosition(Claw_next_state.CLOSE_STEP)
 								+ RoboPadConstants.COMMAND_DIVISOR);
 					}
 					break;	
@@ -220,7 +217,7 @@ public class BeetleFragment extends RobotFragment {
 	 * @param nextState The next state depending on the button that was pressed
 	 * @return The message for controlling the position of the servo of the claws
 	 */
-	private String getNextClawPostion(Claw_next_state nextState) {
+	private String getNextClawPosition(Claw_next_state nextState) {
 
 		// Show buttons enabled or disabled if the claw gets to max or min position
 		if(mClawPosition == RoboPadConstants.MAX_OPEN_CLAW_POS 

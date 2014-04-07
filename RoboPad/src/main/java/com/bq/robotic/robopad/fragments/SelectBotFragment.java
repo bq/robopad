@@ -60,10 +60,6 @@ public class SelectBotFragment extends Fragment {
 
 		View layout = inflater.inflate(R.layout.fragment_select_bot, container, false);
 
-		if(listener != null) {
-			listener.onSetFragmentTitle(R.string.select_robot);
-		}
-
 		setUiListeners(layout);
 
 		return layout;
@@ -104,7 +100,7 @@ public class SelectBotFragment extends Fragment {
 		ImageButton pollywogButton = (ImageButton) containerLayout.findViewById(R.id.pollywog_button);
 		pollywogButton.setOnClickListener(onButtonClick);
 
-		Button beetleButton = (Button) containerLayout.findViewById(R.id.beetle_button);
+        ImageButton beetleButton = (ImageButton) containerLayout.findViewById(R.id.beetle_button);
 		beetleButton.setOnClickListener(onButtonClick);
 
 		Button rhinoButton = (Button) containerLayout.findViewById(R.id.rhino_button);

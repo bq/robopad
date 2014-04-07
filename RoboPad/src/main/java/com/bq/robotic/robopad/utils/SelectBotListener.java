@@ -32,14 +32,7 @@ import com.bq.robotic.robopad.utils.RoboPadConstants.robotType;
 
 public interface SelectBotListener {
 
-	/**
-	 * Callback from the SelectBotFragment for changing the bottom title bar.
-	 * 
-	 * @param titleId The text resource id
-	 */
-	void onSetFragmentTitle(int titleId);
-	
-	
+
 	/**
 	 * Callback from the SelectBotFragment for showing the selected type of robot fragment 
 	 * 
