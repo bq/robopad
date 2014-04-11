@@ -73,12 +73,6 @@ public class GenericRobotFragment extends RobotFragment {
 	@Override
 	protected void setUiListeners(View containerLayout) {
 
-		Button connectButton = (Button) containerLayout.findViewById(R.id.connect_button);
-		connectButton.setOnClickListener(onButtonClick);
-
-		Button disconnectButton = (Button) containerLayout.findViewById(R.id.disconnect_button);
-		disconnectButton.setOnClickListener(onButtonClick);
-
 		ImageButton stopButton = (ImageButton) containerLayout.findViewById(R.id.stop_button);
 		stopButton.setOnClickListener(onButtonClick);
 
@@ -168,14 +162,6 @@ public class GenericRobotFragment extends RobotFragment {
 
 			switch(v.getId()) { 
 
-				case R.id.connect_button:
-					listener.onConnectRobot();    				
-					break;
-	
-				case R.id.disconnect_button:
-					listener.onDisconnectRobot();    				
-					break;
-	
 				case R.id.stop_button:
 					listener.onSendMessage(RoboPadConstants.STOP_COMMAND);    				
 					break;

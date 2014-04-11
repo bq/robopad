@@ -126,59 +126,42 @@ void moveClaw() {
 }
 
 
-/* Perform the action required by the user of the Android app */
-void setAction(char* data) {
-  
+/* Manage the buffer of data */
+void checkData(char* data){  
+
   switch(data[0]) {
 
-    // Claw button pressed
+    case'S':
+      /* Stop button pressed */
+      stopWheels();
+      break;
+    
+    case 'U':
+      /* Up button pressed */
+      goForwards();
+      break;
+    
+    case 'D':
+      /* Down button pressed */
+      goBackwards();
+      break;
+      
+    case 'L':
+      /* Left button pressed */ 
+      goLeft();
+      break;
+      
+    case 'R':
+      /* Right button pressed */ 
+      goRight();
+      break;
+
+    /* Claw button pressed */
     case 'C':
       posClaw = strtol(data+1, NULL, 10);
       moveClaw();
       break;
-  }
-}
-
-
-/* Manage the buffer of data */
-void checkData(char* data){  
   
-  if (data[0] == 'S') {
-    /* Stop button pressed */
-    stopWheels();
-  
-  } else if (data[0] == 'U') {
-    /* Up button pressed */
-    goForwards();
-  
-  } else if (data[0] == 'D') {
-    /* Down button pressed */
-    goBackwards();
-    
-  } else if (data[0] == 'L') {
-    /* Left button pressed */ 
-    goLeft();
-    
-  } else if (data[0] == 'R') {
-    /* Right button pressed */ 
-    goRight();
-    
-  } else {
-   
-    /* Divide the full instruction line with all the 
-       configuration instructions in single configuration 
-       instructions. All the command line, example: _C40_C35_ */
-    char* full_instruction_line = {0};  
-     
-    full_instruction_line = strtok(data, "_");
-     
-    while(full_instruction_line != NULL) {
-                 
-      setAction(full_instruction_line);   
-       
-      full_instruction_line = strtok(NULL, "_");
-     
-    }
   }
 
   /* Empty the Serial */   

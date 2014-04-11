@@ -27,7 +27,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/menu_pollywog_icon_pressed_selector"
                 android:src="@drawable/menu_pollywog_icon_selector"
-                android:padding="20dp"/>
+                android:padding="20dp"
+                android:layout_marginLeft="40dp"/>
 
             <ImageButton
                 android:id="@+id/beetle_button"
@@ -35,8 +36,7 @@
                 android:layout_height="wrap_content"
                 android:padding="20dp"
                 android:background="@drawable/menu_beetle_icon_pressed_selector"
-                android:src="@drawable/menu_beetle_icon_selector"
-                android:visibility="gone"/>
+                android:src="@drawable/menu_beetle_icon_selector" />
 
             <Button
                 android:id="@+id/rhino_button"

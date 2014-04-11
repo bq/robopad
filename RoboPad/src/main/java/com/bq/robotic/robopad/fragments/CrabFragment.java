@@ -78,12 +78,6 @@ public class CrabFragment extends RobotFragment {
 		ImageButton stopButton = (ImageButton) containerLayout.findViewById(R.id.stop_button);
 		stopButton.setOnClickListener(onButtonClick);
 
-        Button connectButton = (Button) containerLayout.findViewById(R.id.connect_button);
-        connectButton.setOnClickListener(onButtonClick);
-
-        Button disconnectButton = (Button) containerLayout.findViewById(R.id.disconnect_button);
-        disconnectButton.setOnClickListener(onButtonClick);
-
         Button resetButton = (Button) containerLayout.findViewById(R.id.reset_button);
         resetButton.setOnClickListener(onButtonClick);
 
@@ -132,14 +126,6 @@ public class CrabFragment extends RobotFragment {
 					listener.onSendMessage(RoboPadConstants.STOP_COMMAND);
 					break;
 
-                case R.id.connect_button:
-                    listener.onConnectRobot();
-                    break;
-
-                case R.id.disconnect_button:
-                    listener.onDisconnectRobot();
-                    break;
-					
                 case R.id.reset_button:
                     listener.onSendMessage(RoboPadConstants.RESET_COMMAND);
 

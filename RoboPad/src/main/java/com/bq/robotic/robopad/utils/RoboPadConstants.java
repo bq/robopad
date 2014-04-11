@@ -33,7 +33,6 @@ public class RoboPadConstants {
     
     public static enum robotType {POLLYWOG, BEETLE, RHINO, CRAB, GENERIC_ROBOT};
     
-    public static final String COMMAND_DIVISOR = "_";
     
     /**
      * Splash screen
@@ -48,7 +47,7 @@ public class RoboPadConstants {
     public static int MAX_OPEN_CLAW_POS = 10;
     public static final int INIT_CLAW_POS = 30;
     public static int CLAW_STEP = 5;
-    public static String CLAW_COMMAND = "_C";
+    public static String CLAW_COMMAND = "C";
   
     
     /**

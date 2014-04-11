@@ -29,13 +29,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.bq.robotic.robopad.R;
 import com.bq.robotic.robopad.utils.RoboPadConstants;
 import com.bq.robotic.robopad.utils.RoboPadConstants.Claw_next_state;
-import com.bq.robotic.robopad.R;
 
 /**
  * Fragment of the game pad controller for the Beetle robot.
@@ -51,9 +50,9 @@ public class BeetleFragment extends RobotFragment {
 
 	private int mClawPosition; // Current position of the claw 
 
-	private Button mFullOpenClawButton;
-	private Button mOpenStepClawButton;
-	private Button mCloseStepClawButton;
+	private ImageButton mFullOpenClawButton;
+	private ImageButton mOpenStepClawButton;
+	private ImageButton mCloseStepClawButton;
 
 
 	@Override
@@ -62,6 +61,8 @@ public class BeetleFragment extends RobotFragment {
 			Bundle savedInstanceState) {
 
 		View layout = inflater.inflate(R.layout.fragment_beetle, container, false);
+
+        ((ImageView) layout.findViewById(R.id.robot_bg)).setImageResource(R.drawable.ic_beetle_bg_off);
 
 		// Put the servo of the claws in a initial position
 		mClawPosition = RoboPadConstants.INIT_CLAW_POS; // default open 30 (values from 5 to 50) 
@@ -86,13 +87,13 @@ public class BeetleFragment extends RobotFragment {
 		ImageButton stopButton = (ImageButton) containerLayout.findViewById(R.id.stop_button);
 		stopButton.setOnClickListener(onButtonClick);
 
-		mFullOpenClawButton = (Button) containerLayout.findViewById(R.id.full_open_claw_button);
+		mFullOpenClawButton = (ImageButton) containerLayout.findViewById(R.id.full_open_claw_button);
 		mFullOpenClawButton.setOnClickListener(onButtonClick);
 
-		mOpenStepClawButton = (Button) containerLayout.findViewById(R.id.open_claw_button);
+		mOpenStepClawButton = (ImageButton) containerLayout.findViewById(R.id.open_claw_button);
 		mOpenStepClawButton.setOnClickListener(onButtonClick);
 
-		mCloseStepClawButton = (Button) containerLayout.findViewById(R.id.close_claw_button);
+		mCloseStepClawButton = (ImageButton) containerLayout.findViewById(R.id.close_claw_button);
 		mCloseStepClawButton.setOnClickListener(onButtonClick);
 
 		ImageButton upButton = (ImageButton) containerLayout.findViewById(R.id.up_button);
@@ -113,13 +114,13 @@ public class BeetleFragment extends RobotFragment {
     @Override
     public void onBluetoothConnected() {
         ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.bot_beetle_connected);
-        ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.pollywog_bg_on);
+        ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.ic_beetle_bg_on);
     }
 
     @Override
     public void onBluetoothDisconnected() {
         ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.bot_beetle_disconnected);
-        ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.pollywog_bg_off);
+        ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.ic_beetle_bg_off);
     }
 
 
@@ -181,29 +182,26 @@ public class BeetleFragment extends RobotFragment {
 					listener.onSendMessage(RoboPadConstants.STOP_COMMAND);    				
 					break;
 	
-				case R.id.full_open_claw_button: 
+				case R.id.full_open_claw_button:
 					if(listener.onCheckIsConnected()) {
-						listener.onSendMessage(RoboPadConstants.CLAW_COMMAND 
-								+ getNextClawPosition(Claw_next_state.FULL_OPEN)
-								+ RoboPadConstants.COMMAND_DIVISOR);
+						listener.onSendMessage(RoboPadConstants.CLAW_COMMAND
+								+ getNextClawPosition(Claw_next_state.FULL_OPEN));
 					}
 					break;
-	
-				case R.id.open_claw_button:  
+
+				case R.id.open_claw_button:
 					if(listener.onCheckIsConnected()) {
-						listener.onSendMessage(RoboPadConstants.CLAW_COMMAND 
-								+ getNextClawPosition(Claw_next_state.OPEN_STEP)
-								+ RoboPadConstants.COMMAND_DIVISOR);
+						listener.onSendMessage(RoboPadConstants.CLAW_COMMAND
+								+ getNextClawPosition(Claw_next_state.OPEN_STEP));
 					}
 					break;
-	
+
 				case R.id.close_claw_button:
 					if(listener.onCheckIsConnected()) {
-						listener.onSendMessage(RoboPadConstants.CLAW_COMMAND 
-								+ getNextClawPosition(Claw_next_state.CLOSE_STEP)
-								+ RoboPadConstants.COMMAND_DIVISOR);
+						listener.onSendMessage(RoboPadConstants.CLAW_COMMAND
+								+ getNextClawPosition(Claw_next_state.CLOSE_STEP));
 					}
-					break;	
+					break;
 
 			}
 

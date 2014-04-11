@@ -104,12 +104,6 @@ public class RhinoFragment extends RobotFragment {
 	@Override
 	protected void setUiListeners(View containerLayout) {
 
-		Button connectButton = (Button) containerLayout.findViewById(R.id.connect_button);
-		connectButton.setOnClickListener(onButtonClick);
-
-		Button disconnectButton = (Button) containerLayout.findViewById(R.id.disconnect_button);
-		disconnectButton.setOnClickListener(onButtonClick);
-
 		ImageButton stopButton = (ImageButton) containerLayout.findViewById(R.id.stop_button);
 		stopButton.setOnClickListener(onButtonClick);
 		
@@ -129,8 +123,7 @@ public class RhinoFragment extends RobotFragment {
 
 	@Override
 	public void onBluetoothConnected() {
-		super.onBluetoothConnected();
-			
+
 		mLeftSlider.setProgress(1);
 		mRightSlider.setProgress(1);
 		
@@ -141,8 +134,6 @@ public class RhinoFragment extends RobotFragment {
 
 	@Override
 	public void onBluetoothDisconnected() {
-		super.onBluetoothDisconnected();
-		
 		mLeftSlider.setEnabled(false);
 		mRightSlider.setEnabled(false);
 	}
@@ -163,17 +154,6 @@ public class RhinoFragment extends RobotFragment {
 
 			switch(v.getId()) { 
 
-				case R.id.connect_button:
-					listener.onConnectRobot();    				
-					break;
-	
-				case R.id.disconnect_button:
-					mLeftSlider.setProgress(1);
-					mRightSlider.setProgress(1);
-					
-					listener.onDisconnectRobot();    				
-					break;
-	
 				case R.id.stop_button:
 					listener.onSendMessage(RoboPadConstants.STOP_COMMAND);
 					mLeftSlider.setProgress(1);

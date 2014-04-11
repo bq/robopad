@@ -15,9 +15,8 @@
         android:id="@+id/bot_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="50dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="39dp"
+        android:layout_centerVertical="true"
         android:src="@drawable/bot_pollywog_disconnected_2" />
 
     <ImageButton
