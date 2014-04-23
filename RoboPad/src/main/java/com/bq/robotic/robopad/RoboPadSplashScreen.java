@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Window;
 
 import com.bq.robotic.robopad.utils.RoboPadConstants;
 
@@ -15,9 +14,6 @@ public class RoboPadSplashScreen extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        // Hide title bar
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        
         setContentView(R.layout.activity_splash_screen);
 
         /* New Handler to start the Menu-Activity 
@@ -27,7 +23,7 @@ public class RoboPadSplashScreen extends Activity {
             public void run() {
             	
                 /* Create an Intent that will start the RoboPad-Activity. */
-                Intent mainIntent = new Intent(RoboPadSplashScreen.this, RoboPad.class);
+                Intent mainIntent = new Intent(RoboPadSplashScreen.this, SelectRobotActivity.class);
                 RoboPadSplashScreen.this.startActivity(mainIntent);
                 RoboPadSplashScreen.this.finish();
             }

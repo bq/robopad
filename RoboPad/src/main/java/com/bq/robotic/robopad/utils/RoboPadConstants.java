@@ -38,20 +38,33 @@ public class RoboPadConstants {
      * Splash screen
      */
     public static final int SPLASH_DISPLAY_TIME = 2000; /* 2 seconds */
+
+
+    /**
+     * Shared preferences
+     */
+    public static final String WAS_ENABLING_BLUETOOTH_ALLOWED = "was_enabling_bluetooth_allowed";
+
+
+    /**
+     * Select robot
+     */
+    public static final String ROBOT_SELECTED_KEY = "robot_selected";
+
     
     /**
      * Beetle robot
      */
     public static enum Claw_next_state {OPEN_STEP, CLOSE_STEP, FULL_OPEN};    
-    public static int MIN_CLOSE_CLAW_POS = 55;
-    public static int MAX_OPEN_CLAW_POS = 10;
+    public static final int MIN_CLOSE_CLAW_POS = 55;
+    public static final int MAX_OPEN_CLAW_POS = 10;
     public static final int INIT_CLAW_POS = 30;
-    public static int CLAW_STEP = 5;
-    public static String CLAW_COMMAND = "C";
+    public static final int CLAW_STEP = 5;
+    public static final String CLAW_COMMAND = "C";
   
     
     /**
-     * Pins renacuajo bot! revise for each robot
+     * Common commands to send to the arduino
      */  
     //FIXME: Put in comments the correct pins
     public static final String UP_COMMAND = "U"; // servo digital port both wheels, left[pin 4, value = 0], right[pin 7, value = 180]
@@ -64,26 +77,26 @@ public class RoboPadConstants {
     /**
      * Rhino Robot
      */
-    public static String CHARGE_COMMAND = "C";
+    public static final String CHARGE_COMMAND = "C";
 
 
     /**
      * Crab Robot
      */
-    public static int MIN_AMPLITUDE = 0;
-    public static int MAX_AMPLITUDE = 40;
-    public static int DEFAULT_AMPLITUDE = 20;
-    public static int MIN_PERIOD = 1000;
-    public static int MAX_PERIOD = 8000;
-    public static int DEFAULT_PERIOD = 2000;
-    public static int MIN_PHASE = -90;
-    public static int MAX_PHASE = 90;
-    public static int DEFAULT_PHASE = -90;
-    public static String LEFT_AMPLITUDE_COMMAND = "AL";
-    public static String RIGHT_AMPLITUDE_COMMAND = "AR";
-    public static String PERIOD_COMMAND = "T";
-    public static String PHASE_COMMAND = "F";
-    public static String RESET_COMMAND = "I";
+    public static final int MIN_AMPLITUDE = 0;
+    public static final int MAX_AMPLITUDE = 40;
+    public static final int DEFAULT_AMPLITUDE = 20;
+    public static final int MIN_PERIOD = 1000;
+    public static final int MAX_PERIOD = 8000;
+    public static final int DEFAULT_PERIOD = 2000;
+    public static final int MIN_PHASE = -90;
+    public static final int MAX_PHASE = 90;
+    public static final int DEFAULT_PHASE = -90;
+    public static final String LEFT_AMPLITUDE_COMMAND = "AL";
+    public static final String RIGHT_AMPLITUDE_COMMAND = "AR";
+    public static final String PERIOD_COMMAND = "T";
+    public static final String PHASE_COMMAND = "F";
+    public static final String RESET_COMMAND = "I";
 
     
     /**

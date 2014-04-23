@@ -29,7 +29,7 @@ Features
 
 #. 6 buttons in the generic robot mode for use as you want in your Arduino code
 
-#. Specific controls for the Pollywog, Beetle and Rhino printbots of Bq
+#. Specific controls for the Pollywog, Beetle, Rhino and Crab printbots of Bq
 
 
 Installation

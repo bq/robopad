@@ -2,8 +2,7 @@
 <resources>
 
     <string name="app_name">RoboPad</string>
-    <string name="action_settings">Configuración</string>
-    
+
     <string name="pollywog">Renacuajo</string>
     <string name="beetle">Escarabajo</string>
     <string name="rhino">Rhino</string>

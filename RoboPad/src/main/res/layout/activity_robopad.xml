@@ -2,46 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_gradient"
     tools:context=".RoboPad">
-
-    <RelativeLayout
-        android:id="@+id/navigation_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="@android:color/transparent"
-        android:gravity="center_horizontal">
-
-        <ImageButton
-            android:id="@+id/select_bot_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:background="@drawable/blue_circle_btn_transparent_selector"
-            android:clickable="false"
-            android:onClick="onSelectBotButtonClick"
-            android:padding="@dimen/button_press_padding"
-            android:src="@drawable/robot_icon" />
-
-        <ImageButton
-            android:id="@+id/pad_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
-            android:layout_toRightOf="@id/select_bot_button"
-            android:padding="@dimen/button_press_padding"
-            android:clickable="false"
-            android:background="@android:color/transparent"
-            android:src="@drawable/pad_icon"
-            android:visibility="gone" />
-    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/navigation_bar"
         android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
         android:gravity="center">
 
         <ImageButton
@@ -89,8 +56,6 @@
     <FrameLayout
         android:id="@+id/game_pad_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="-10dp"/>
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

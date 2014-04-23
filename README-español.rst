@@ -29,7 +29,7 @@ Características
 
 #. 6 botones en el tipo de robot genérico para usar en tus propios robots
 
-#. Mandos de control específicos para los printbots Renacuajo, Escarabajo y Rhino de Bq.
+#. Mandos de control específicos para los printbots Renacuajo, Escarabajo, Rhino y Cangrejo de Bq.
 
 
 Instalación

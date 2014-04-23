@@ -142,15 +142,7 @@ public class PollywogFragment extends RobotFragment {
 				return;
 			}
 
-			switch(v.getId()) { 
-
-//			case R.id.connect_button:
-//				listener.onConnectRobot();
-//				break;
-//
-//			case R.id.disconnect_button:
-//				listener.onDisconnectRobot();
-//				break;
+			switch(v.getId()) {
 
 			case R.id.stop_button:
 				listener.onSendMessage(RoboPadConstants.STOP_COMMAND);    				

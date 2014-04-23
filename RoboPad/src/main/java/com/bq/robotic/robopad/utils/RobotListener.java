@@ -54,21 +54,8 @@ public interface RobotListener {
 	 * Callback from the RobotFragment for sending a message to the Arduino through the bluetooth 
 	 * connection. 
 	 * 
-	 * @param The message to be send to the Arduino
+	 * @param message to be send to the Arduino
 	 */
 	void onSendMessage(String message);
-
-	
-	/**
-	 * Callback from the RobotFragment for initializing the search of Arduino's bluetooths and 
-	 * connecting with the one selected by the user 
-	 */
-	void onConnectRobot();
-
-	
-	/**
-	 * Callback from the RobotFragment for ending the bluetooth connection with the Arduino board  
-	 */
-	void onDisconnectRobot();
 	
 }
