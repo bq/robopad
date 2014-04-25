@@ -23,14 +23,19 @@
 
 package com.bq.robotic.robopad.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.bq.robotic.robopad.R;
 import com.bq.robotic.robopad.utils.RoboPadConstants;
@@ -48,15 +53,18 @@ public class PollywogFragment extends RobotFragment {
 	// Debugging
 	private static final String LOG_TAG = "PollywogFragment";
 
+    private ImageButton pinExplanationButton;
+    View layout;
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View layout = inflater.inflate(R.layout.fragment_pollywog, container, false);
+		layout = inflater.inflate(R.layout.fragment_pollywog, container, false);
 
-		setUiListeners(layout);
+        setUiListeners(layout);
 
 		return layout;
 
@@ -87,6 +95,9 @@ public class PollywogFragment extends RobotFragment {
 
 		ImageButton rightButton = (ImageButton) containerLayout.findViewById(R.id.right_button);
 		rightButton.setOnTouchListener(buttonOnTouchListener);
+
+//        pinExplanationButton = (ImageButton) containerLayout.findViewById(R.id.bot_icon);
+//        pinExplanationButton.setOnClickListener(onButtonClick);
 	}
 
 
@@ -144,9 +155,30 @@ public class PollywogFragment extends RobotFragment {
 
 			switch(v.getId()) {
 
-			case R.id.stop_button:
-				listener.onSendMessage(RoboPadConstants.STOP_COMMAND);    				
-				break;
+                case R.id.stop_button:
+                    listener.onSendMessage(RoboPadConstants.STOP_COMMAND);
+                    break;
+
+                case R.id.bot_icon:
+                    LayoutInflater layoutInflater
+                            = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    View popupView = layoutInflater.inflate(R.layout.popup_pin_explanation, null);
+
+                    TextView pinExplanationText = (TextView) popupView.findViewById(R.id.pin_explanation_text);
+                    pinExplanationText.setText(Html.fromHtml(getActivity().getString(R.string.pollywog_pin_explanation)));
+
+                    PopupWindow popupWindow = new PopupWindow(
+                            popupView,
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT);
+
+
+
+//                    popupWindow.showAsDropDown(pinExplanationButton, (int) pinExplanationButton.getX(), -30);
+                    popupWindow.showAtLocation(layout, Gravity.CENTER_VERTICAL, pinExplanationButton.getRight(), 0);
+
+                    break;
+
 			}
 
 		}
