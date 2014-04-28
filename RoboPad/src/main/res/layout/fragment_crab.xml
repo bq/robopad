@@ -200,6 +200,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/btn_green_selector"
-        android:src="@drawable/stop_button" />
+        android:src="@drawable/ic_stop_button" />
 
 </RelativeLayout>

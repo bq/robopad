@@ -91,6 +91,6 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="15dp"
         android:background="@drawable/btn_green_selector"
-        android:src="@drawable/stop_button" />
+        android:src="@drawable/ic_stop_button" />
 
 </RelativeLayout>

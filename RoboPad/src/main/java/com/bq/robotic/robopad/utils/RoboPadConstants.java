@@ -32,6 +32,7 @@ public class RoboPadConstants {
     public static final long CLICK_SLEEP_TIME = 150;
     
     public static enum robotType {POLLYWOG, BEETLE, RHINO, CRAB, GENERIC_ROBOT};
+    public static final String ROBOT_TYPE_KEY = "robot_type_key";
     
     
     /**
@@ -59,7 +60,7 @@ public class RoboPadConstants {
     public static final int MIN_CLOSE_CLAW_POS = 55;
     public static final int MAX_OPEN_CLAW_POS = 10;
     public static final int INIT_CLAW_POS = 30;
-    public static final int CLAW_STEP = 1;
+    public static final int CLAW_STEP = 3;
 //    public static final int CLAW_STEP = 5;
     public static final String CLAW_COMMAND = "C";
   

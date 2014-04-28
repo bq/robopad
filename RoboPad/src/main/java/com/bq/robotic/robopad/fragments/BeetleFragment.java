@@ -26,6 +26,7 @@ package com.bq.robotic.robopad.fragments;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,10 +34,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 
 import com.bq.robotic.robopad.R;
 import com.bq.robotic.robopad.utils.RoboPadConstants;
 import com.bq.robotic.robopad.utils.RoboPadConstants.Claw_next_state;
+import com.bq.robotic.robopad.utils.RobotConnectionsPopupWindow;
 
 /**
  * Fragment of the game pad controller for the Beetle robot.
@@ -56,8 +59,9 @@ public class BeetleFragment extends RobotFragment {
 	private ImageButton mOpenStepClawButton;
 	private ImageButton mCloseStepClawButton;
     private Handler sendClawValuesHandler;
-//    private MySendClawValueToArduinoTask sendClawValueToArduinoTask;
     private boolean clawButtonUp = false;
+
+    private ImageButton pinExplanationButton;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -113,6 +117,9 @@ public class BeetleFragment extends RobotFragment {
 
 		ImageButton rightButton = (ImageButton) containerLayout.findViewById(R.id.right_button);
 		rightButton.setOnTouchListener(buttonOnTouchListener);
+
+        pinExplanationButton = (ImageButton) containerLayout.findViewById(R.id.bot_icon);
+        pinExplanationButton.setOnClickListener(onButtonClick);
 	}
 
 
@@ -195,6 +202,18 @@ public class BeetleFragment extends RobotFragment {
 					}
 					break;
 
+                case R.id.bot_icon:
+
+                    PopupWindow popupWindow = (new RobotConnectionsPopupWindow(RoboPadConstants.robotType.POLLYWOG,
+                            getActivity())).getPopupWindow();
+
+                    // Displaying the popup at the specified location, + offsets.
+                    popupWindow.showAtLocation(getView(), Gravity.CENTER_VERTICAL | Gravity.LEFT,
+                            pinExplanationButton.getRight() - pinExplanationButton.getPaddingRight(),
+                            pinExplanationButton.getPaddingTop());
+
+                    break;
+
 			}
 
 		}
@@ -218,8 +237,6 @@ public class BeetleFragment extends RobotFragment {
             switch (event.getAction()) {
 
                 case MotionEvent.ACTION_DOWN:
-
-                    Log.e(LOG_TAG, "on action down");
 
                     if(listener.onCheckIsConnected()) {
                         clawButtonUp = false;

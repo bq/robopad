@@ -23,6 +23,12 @@
         <item name="android:colorBackgroundCacheHint">#00000000</item>
     </style>
 
+    <!-- popup anim -->
+    <style name="popup_animation" parent="android:Animation" mce_bogus="1">
+        <item name="android:windowEnterAnimation">@anim/popup_in</item>
+        <item name="android:windowExitAnimation">@anim/popup_out</item>
+    </style>
+
     <style name="green_button">
         <item name="android:background">@drawable/green_button_btn_default_holo_light</item>
         <item name="android:textColor">@android:color/white</item>

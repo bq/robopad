@@ -23,9 +23,7 @@
 
 package com.bq.robotic.robopad.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -35,10 +33,10 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import com.bq.robotic.robopad.R;
 import com.bq.robotic.robopad.utils.RoboPadConstants;
+import com.bq.robotic.robopad.utils.RobotConnectionsPopupWindow;
 
 
 /**
@@ -54,7 +52,7 @@ public class PollywogFragment extends RobotFragment {
 	private static final String LOG_TAG = "PollywogFragment";
 
     private ImageButton pinExplanationButton;
-    View layout;
+    private View layout;
 
 
 	@Override
@@ -96,8 +94,8 @@ public class PollywogFragment extends RobotFragment {
 		ImageButton rightButton = (ImageButton) containerLayout.findViewById(R.id.right_button);
 		rightButton.setOnTouchListener(buttonOnTouchListener);
 
-//        pinExplanationButton = (ImageButton) containerLayout.findViewById(R.id.bot_icon);
-//        pinExplanationButton.setOnClickListener(onButtonClick);
+        pinExplanationButton = (ImageButton) containerLayout.findViewById(R.id.bot_icon);
+        pinExplanationButton.setOnClickListener(onButtonClick);
 	}
 
 
@@ -160,22 +158,14 @@ public class PollywogFragment extends RobotFragment {
                     break;
 
                 case R.id.bot_icon:
-                    LayoutInflater layoutInflater
-                            = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    View popupView = layoutInflater.inflate(R.layout.popup_pin_explanation, null);
 
-                    TextView pinExplanationText = (TextView) popupView.findViewById(R.id.pin_explanation_text);
-                    pinExplanationText.setText(Html.fromHtml(getActivity().getString(R.string.pollywog_pin_explanation)));
+                    PopupWindow popupWindow = (new RobotConnectionsPopupWindow(RoboPadConstants.robotType.POLLYWOG,
+                            getActivity())).getPopupWindow();
 
-                    PopupWindow popupWindow = new PopupWindow(
-                            popupView,
-                            ViewGroup.LayoutParams.WRAP_CONTENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT);
-
-
-
-//                    popupWindow.showAsDropDown(pinExplanationButton, (int) pinExplanationButton.getX(), -30);
-                    popupWindow.showAtLocation(layout, Gravity.CENTER_VERTICAL, pinExplanationButton.getRight(), 0);
+                    // Displaying the popup at the specified location, + offsets.
+                    popupWindow.showAtLocation(layout, Gravity.CENTER_VERTICAL | Gravity.LEFT,
+                            pinExplanationButton.getRight() - pinExplanationButton.getPaddingRight(),
+                            pinExplanationButton.getPaddingTop());
 
                     break;
 
@@ -187,13 +177,13 @@ public class PollywogFragment extends RobotFragment {
 
     @Override
     public void onBluetoothConnected() {
-        ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.bot_pollywog_connected_2);
+        ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.ic_bot_pollywog_connected);
         ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.pollywog_bg_on);
     }
 
     @Override
     public void onBluetoothDisconnected() {
-        ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.bot_pollywog_disconnected_2);
+        ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.ic_bot_pollywog_disconnected);
         ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.pollywog_bg_off);
     }
 }
