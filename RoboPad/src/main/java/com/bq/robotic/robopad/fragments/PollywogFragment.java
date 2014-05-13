@@ -25,6 +25,7 @@ package com.bq.robotic.robopad.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -167,9 +168,12 @@ public class PollywogFragment extends RobotFragment {
 //                            pinExplanationButton.getRight() - pinExplanationButton.getPaddingRight(),
 //                            pinExplanationButton.getPaddingTop());
 
+                    int offsetY = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12,
+                                    getActivity().getResources().getDisplayMetrics());
+
                     popupWindow.showAtLocation(getView(), Gravity.CENTER_VERTICAL | Gravity.LEFT,
                             pinExplanationButton.getRight() - (int)getActivity().getResources().getDimension(R.dimen.button_press_padding),
-                            0);
+                            offsetY);
 
                     break;
 

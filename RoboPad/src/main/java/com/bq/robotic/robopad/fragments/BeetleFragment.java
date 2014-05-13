@@ -26,6 +26,7 @@ package com.bq.robotic.robopad.fragments;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -207,10 +208,13 @@ public class BeetleFragment extends RobotFragment {
                     PopupWindow popupWindow = (new RobotConnectionsPopupWindow(RoboPadConstants.robotType.BEETLE,
                             getActivity())).getPopupWindow();
 
+                    int offsetY = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12,
+                            getActivity().getResources().getDisplayMetrics());
+
                     // Displaying the popup at the specified location, + offsets.
                     popupWindow.showAtLocation(getView(), Gravity.CENTER_VERTICAL | Gravity.LEFT,
                             pinExplanationButton.getRight() - (int)getActivity().getResources().getDimension(R.dimen.button_press_padding),
-                            0);
+                            offsetY);
 
                     break;
 

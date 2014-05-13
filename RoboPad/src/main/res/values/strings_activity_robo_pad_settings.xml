@@ -9,7 +9,7 @@
     <string name="pref_title_help_options">Show tips</string>
     <string-array name="pref_help_options_titles">
         <item>Never</item>
-        <item>Once</item>
+        <item>Only the first time</item>
         <item>Always</item>
     </string-array>
     <string-array name="pref_help_options_values">
