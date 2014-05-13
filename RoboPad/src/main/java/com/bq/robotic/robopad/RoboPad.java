@@ -27,6 +27,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -110,24 +111,26 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
 			
 	}
 
+
     @Override
     protected void onPause() {
         super.onPause();
         // Store values between instances here
-        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = preferences.edit();
 
-        editor.putBoolean(RoboPadConstants.WAS_ENABLING_BLUETOOTH_ALLOWED, wasEnableBluetoothAllowed); // value to store
+        editor.putBoolean(RoboPadConstants.WAS_ENABLING_BLUETOOTH_ALLOWED_KEY, wasEnableBluetoothAllowed); // value to store
         // Commit to storage
         editor.commit();
     }
+
 
     @Override
     protected void onStart() {
         super.onStart();
         // Store values between instances here
-        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-        wasEnableBluetoothAllowed = preferences.getBoolean(RoboPadConstants.WAS_ENABLING_BLUETOOTH_ALLOWED, false);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        wasEnableBluetoothAllowed = preferences.getBoolean(RoboPadConstants.WAS_ENABLING_BLUETOOTH_ALLOWED_KEY, false);
     }
 
 
@@ -142,7 +145,7 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
         case Droid2InoConstants.STATE_CONNECTED:
             ((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothConnected();
 
-            // If connected is because the Bluetooth enable was allowed
+            // If connected is because the Bluetooth enabling was allowed
             break;
 
         case Droid2InoConstants.STATE_CONNECTING:

@@ -4,7 +4,7 @@ RoboPad
 
 RoboPad is an Android app that consists on a robots controller via the device's Bluetooth. You have several types of robots with differents types of control for each of them. The robots must be controlled by an Arduino board with a Bluetooth module.
 
-Right now, the type of robot that you can choose are the printbots designed in the Bq company or whichever robot with an Arduino board. 
+Right now, the type of robot that you can choose are the PrintBots designed in the bq company or whichever robot with an Arduino board. 
 
 You can use a 3D printer to create your printbot (Pollywog, Beetle and Rhino). You can find the printable parts and the code of each one in http://diy.bq.com/printbots/ (the code in the web is not available yet).
 
@@ -29,7 +29,9 @@ Features
 
 #. 6 buttons in the generic robot mode for use as you want in your Arduino code
 
-#. Specific controls for the Pollywog, Beetle, Rhino and Crab printbots of Bq
+#. Specific controls for the Pollywog, Beetle, Rhino and Crab PrintBots of bq
+
+#. Management of the Bluetooth connection for battery saving
 
 
 Installation

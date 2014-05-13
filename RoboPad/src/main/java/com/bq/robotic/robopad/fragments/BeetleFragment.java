@@ -204,13 +204,13 @@ public class BeetleFragment extends RobotFragment {
 
                 case R.id.bot_icon:
 
-                    PopupWindow popupWindow = (new RobotConnectionsPopupWindow(RoboPadConstants.robotType.POLLYWOG,
+                    PopupWindow popupWindow = (new RobotConnectionsPopupWindow(RoboPadConstants.robotType.BEETLE,
                             getActivity())).getPopupWindow();
 
                     // Displaying the popup at the specified location, + offsets.
                     popupWindow.showAtLocation(getView(), Gravity.CENTER_VERTICAL | Gravity.LEFT,
-                            pinExplanationButton.getRight() - pinExplanationButton.getPaddingRight(),
-                            pinExplanationButton.getPaddingTop());
+                            pinExplanationButton.getRight() - (int)getActivity().getResources().getDimension(R.dimen.button_press_padding),
+                            0);
 
                     break;
 

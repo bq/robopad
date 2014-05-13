@@ -6,7 +6,7 @@ RoboPad es una aplicación Android para controlar robots a través del Bluetooth
 
 Los tipos de robots que se pueden seleccionar hoy en día son aquellos diseñados por la empresa Bq, además de cualquier otro que sea controlado por una placa Arduino.
 
-Puedes usar una impresora 3D para crear tu printbot (Renacuajo, Escarabajo y Rhino). Tanto los archivos con las partes imprimibles como el código Arduino de cada uno de los printbots de Bq se puede descargar desde la web http://diy.bq.com/printbots/ (el código no está disponible aún en la web).
+Puedes usar una impresora 3D para crear tu PrintBot (Renacuajo, Escarabajo y Rhino). Tanto los archivos con las partes imprimibles como el código Arduino de cada uno de los printbots de Bq se puede descargar desde la web http://diy.bq.com/printbots/ (el código no está disponible aún en la web).
 
 Hay un mando de control para robots genéricos que te permite controlar tu propio robot con hasta 6 funcionalidades más la cruceta de movimientos o bien aumentar el número de funcionalidades de algún printbot ya existente con los 6 botones de comandos.
 
@@ -29,7 +29,9 @@ Características
 
 #. 6 botones en el tipo de robot genérico para usar en tus propios robots
 
-#. Mandos de control específicos para los printbots Renacuajo, Escarabajo, Rhino y Cangrejo de Bq.
+#. Mandos de control específicos para los PrintBots Renacuajo, Escarabajo, Rhino y Cangrejo de bq.
+
+#. Administración de la conexión Bluetooth para ahorrar batería
 
 
 Instalación

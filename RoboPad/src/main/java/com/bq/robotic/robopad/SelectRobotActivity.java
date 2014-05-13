@@ -55,4 +55,15 @@ public class SelectRobotActivity extends Activity {
 
     }
 
+
+    /**
+     * Callback for the show preferences button
+     * @param v
+     */
+    public void onShowPreferences(View v) {
+        Intent intent = new Intent(SelectRobotActivity.this,
+                RoboPadSettings.class);
+        startActivity(intent);
+    }
+
 }

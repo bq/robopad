@@ -23,7 +23,6 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:19.+'
     compile('com.bq.robotic:droid2ino:1.4@aar') {
         transitive = true
     }

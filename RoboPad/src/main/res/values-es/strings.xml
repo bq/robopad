@@ -2,16 +2,14 @@
 <resources>
 
     <string name="app_name">RoboPad</string>
+    <string name="settings">Settings</string>
 
     <string name="pollywog">Renacuajo</string>
     <string name="beetle">Escarabajo</string>
     <string name="rhino">Rhino</string>
     <string name="crab">Cangrejo</string>
     <string name="generic_robot">Robot genérico</string>
-    
-    <string name="select_robot">SELECCIONAR ROBOT</string>
-    <string name="remote_control">CONTROL REMOTO</string>
-    
+
     <string name="exit_robot_control_dialog">Se perderá la conexión con este robot, ¿quieres elegir un nuevo tipo de robot?</string>
     <string name="exit_robot_control_dialog_title">Desconexión del robot</string>
     

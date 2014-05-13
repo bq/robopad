@@ -7,8 +7,12 @@
     <color name="holo_blue_light">#33b5e5</color>
     <color name="holo_blue_light_transparent_1">#A033b5e5</color>
     <color name="holo_blue_light_transparent_2">#4033b5e5</color>
+    <color name="holo_turquoise">#38aeac</color>
     <color name="holo_turquoise_transparent_1">#A038aeac</color>
     <color name="holo_turquoise_transparent_2">#4038aeac</color>
     <color name="orange_transparent_1">#A0f57e29</color>
     <color name="orange_transparent_2">#40f57e29</color>
+    <color name="red_transparent_1">#A0d72129</color>
+    <color name="red_transparent_2">#40d72129</color>
+    <color name="preferences_background">#022d4f</color>
 </resources>

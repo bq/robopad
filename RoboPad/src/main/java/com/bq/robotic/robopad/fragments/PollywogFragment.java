@@ -52,7 +52,7 @@ public class PollywogFragment extends RobotFragment {
 	private static final String LOG_TAG = "PollywogFragment";
 
     private ImageButton pinExplanationButton;
-    private View layout;
+//    private View layout;
 
 
 	@Override
@@ -60,7 +60,7 @@ public class PollywogFragment extends RobotFragment {
 			ViewGroup container,
 			Bundle savedInstanceState) {
 
-		layout = inflater.inflate(R.layout.fragment_pollywog, container, false);
+		View layout = inflater.inflate(R.layout.fragment_pollywog, container, false);
 
         setUiListeners(layout);
 
@@ -163,9 +163,13 @@ public class PollywogFragment extends RobotFragment {
                             getActivity())).getPopupWindow();
 
                     // Displaying the popup at the specified location, + offsets.
-                    popupWindow.showAtLocation(layout, Gravity.CENTER_VERTICAL | Gravity.LEFT,
-                            pinExplanationButton.getRight() - pinExplanationButton.getPaddingRight(),
-                            pinExplanationButton.getPaddingTop());
+//                    popupWindow.showAtLocation(getView(), Gravity.CENTER_VERTICAL | Gravity.LEFT,
+//                            pinExplanationButton.getRight() - pinExplanationButton.getPaddingRight(),
+//                            pinExplanationButton.getPaddingTop());
+
+                    popupWindow.showAtLocation(getView(), Gravity.CENTER_VERTICAL | Gravity.LEFT,
+                            pinExplanationButton.getRight() - (int)getActivity().getResources().getDimension(R.dimen.button_press_padding),
+                            0);
 
                     break;
 

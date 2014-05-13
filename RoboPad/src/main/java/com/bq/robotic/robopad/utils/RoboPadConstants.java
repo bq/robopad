@@ -44,7 +44,8 @@ public class RoboPadConstants {
     /**
      * Shared preferences
      */
-    public static final String WAS_ENABLING_BLUETOOTH_ALLOWED = "was_enabling_bluetooth_allowed";
+    public static final String WAS_ENABLING_BLUETOOTH_ALLOWED_KEY = "pref_automatic_bluetooth_allowed";
+    public static final String ENABLE_BLUETOOTH_KEY = "pref_bluetooth_enable";
 
 
     /**

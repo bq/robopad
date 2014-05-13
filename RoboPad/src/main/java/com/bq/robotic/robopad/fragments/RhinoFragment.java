@@ -99,7 +99,7 @@ public class RhinoFragment extends RobotFragment {
 	 * to get the callback here and not in the FragmentActivity, that would be a mess with all the 
 	 * callbacks of all the possible fragments
 	 * 
-	 * @param The view used as the main container for this fragment
+	 * @param containerLayout The view used as the main container for this fragment
 	 */
 	@Override
 	protected void setUiListeners(View containerLayout) {
