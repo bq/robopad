@@ -44,14 +44,11 @@
     <string name="command_5">5</string>
     <string name="command_6">6</string>
 
-    <string name="pollywog_pin_explanation">
-        <![CDATA[
-        <h4>Connect me to the following pins:</h4>
-        <p><strong>- Bluetooth:</strong></p>
-        <p>TXD: pin 0 <br /> RXD: pìn 1 <br /> VCC: VCC <br />GND: GND</p>
-        <p><strong>- Servos:</strong> </p>
-        <p>Left wheel: pin 6 <br /> Right wheel: pin 9 </p>
-        ]]>
-    </string>
+
+    <!-- Tips -->
+    <string name="pin_explanation_tip_text">If you click on me, I will show you how to connect my pins</string>
+    <string name="bluetooth_tip_text">If you click on me, I will connect or disconnect with the robot</string>
+    <string name="pad_tip_text">If you click on us, we will control the robot</string>
+    <string name="claws_tip_text">If you click on us, we will control\nthe claws of the robot</string>
 
 </resources>

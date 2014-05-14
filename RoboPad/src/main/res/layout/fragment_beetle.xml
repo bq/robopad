@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp">
 
     <include
         android:id="@+id/pad_layout_view"
@@ -54,7 +55,7 @@
         android:id="@+id/bot_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="17dp"
         android:layout_centerVertical="true"
         android:background="@drawable/blue_circle_btn_transparent_selector"
         android:scaleType="centerCrop"
@@ -72,5 +73,10 @@
         android:layout_marginBottom="10dp"
         android:layout_marginRight="@dimen/stop_button_margin_right"
         android:src="@drawable/ic_stop_button" />
+
+    <com.nhaarman.supertooltips.ToolTipRelativeLayout
+        android:id="@+id/activity_main_tooltipframelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

@@ -46,6 +46,8 @@ public class RoboPadConstants {
      */
     public static final String WAS_ENABLING_BLUETOOTH_ALLOWED_KEY = "pref_automatic_bluetooth_allowed";
     public static final String ENABLE_BLUETOOTH_KEY = "pref_bluetooth_enable";
+    public static final String SHOW_TIPS_KEY = "help_options";
+    public static enum showTipsValues {NEVER, FIRST_TIME, ALWAYS};
 
 
     /**

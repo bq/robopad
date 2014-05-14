@@ -41,6 +41,8 @@ import com.bq.robotic.robopad.R;
 import com.bq.robotic.robopad.utils.RoboPadConstants;
 import com.bq.robotic.robopad.utils.RoboPadConstants.Claw_next_state;
 import com.bq.robotic.robopad.utils.RobotConnectionsPopupWindow;
+import com.bq.robotic.robopad.utils.TipsFactory;
+import com.nhaarman.supertooltips.ToolTipView;
 
 /**
  * Fragment of the game pad controller for the Beetle robot.
@@ -63,6 +65,13 @@ public class BeetleFragment extends RobotFragment {
     private boolean clawButtonUp = false;
 
     private ImageButton pinExplanationButton;
+
+    // Tips
+    private ToolTipView pin_explanation_tip;
+    private ToolTipView bluetooth_tip;
+    private ToolTipView pad_tip;
+    private ToolTipView claws_tip;
+    private ToolTipView currentTipView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -313,6 +322,77 @@ public class BeetleFragment extends RobotFragment {
 		return String.valueOf(mClawPosition);
 
 	}
+
+
+    private ToolTipView.OnToolTipViewClickedListener onToolTipClicked = new ToolTipView.OnToolTipViewClickedListener() {
+
+        @Override
+        public void onToolTipViewClicked(ToolTipView toolTipView) {
+            showNextTip();
+        }
+    };
+
+
+    protected void showNextTip() {
+        if (currentTipView == null) {
+            setIsLastTipToShow(false);
+            // Pin explanation tip
+            pin_explanation_tip = mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.pin_explanation_tip_text),
+                    getActivity().findViewById(R.id.bot_icon));
+
+            currentTipView = pin_explanation_tip;
+            currentTipView.setOnToolTipViewClickedListener(onToolTipClicked);
+
+        } else if (currentTipView == pin_explanation_tip) {
+            pin_explanation_tip.remove();
+            pin_explanation_tip = null;
+
+            bluetooth_tip = mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.bluetooth_tip_text),
+                    getActivity().findViewById(R.id.connect_button));
+
+            currentTipView = bluetooth_tip;
+            currentTipView.setOnToolTipViewClickedListener(onToolTipClicked);
+
+        } else if (currentTipView == bluetooth_tip) {
+            bluetooth_tip.remove();
+            bluetooth_tip = null;
+
+            pad_tip = mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.pad_tip_text),
+                    getActivity().findViewById(R.id.right_button));
+
+            currentTipView = pad_tip;
+            currentTipView.setOnToolTipViewClickedListener(onToolTipClicked);
+
+        } else if (currentTipView == pad_tip) {
+            pad_tip.remove();
+            pad_tip = null;
+
+            claws_tip = mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.claws_tip_text),
+                    getActivity().findViewById(R.id.full_open_claw_button));
+
+            int margin = getResources().getDimensionPixelSize(R.dimen.claw_buttons_margin);
+            claws_tip.setPadding(0,0, margin, 0);
+
+            claws_tip.setPointerCenterX((int) claws_tip.getX() - getActivity().getResources().getDimensionPixelSize(R.dimen.button_press_padding));
+
+            currentTipView = claws_tip;
+            currentTipView.setOnToolTipViewClickedListener(onToolTipClicked);
+
+        } else if (currentTipView == claws_tip) {
+            claws_tip.remove();
+            claws_tip = null;
+
+            currentTipView = null;
+            setIsLastTipToShow(true);
+            mToolTipFrameLayout.setOnClickListener(null);
+        }
+
+    }
+
+    @Override
+    protected void setIsLastTipToShow(boolean isLastTipToShow) {
+        this.isLastTipToShow = isLastTipToShow;
+    }
 
 
     /**************************************************************************************

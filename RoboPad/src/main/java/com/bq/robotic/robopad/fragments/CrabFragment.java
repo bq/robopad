@@ -31,11 +31,14 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.bq.robotic.robopad.R;
 import com.bq.robotic.robopad.utils.RoboPadConstants;
+import com.bq.robotic.robopad.utils.TipsFactory;
+import com.nhaarman.supertooltips.ToolTipView;
 
 
 /**
@@ -46,6 +49,11 @@ import com.bq.robotic.robopad.utils.RoboPadConstants;
  */
 
 public class CrabFragment extends RobotFragment {
+
+    // Tips
+    private ToolTipView pin_explanation_tip;
+    private ToolTipView bluetooth_tip;
+    private ToolTipView currentTipView;
 
 	// Debugging
 	private static final String LOG_TAG = "CrabFragment";
@@ -226,5 +234,52 @@ public class CrabFragment extends RobotFragment {
         }
 
     };
+
+
+    private ToolTipView.OnToolTipViewClickedListener onToolTipClicked = new ToolTipView.OnToolTipViewClickedListener() {
+
+        @Override
+        public void onToolTipViewClicked(ToolTipView toolTipView) {
+            showNextTip();
+        }
+    };
+
+
+    protected void showNextTip() {
+        if (currentTipView == null) {
+            setIsLastTipToShow(false);
+            // Pin explanation tip
+            pin_explanation_tip = mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.pin_explanation_tip_text),
+                    getActivity().findViewById(R.id.bot_icon));
+
+            currentTipView = pin_explanation_tip;
+            currentTipView.setOnToolTipViewClickedListener(onToolTipClicked);
+
+        } else if (currentTipView == pin_explanation_tip) {
+            pin_explanation_tip.remove();
+            pin_explanation_tip = null;
+
+            bluetooth_tip = mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.bluetooth_tip_text),
+                    getActivity().findViewById(R.id.connect_button));
+
+            currentTipView = bluetooth_tip;
+            currentTipView.setOnToolTipViewClickedListener(onToolTipClicked);
+
+        } else if (currentTipView == bluetooth_tip) {
+            bluetooth_tip.remove();
+            bluetooth_tip = null;
+
+            currentTipView = null;
+            setIsLastTipToShow(true);
+            mToolTipFrameLayout.setOnClickListener(null);
+            ((RelativeLayout) getActivity().findViewById(R.id.entire_pollywog_layout)).removeView(mToolTipFrameLayout);
+        }
+
+    }
+
+    @Override
+    protected void setIsLastTipToShow(boolean isLastTipToShow) {
+        this.isLastTipToShow = isLastTipToShow;
+    }
 
 }

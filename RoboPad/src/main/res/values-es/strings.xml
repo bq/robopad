@@ -32,14 +32,10 @@
     <string name="phase_difference">Diferencia de fase: </string>
     <string name="reset">Reinicializar</string>
 
-    <string name="pollywog_pin_explanation">
-        <![CDATA[
-            <h4>Conéctame a los siguientes pines:</h4>
-            <p><strong>- Bluetooth:</strong></p>
-            <p>TXD: pin 0 <br /> RXD: pìn 1 <br /> VCC: VCC <br />GND: GND</p>
-            <p><strong>- Servos:</strong> </p>
-            <p>Rueda izquierda: pin 6 <br /> Rueda derecha: pin 9 </p>
-            ]]>
-    </string>
+    <!-- Tips -->
+    <string name="pin_explanation_tip_text">Si me pulsas, te enseñaré cómo has de conectar mis pines</string>
+    <string name="bluetooth_tip_text">Si me pulsas, me conectaré o desconectaré del robot</string>
+    <string name="pad_tip_text">Si nos pulsas, controlaremos al robot</string>
+    <string name="claws_tip_text">Si nos pulsas, controlaremos las pinzas del robot</string>
 
 </resources>

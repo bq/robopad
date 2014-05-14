@@ -38,6 +38,8 @@ import android.widget.PopupWindow;
 import com.bq.robotic.robopad.R;
 import com.bq.robotic.robopad.utils.RoboPadConstants;
 import com.bq.robotic.robopad.utils.RobotConnectionsPopupWindow;
+import com.bq.robotic.robopad.utils.TipsFactory;
+import com.nhaarman.supertooltips.ToolTipView;
 
 
 /**
@@ -53,7 +55,12 @@ public class PollywogFragment extends RobotFragment {
 	private static final String LOG_TAG = "PollywogFragment";
 
     private ImageButton pinExplanationButton;
-//    private View layout;
+
+    // Tips
+    private ToolTipView pin_explanation_tip;
+    private ToolTipView bluetooth_tip;
+    private ToolTipView pad_tip;
+    private ToolTipView currentTipView;
 
 
 	@Override
@@ -70,7 +77,7 @@ public class PollywogFragment extends RobotFragment {
 	}
 
 
-	/**
+    /**
 	 * Set the listeners to the views that need them. It must be done here in the fragment in order
 	 * to get the callback here and not in the FragmentActivity, that would be a mess with all the 
 	 * callbacks of all the possible fragments
@@ -97,6 +104,7 @@ public class PollywogFragment extends RobotFragment {
 
         pinExplanationButton = (ImageButton) containerLayout.findViewById(R.id.bot_icon);
         pinExplanationButton.setOnClickListener(onButtonClick);
+
 	}
 
 
@@ -169,7 +177,7 @@ public class PollywogFragment extends RobotFragment {
 //                            pinExplanationButton.getPaddingTop());
 
                     int offsetY = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12,
-                                    getActivity().getResources().getDisplayMetrics());
+                            getActivity().getResources().getDisplayMetrics());
 
                     popupWindow.showAtLocation(getView(), Gravity.CENTER_VERTICAL | Gravity.LEFT,
                             pinExplanationButton.getRight() - (int)getActivity().getResources().getDimension(R.dimen.button_press_padding),
@@ -181,6 +189,62 @@ public class PollywogFragment extends RobotFragment {
 
 		}
 	};
+
+
+    private ToolTipView.OnToolTipViewClickedListener onToolTipClicked = new ToolTipView.OnToolTipViewClickedListener() {
+
+        @Override
+        public void onToolTipViewClicked(ToolTipView toolTipView) {
+            showNextTip();
+        }
+    };
+
+
+    protected void showNextTip() {
+        if (currentTipView == null) {
+            setIsLastTipToShow(false);
+            // Pin explanation tip
+            pin_explanation_tip = mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.pin_explanation_tip_text),
+                    getActivity().findViewById(R.id.bot_icon));
+
+            currentTipView = pin_explanation_tip;
+            currentTipView.setOnToolTipViewClickedListener(onToolTipClicked);
+
+        } else if (currentTipView == pin_explanation_tip) {
+            pin_explanation_tip.remove();
+            pin_explanation_tip = null;
+
+            bluetooth_tip = mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.bluetooth_tip_text),
+                    getActivity().findViewById(R.id.connect_button));
+
+            currentTipView = bluetooth_tip;
+            currentTipView.setOnToolTipViewClickedListener(onToolTipClicked);
+
+        } else if (currentTipView == bluetooth_tip) {
+            bluetooth_tip.remove();
+            bluetooth_tip = null;
+
+            pad_tip = mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.pad_tip_text),
+                    getActivity().findViewById(R.id.right_button));
+
+            currentTipView = pad_tip;
+            currentTipView.setOnToolTipViewClickedListener(onToolTipClicked);
+
+        } else if (currentTipView == pad_tip) {
+            pad_tip.remove();
+            pad_tip = null;
+
+            currentTipView = null;
+            setIsLastTipToShow(true);
+            mToolTipFrameLayout.setOnClickListener(null);
+        }
+
+    }
+
+    @Override
+    protected void setIsLastTipToShow(boolean isLastTipToShow) {
+        this.isLastTipToShow = isLastTipToShow;
+    }
 
 
     @Override
