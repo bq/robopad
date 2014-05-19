@@ -25,7 +25,7 @@ public class TipsFactory {
         ToolTip toolTip = new ToolTip()
                 .withContentView(tipContent)
                 .withColor(context.getResources().getColor(R.color.holo_blue_dark))
-                .withAnimationType(ToolTip.AnimationType.NONE);
+                .withAnimationType(ToolTip.AnimationType.FROM_TOP);
 
         return toolTip;
     }
@@ -40,7 +40,7 @@ public class TipsFactory {
         ToolTip toolTip = new ToolTip()
                 .withContentView(tipContent)
                 .withColor(context.getResources().getColor(R.color.holo_blue_dark))
-                .withAnimationType(ToolTip.AnimationType.NONE);
+                .withAnimationType(ToolTip.AnimationType.FROM_TOP);
 
         return toolTip;
     }

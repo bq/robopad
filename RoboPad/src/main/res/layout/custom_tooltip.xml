@@ -7,4 +7,5 @@
     android:textColor="@android:color/white"
     android:textStyle="bold"
     android:gravity="center"
+    android:textSize="@dimen/text_size"
     android:typeface="monospace"/>
