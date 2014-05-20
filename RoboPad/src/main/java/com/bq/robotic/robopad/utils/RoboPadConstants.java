@@ -47,7 +47,7 @@ public class RoboPadConstants {
     public static final String WAS_ENABLING_BLUETOOTH_ALLOWED_KEY = "pref_automatic_bluetooth_allowed";
     public static final String ENABLE_BLUETOOTH_KEY = "pref_bluetooth_enable";
     public static final String SHOW_TIPS_KEY = "help_options";
-    public static enum showTipsValues {NEVER, FIRST_TIME, ALWAYS};
+    public static enum showTipsValues {NEVER, FIRST_TIME, ALWAYS}
 
 
     /**
@@ -59,7 +59,7 @@ public class RoboPadConstants {
     /**
      * Beetle robot
      */
-    public static enum Claw_next_state {OPEN_STEP, CLOSE_STEP, FULL_OPEN};    
+    public static enum Claw_next_state {OPEN_STEP, CLOSE_STEP, FULL_OPEN}
     public static final int MIN_CLOSE_CLAW_POS = 55;
     public static final int MAX_OPEN_CLAW_POS = 10;
     public static final int INIT_CLAW_POS = 30;

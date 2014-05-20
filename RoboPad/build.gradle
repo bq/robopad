@@ -14,12 +14,12 @@ android {
 
         debug {
             runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt')
+            proguardFile file('custom-proguard-android.txt')
         }
 
         release {
             runProguard true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+            proguardFile file('custom-proguard-android.txt')
         }
     }
 
