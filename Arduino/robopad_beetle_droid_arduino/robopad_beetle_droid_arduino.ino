@@ -49,6 +49,10 @@
 #define rightWheelFordwardValue 180
 #define rightWheelBackwardsValue 0
 
+/* Max and min positions of the claw */
+#define maxClawPosition 10
+#define minClawPosition 55
+
 /* Size of the received data buffer */
 #define bufferSize 5
 
@@ -121,6 +125,15 @@ void goRight() {
 
 
 void moveClaw() {
+
+  // Check limits of the claw position
+  if(posClaw < maxClawPosition) {
+    posClaw = maxClawPosition;
+  
+  } else if (posClaw > minClawPosition) {
+    posClaw = minClawPosition;
+  }
+
   claw.write(posClaw);
   delay(3);
 }

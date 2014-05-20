@@ -21,6 +21,14 @@
     <!-- Rhino robot -->
     <string name="charge">Embestir</string>
 
+    <!-- Generic robot -->
+    <string name="command_1">1</string>
+    <string name="command_2">2</string>
+    <string name="command_3">3</string>
+    <string name="command_4">4</string>
+    <string name="command_5">5</string>
+    <string name="command_6">6</string>
+
     <!-- Crab robot -->
     <!--<string name="amplitude">Amplitud</string>-->
     <string name="step_size">Tamaño de los pasos</string>
