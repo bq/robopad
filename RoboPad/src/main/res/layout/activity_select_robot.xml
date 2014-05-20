@@ -15,7 +15,7 @@
         android:layout_marginRight="10dp"
         android:layout_alignParentRight="true"
         android:background="@drawable/blue_circle_btn_transparent_selector"
-        android:padding="6dp"
+        android:padding="@dimen/button_press_padding"
         android:src="@drawable/ic_settings"
         android:onClick="onShowPreferences"/>
 
