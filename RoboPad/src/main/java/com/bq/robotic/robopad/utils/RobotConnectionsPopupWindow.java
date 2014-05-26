@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.PopupWindow;
 
 import com.bq.robotic.robopad.R;
@@ -14,7 +13,7 @@ public class RobotConnectionsPopupWindow {
 
     //FIXME: necessary?
     private Context context;
-    private ImageView popupView;
+    private ScaleImageView popupView;
 
     // Debugging
     private static final String LOG_TAG = "RobotConnectionsPopupWindow";
@@ -26,7 +25,7 @@ public class RobotConnectionsPopupWindow {
         LayoutInflater layoutInflater
                 = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        popupView = (ImageView) layoutInflater.inflate(R.layout.popup_pin_connections, null);
+        popupView = (ScaleImageView) layoutInflater.inflate(R.layout.popup_pin_connections, null);
 
         switch (botType) {
 
@@ -43,8 +42,6 @@ public class RobotConnectionsPopupWindow {
 
 
     public PopupWindow getPopupWindow() {
-
-
 
         PopupWindow popupWindow = new PopupWindow(
                 popupView,
