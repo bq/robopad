@@ -11,8 +11,6 @@ import com.bq.robotic.robopad.R;
 
 public class RobotConnectionsPopupWindow {
 
-    //FIXME: necessary?
-    private Context context;
     private ScaleImageView popupView;
 
     // Debugging
@@ -20,7 +18,6 @@ public class RobotConnectionsPopupWindow {
 
 
     public RobotConnectionsPopupWindow(RoboPadConstants.robotType botType, Context context) {
-        this.context = context;
 
         LayoutInflater layoutInflater
                 = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -48,18 +45,6 @@ public class RobotConnectionsPopupWindow {
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        //        int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 500,
-//                context.getResources().getDisplayMetrics());
-//
-//        int sizeY = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 311,
-//                context.getResources().getDisplayMetrics());
-
-//        PopupWindow popupWindow = new PopupWindow(
-//                popupView,
-//                size,
-//                sizeY);
-
-
         // Needed for dismiss the popup window when clicked outside the popup window
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
@@ -68,7 +53,6 @@ public class RobotConnectionsPopupWindow {
 
         // Clear the default translucent background
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
-//        popupWindow.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.pollywog_pins));
 
         return popupWindow;
     }

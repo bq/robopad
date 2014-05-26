@@ -39,7 +39,6 @@
     <string name="command_5">5</string>
     <string name="command_6">6</string>
 
-
     <!-- Tips -->
     <string name="pin_explanation_tip_text">If you click on me, I will show you how to connect my pins</string>
     <string name="bluetooth_tip_text">If you click on me, I will connect or disconnect with the robot</string>

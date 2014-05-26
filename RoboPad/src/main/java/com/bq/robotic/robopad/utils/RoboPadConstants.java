@@ -31,7 +31,7 @@ public class RoboPadConstants {
     
     public static final long CLICK_SLEEP_TIME = 150;
     
-    public static enum robotType {POLLYWOG, BEETLE, RHINO, CRAB, GENERIC_ROBOT};
+    public static enum robotType {POLLYWOG, BEETLE, RHINO, CRAB, GENERIC_ROBOT}
     public static final String ROBOT_TYPE_KEY = "robot_type_key";
     
     

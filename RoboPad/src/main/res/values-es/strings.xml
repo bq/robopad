@@ -12,12 +12,7 @@
 
     <string name="exit_robot_control_dialog">Se perderá la conexión con este robot, ¿quieres elegir un nuevo tipo de robot?</string>
     <string name="exit_robot_control_dialog_title">Desconexión del robot</string>
-    
-    <!--  Beetle robot -->
-    <string name="full_open_claw">Soltar pinza</string>
-    <string name="open_claw">Abrir pinza</string>
-    <string name="close_claw">Cerrar pinza</string>  
-    
+
     <!-- Rhino robot -->
     <string name="charge">Embestir</string>
 

@@ -80,6 +80,12 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
         disconnectButton = (ImageButton) findViewById(R.id.disconnect_button);
         anim = AnimationUtils.loadAnimation(this, R.anim.bluetooth_spiner);
 
+        // If we're being restored from a previous state,
+        // then we don't need to do anything and should return or else
+        // we could end up with overlapping fragments.
+        if (savedInstanceState != null) {
+            return;
+        }
 
         // Show the selected robot fragment
         FragmentTransaction ft = mFragmentManager.beginTransaction();
