@@ -100,7 +100,6 @@ Limitations
 
 - The generic robot has 6 buttons that sends the commands '1', '2', '3', '4', '5' and '6' respectively to the Arduino board.
 
-- The app theme must have the Theme.AppCompat as parent in the style.xml file
 
 
 License
