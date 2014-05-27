@@ -279,10 +279,11 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
 
         //Save the fragment's instance
         mFragmentManager.putFragment(outState, SAVE_FRAGMENT_STATE_KEY, mFragmentManager.findFragmentById(R.id.game_pad_container));
+
+        super.onSaveInstanceState(outState);
 
     }
 

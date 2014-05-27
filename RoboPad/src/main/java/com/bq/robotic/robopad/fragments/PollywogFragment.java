@@ -70,31 +70,9 @@ public class PollywogFragment extends RobotFragment {
 
         setUiListeners(layout);
 
-        if (savedInstanceState != null) {
-            currentTip = (tips) savedInstanceState.getSerializable(RoboPadConstants.CURRENT_TIP_KEY);
-
-        } else {
-            currentTip = null;
-        }
-
 		return layout;
 
 	}
-
-
-    /**
-     * Save the state of the current tip if it is being shown some of it
-     * @param outState the bundle to store values
-     */
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        if(currentTip != null) {
-            outState.putSerializable(RoboPadConstants.CURRENT_TIP_KEY, currentTip);
-        }
-
-    }
 
 
     /**

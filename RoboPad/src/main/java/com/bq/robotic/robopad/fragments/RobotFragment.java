@@ -100,15 +100,6 @@ public abstract class RobotFragment extends Fragment {
 
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		// Retain this fragment across configuration changes.
-		setRetainInstance(true);
-	}
-
-
-	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 
@@ -131,6 +122,9 @@ public abstract class RobotFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        // Retain this fragment across configuration changes.
+        setRetainInstance(true);
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         int showTipsValue = Integer.parseInt(sharedPref.getString(RoboPadConstants.SHOW_TIPS_KEY, String.valueOf(RoboPadConstants.showTipsValues.FIRST_TIME.ordinal())));
@@ -344,7 +338,7 @@ public abstract class RobotFragment extends Fragment {
 					sleep(RoboPadConstants.CLICK_SLEEP_TIME);
 
 					if(mIsClick && listener != null) {
-						Log.e(LOG_TAG, "stop command in thread send");
+						Log.d(LOG_TAG, "stop command in thread send");
 						listener.onSendMessage(RoboPadConstants.STOP_COMMAND);
 					}
 
