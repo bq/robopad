@@ -59,6 +59,7 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
 	// Debugging
     private static final String LOG_TAG = "RoboPad";
 
+    private static final String SAVE_FRAGMENT_STATE_KEY = "current_fragment_key";
     private FragmentManager mFragmentManager;
 
     private ImageButton connectButton;
@@ -272,6 +273,16 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
                     .show();
 
         }
+
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //Save the fragment's instance
+        mFragmentManager.putFragment(outState, SAVE_FRAGMENT_STATE_KEY, mFragmentManager.findFragmentById(R.id.game_pad_container));
 
     }
 

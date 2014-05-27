@@ -146,6 +146,86 @@ public abstract class RobotFragment extends Fragment {
             return;
         }
 
+        if (showTipsValue == RoboPadConstants.showTipsValues.FIRST_TIME.ordinal()) {
+            checkShowTipsIfFirstTime();
+
+        } else if (showTipsValue == RoboPadConstants.showTipsValues.ALWAYS.ordinal()) {
+            enableToolTipListener();
+            showTips();
+        }
+
+    }
+
+
+    /**
+     * When the user has selected the preference of showing the tips only the first time, must be
+     * the first time for each robot screen, because each one has itself actions available. So,
+     * this method checks if it is the first time the user enters in this current robot or not.
+     */
+    private void checkShowTipsIfFirstTime() {
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+
+        if(this instanceof PollywogFragment) {
+
+            if(sharedPref.getBoolean(RoboPadConstants.POLLYWOG_FIRST_TIME_TIPS_KEY, true)) {
+                writeInSharedPreferencesEditor(RoboPadConstants.POLLYWOG_FIRST_TIME_TIPS_KEY, false);
+                enableToolTipListener();
+                showTips();
+            }
+
+        } else if(this instanceof BeetleFragment) {
+
+            if(sharedPref.getBoolean(RoboPadConstants.BEETLE_FIRST_TIME_TIPS_KEY, true)) {
+                writeInSharedPreferencesEditor(RoboPadConstants.BEETLE_FIRST_TIME_TIPS_KEY, false);
+                enableToolTipListener();
+                showTips();
+            }
+
+        } else if(this instanceof RhinoFragment) {
+
+            if(sharedPref.getBoolean(RoboPadConstants.RHINO_FIRST_TIME_TIPS_KEY, true)) {
+                writeInSharedPreferencesEditor(RoboPadConstants.RHINO_FIRST_TIME_TIPS_KEY, false);
+                enableToolTipListener();
+                showTips();
+            }
+
+        } else if(this instanceof CrabFragment) {
+
+            if(sharedPref.getBoolean(RoboPadConstants.CRAB_FIRST_TIME_TIPS_KEY, true)) {
+                writeInSharedPreferencesEditor(RoboPadConstants.CRAB_FIRST_TIME_TIPS_KEY, false);
+                enableToolTipListener();
+                showTips();
+            }
+
+        } else if(this instanceof GenericRobotFragment) {
+
+            if(sharedPref.getBoolean(RoboPadConstants.GENERIC_ROBOT_FIRST_TIME_TIPS_KEY, true)) {
+                writeInSharedPreferencesEditor(RoboPadConstants.GENERIC_ROBOT_FIRST_TIME_TIPS_KEY, false);
+                enableToolTipListener();
+                showTips();
+            }
+        }
+    }
+
+
+    /**
+     * Write in the shared preference editor
+     * @param key key of the preference
+     * @param value of the preference
+     */
+    private void writeInSharedPreferencesEditor(String key, boolean value) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(key, value);
+        editor.commit();
+    }
+
+
+    /**
+     * Enable the listener of the tips layout only if the fragment has to show the tips
+     */
+    private void enableToolTipListener() {
         mToolTipFrameLayout.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -153,19 +233,6 @@ public abstract class RobotFragment extends Fragment {
                 showTips();
             }
         });
-
-        if (showTipsValue == RoboPadConstants.showTipsValues.FIRST_TIME.ordinal()) {
-
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString(RoboPadConstants.SHOW_TIPS_KEY, String.valueOf(RoboPadConstants.showTipsValues.NEVER.ordinal()));
-            editor.commit();
-
-            showTips();
-
-        } else if (showTipsValue == RoboPadConstants.showTipsValues.ALWAYS.ordinal()) {
-            showTips();
-        }
-
     }
 
 

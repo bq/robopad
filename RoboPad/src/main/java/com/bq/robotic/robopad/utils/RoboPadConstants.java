@@ -47,6 +47,12 @@ public class RoboPadConstants {
     public static final String WAS_ENABLING_BLUETOOTH_ALLOWED_KEY = "pref_automatic_bluetooth_allowed";
     public static final String ENABLE_BLUETOOTH_KEY = "pref_bluetooth_enable";
     public static final String SHOW_TIPS_KEY = "help_options";
+    public static final String POLLYWOG_FIRST_TIME_TIPS_KEY = "pollywog_first_time_tips_key";
+    public static final String BEETLE_FIRST_TIME_TIPS_KEY = "beetle_first_time_tips_key";
+    public static final String RHINO_FIRST_TIME_TIPS_KEY = "rhino_first_time_tips_key";
+    public static final String CRAB_FIRST_TIME_TIPS_KEY = "crab_first_time_tips_key";
+    public static final String GENERIC_ROBOT_FIRST_TIME_TIPS_KEY = "generic_robot_first_time_tips_key";
+    public static final String CURRENT_TIP_KEY = "current_tip_key";
     public static enum showTipsValues {NEVER, FIRST_TIME, ALWAYS}
 
 

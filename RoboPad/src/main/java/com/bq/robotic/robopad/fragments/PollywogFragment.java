@@ -57,10 +57,8 @@ public class PollywogFragment extends RobotFragment {
     private ImageButton pinExplanationButton;
 
     // Tips
-    private ToolTipView pin_explanation_tip;
-    private ToolTipView bluetooth_tip;
-    private ToolTipView pad_tip;
-    private ToolTipView currentTipView;
+    private tips currentTip;
+    private enum tips {PIN, BLUETOOTH, PAD}
 
 
 	@Override
@@ -72,9 +70,31 @@ public class PollywogFragment extends RobotFragment {
 
         setUiListeners(layout);
 
+        if (savedInstanceState != null) {
+            currentTip = (tips) savedInstanceState.getSerializable(RoboPadConstants.CURRENT_TIP_KEY);
+
+        } else {
+            currentTip = null;
+        }
+
 		return layout;
 
 	}
+
+
+    /**
+     * Save the state of the current tip if it is being shown some of it
+     * @param outState the bundle to store values
+     */
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if(currentTip != null) {
+            outState.putSerializable(RoboPadConstants.CURRENT_TIP_KEY, currentTip);
+        }
+
+    }
 
 
     /**
@@ -201,45 +221,43 @@ public class PollywogFragment extends RobotFragment {
 
 
     protected void showNextTip() {
-        if (currentTipView == null) {
+
+        if (currentTip == null) {
             setIsLastTipToShow(false);
-            // Pin explanation tip
-            pin_explanation_tip = mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.pin_explanation_tip_text),
-                    getActivity().findViewById(R.id.bot_icon));
 
-            currentTipView = pin_explanation_tip;
-            currentTipView.setOnToolTipViewClickedListener(onToolTipClicked);
+            mToolTipFrameLayout.removeAllViews();
 
-        } else if (currentTipView == pin_explanation_tip) {
-            pin_explanation_tip.remove();
-            pin_explanation_tip = null;
+            mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.pin_explanation_tip_text),
+                    getActivity().findViewById(R.id.bot_icon)).setOnToolTipViewClickedListener(onToolTipClicked);
 
-            bluetooth_tip = mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.bluetooth_tip_text),
-                    getActivity().findViewById(R.id.connect_button));
+            currentTip = tips.PIN;
 
-            currentTipView = bluetooth_tip;
-            currentTipView.setOnToolTipViewClickedListener(onToolTipClicked);
+        } else if (currentTip.equals(tips.PIN)) {
+            mToolTipFrameLayout.removeAllViews();
 
-        } else if (currentTipView == bluetooth_tip) {
-            bluetooth_tip.remove();
-            bluetooth_tip = null;
+            mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.bluetooth_tip_text),
+                    getActivity().findViewById(R.id.connect_button)).setOnToolTipViewClickedListener(onToolTipClicked);
 
-            pad_tip = mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.pad_tip_text),
-                    getActivity().findViewById(R.id.right_button));
+            currentTip = tips.BLUETOOTH;
 
-            currentTipView = pad_tip;
-            currentTipView.setOnToolTipViewClickedListener(onToolTipClicked);
+        } else if (currentTip.equals(tips.BLUETOOTH)) {
+            mToolTipFrameLayout.removeAllViews();
 
-        } else if (currentTipView == pad_tip) {
-            pad_tip.remove();
-            pad_tip = null;
+            mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.pad_tip_text),
+                    getActivity().findViewById(R.id.right_button)).setOnToolTipViewClickedListener(onToolTipClicked);
 
-            currentTipView = null;
+            currentTip = tips.PAD;
+
+        } else if (currentTip.equals(tips.PAD)) {
+            mToolTipFrameLayout.removeAllViews();
+
+            currentTip = null;
             setIsLastTipToShow(true);
             mToolTipFrameLayout.setOnClickListener(null);
-        }
 
+        }
     }
+
 
     @Override
     protected void setIsLastTipToShow(boolean isLastTipToShow) {
