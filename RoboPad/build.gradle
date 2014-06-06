@@ -29,7 +29,7 @@ android {
 }
 
 dependencies {
-    compile('com.bq.robotic:droid2ino:1.4@aar') {
+    compile('com.bq.robotic:droid2ino:1.5@aar') {
         transitive = true
     }
 

@@ -135,6 +135,11 @@ public class BeetleFragment extends RobotFragment {
     public void onBluetoothConnected() {
         ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.bot_beetle_connected);
         ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.ic_beetle_bg_on);
+
+        mClawPosition = RoboPadConstants.INIT_CLAW_POS; // default open 30 (values from 5 to 50)
+        mOpenStepClawButton.setEnabled(true);
+        mFullOpenClawButton.setEnabled(true);
+        mCloseStepClawButton.setEnabled(true);
     }
 
     @Override
