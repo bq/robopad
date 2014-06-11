@@ -235,6 +235,11 @@ public class RhinoFragment extends RobotFragment {
 		// None button controlled by MotionEvent 
 	}
 
+    @Override
+    protected void stateChanged(RoboPadConstants.robotState nextState) {
+
+    }
+
 
     private ToolTipView.OnToolTipViewClickedListener onToolTipClicked = new ToolTipView.OnToolTipViewClickedListener() {
 

@@ -36,6 +36,7 @@ import android.view.ViewGroup;
 
 import com.bq.robotic.robopad.R;
 import com.bq.robotic.robopad.utils.RoboPadConstants;
+import com.bq.robotic.robopad.utils.RoboPadConstants.robotState;
 import com.bq.robotic.robopad.utils.RobotListener;
 import com.nhaarman.supertooltips.ToolTipRelativeLayout;
 
@@ -60,6 +61,8 @@ public abstract class RobotFragment extends Fragment {
     protected ToolTipRelativeLayout mToolTipFrameLayout;
     protected boolean isLastTipToShow = true;
 
+    protected robotState state = RoboPadConstants.robotState.MANUAL_CONTROL;
+
 	/**
 	 * Set the listeners to the UI views
 	 * @param containerLayout
@@ -72,6 +75,14 @@ public abstract class RobotFragment extends Fragment {
 	 * @param viewId the id of the view pressed
 	 */
 	protected abstract void controlButtonActionDown(int viewId);
+
+
+    /**
+     * The state of the robot changes. The state is the type of control the user has of the robot
+     * such as manual control, or if the robot is in line follower mode
+     * @param nextState next state the robot is going to have
+     */
+    protected abstract void stateChanged(robotState nextState);
 
 	
 	/**
@@ -278,6 +289,10 @@ public abstract class RobotFragment extends Fragment {
 			switch (event.getAction()) {
 
 				case MotionEvent.ACTION_DOWN:
+
+                    if(state != RoboPadConstants.robotState.MANUAL_CONTROL) {
+                        stateChanged(RoboPadConstants.robotState.MANUAL_CONTROL);
+                    }
 	
 					if(listener != null && !listener.onCheckIsConnected()) {
 						mIsConnected = false;

@@ -37,6 +37,7 @@ import android.widget.PopupWindow;
 
 import com.bq.robotic.robopad.R;
 import com.bq.robotic.robopad.utils.RoboPadConstants;
+import com.bq.robotic.robopad.utils.RoboPadConstants.robotState;
 import com.bq.robotic.robopad.utils.RobotConnectionsPopupWindow;
 import com.bq.robotic.robopad.utils.TipsFactory;
 import com.nhaarman.supertooltips.ToolTipView;
@@ -55,6 +56,7 @@ public class PollywogFragment extends RobotFragment {
 	private static final String LOG_TAG = "PollywogFragment";
 
     private ImageButton pinExplanationButton;
+    private ImageButton lineFollowerButton;
 
     // Tips
     private tips currentTip;
@@ -102,6 +104,9 @@ public class PollywogFragment extends RobotFragment {
 
         pinExplanationButton = (ImageButton) containerLayout.findViewById(R.id.bot_icon);
         pinExplanationButton.setOnClickListener(onButtonClick);
+
+        lineFollowerButton = (ImageButton) containerLayout.findViewById(R.id.line_follower);
+        lineFollowerButton.setOnClickListener(onButtonClick);
 
 	}
 
@@ -161,6 +166,11 @@ public class PollywogFragment extends RobotFragment {
 			switch(v.getId()) {
 
                 case R.id.stop_button:
+
+                    if(state != RoboPadConstants.robotState.MANUAL_CONTROL) {
+                        stateChanged(RoboPadConstants.robotState.MANUAL_CONTROL);
+                    }
+
                     listener.onSendMessage(RoboPadConstants.STOP_COMMAND);
                     break;
 
@@ -183,10 +193,50 @@ public class PollywogFragment extends RobotFragment {
 
                     break;
 
+                case R.id.line_follower:
+                    if(!listener.onCheckIsConnected()) {
+                        return;
+                    }
+
+                    if(state == robotState.MANUAL_CONTROL) {
+                        stateChanged(robotState.LINE_FOLLOWER);
+
+                    } else {
+                        stateChanged(robotState.MANUAL_CONTROL);
+                    }
+
+                    break;
+
 			}
 
 		}
 	};
+
+
+    /**
+     * The state of the robot changes. The state is the type of control the user has of the robot
+     * such as manual control, or if the robot is in line follower mode
+     * @param nextState next state the robot is going to have
+     */
+    protected void stateChanged(robotState nextState) {
+
+        switch (nextState) {
+
+            case MANUAL_CONTROL:
+                lineFollowerButton.setPressed(false);
+                state = robotState.MANUAL_CONTROL;
+                listener.onSendMessage(RoboPadConstants.MANUAL_CONTROL_MODE_COMMAND);
+                break;
+
+            case LINE_FOLLOWER:
+                lineFollowerButton.setPressed(true);
+                state = robotState.LINE_FOLLOWER;
+                listener.onSendMessage(RoboPadConstants.LINE_FOLLOWER_MODE_COMMAND);
+                break;
+
+        }
+
+    }
 
 
     private ToolTipView.OnToolTipViewClickedListener onToolTipClicked = new ToolTipView.OnToolTipViewClickedListener() {
@@ -198,6 +248,10 @@ public class PollywogFragment extends RobotFragment {
     };
 
 
+    /**
+     * Show the next tip for this robot fragment. The tips are displayed one after another when the
+     * user clicks on the screen
+     */
     protected void showNextTip() {
 
         if (currentTip == null) {
@@ -247,6 +301,8 @@ public class PollywogFragment extends RobotFragment {
     public void onBluetoothConnected() {
         ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.ic_bot_pollywog_connected);
         ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.pollywog_bg_on);
+
+        state = robotState.MANUAL_CONTROL;
     }
 
     @Override

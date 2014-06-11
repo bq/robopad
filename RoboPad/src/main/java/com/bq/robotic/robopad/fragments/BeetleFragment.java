@@ -36,9 +36,11 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.bq.robotic.robopad.R;
 import com.bq.robotic.robopad.utils.RoboPadConstants;
+import com.bq.robotic.robopad.utils.RoboPadConstants.robotState;
 import com.bq.robotic.robopad.utils.RoboPadConstants.Claw_next_state;
 import com.bq.robotic.robopad.utils.RobotConnectionsPopupWindow;
 import com.bq.robotic.robopad.utils.TipsFactory;
@@ -65,10 +67,13 @@ public class BeetleFragment extends RobotFragment {
     private boolean clawButtonUp = false;
 
     private ImageButton pinExplanationButton;
+    private ImageButton lineFollowerButton;
+    private ImageButton lightFollowerButton;
 
     // Tips
     private tips currentTip;
     private enum tips {PIN, BLUETOOTH, PAD, CLAWS}
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -127,6 +132,12 @@ public class BeetleFragment extends RobotFragment {
 
         pinExplanationButton = (ImageButton) containerLayout.findViewById(R.id.bot_icon);
         pinExplanationButton.setOnClickListener(onButtonClick);
+
+        lineFollowerButton = (ImageButton) containerLayout.findViewById(R.id.line_follower);
+        lineFollowerButton.setOnClickListener(onButtonClick);
+
+        lightFollowerButton = (ImageButton) containerLayout.findViewById(R.id.light_follower);
+        lightFollowerButton.setOnClickListener(onButtonClick);
 	}
 
 
@@ -135,6 +146,8 @@ public class BeetleFragment extends RobotFragment {
     public void onBluetoothConnected() {
         ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.bot_beetle_connected);
         ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.ic_beetle_bg_on);
+
+        state = robotState.MANUAL_CONTROL;
 
         mClawPosition = RoboPadConstants.INIT_CLAW_POS; // default open 30 (values from 5 to 50)
         mOpenStepClawButton.setEnabled(true);
@@ -204,11 +217,21 @@ public class BeetleFragment extends RobotFragment {
 			switch(v.getId()) {
 	
 				case R.id.stop_button:
+
+                    if(state != RoboPadConstants.robotState.MANUAL_CONTROL) {
+                        stateChanged(RoboPadConstants.robotState.MANUAL_CONTROL);
+                    }
+
 					listener.onSendMessage(RoboPadConstants.STOP_COMMAND);    				
 					break;
 	
 				case R.id.full_open_claw_button:
 					if(listener.onCheckIsConnected()) {
+
+                        if(state != RoboPadConstants.robotState.MANUAL_CONTROL) {
+                            stateChanged(RoboPadConstants.robotState.MANUAL_CONTROL);
+                        }
+
 						listener.onSendMessage(RoboPadConstants.CLAW_COMMAND
 								+ getNextClawPosition(Claw_next_state.FULL_OPEN));
 					}
@@ -229,10 +252,79 @@ public class BeetleFragment extends RobotFragment {
 
                     break;
 
+                case R.id.line_follower:
+                    if(!listener.onCheckIsConnected()) {
+                        return;
+                    }
+
+                    if(state == robotState.MANUAL_CONTROL || state == robotState.LIGHT_FOLLOWER) {
+                        stateChanged(robotState.LINE_FOLLOWER);
+
+                    } else {
+                        stateChanged(robotState.MANUAL_CONTROL);
+                    }
+
+                    break;
+
+                case R.id.light_follower:
+                    if(!listener.onCheckIsConnected()) {
+                        return;
+                    }
+
+                    if(state == robotState.MANUAL_CONTROL || state == robotState.LINE_FOLLOWER) {
+                        stateChanged(robotState.LIGHT_FOLLOWER);
+
+                    } else {
+                        stateChanged(robotState.MANUAL_CONTROL);
+                    }
+
+                    break;
+
 			}
 
 		}
 	};
+
+
+    /**
+     * The state of the robot changes. The state is the type of control the user has of the robot
+     * such as manual control, or if the robot is in line follower mode
+     * @param nextState next state the robot is going to have
+     */
+    protected void stateChanged(robotState nextState) {
+
+        switch (nextState) {
+
+            case MANUAL_CONTROL:
+                lineFollowerButton.setPressed(false);
+                lightFollowerButton.setPressed(false);
+                state = robotState.MANUAL_CONTROL;
+                //FIXME
+                Toast.makeText(getActivity(), "Start manual control state!", Toast.LENGTH_SHORT).show();
+                listener.onSendMessage(RoboPadConstants.MANUAL_CONTROL_MODE_COMMAND);
+                break;
+
+            case LINE_FOLLOWER:
+                lineFollowerButton.setPressed(true);
+                lightFollowerButton.setPressed(false);
+                state = robotState.LINE_FOLLOWER;
+                //FIXME
+                Toast.makeText(getActivity(), "Start line follower state!", Toast.LENGTH_SHORT).show();
+                listener.onSendMessage(RoboPadConstants.LINE_FOLLOWER_MODE_COMMAND);
+                break;
+
+            case LIGHT_FOLLOWER:
+                lightFollowerButton.setPressed(true);
+                lineFollowerButton.setPressed(false);
+                state = robotState.LIGHT_FOLLOWER;
+                //FIXME
+                Toast.makeText(getActivity(), "Start light follower state!", Toast.LENGTH_SHORT).show();
+                listener.onSendMessage(RoboPadConstants.LIGHT_FOLLOWER_MODE_COMMAND);
+                break;
+
+        }
+
+    }
 
 
     /**
@@ -252,6 +344,10 @@ public class BeetleFragment extends RobotFragment {
             switch (event.getAction()) {
 
                 case MotionEvent.ACTION_DOWN:
+
+                    if(state != RoboPadConstants.robotState.MANUAL_CONTROL) {
+                        stateChanged(RoboPadConstants.robotState.MANUAL_CONTROL);
+                    }
 
                     if(listener.onCheckIsConnected()) {
                         clawButtonUp = false;
@@ -335,6 +431,10 @@ public class BeetleFragment extends RobotFragment {
     };
 
 
+    /**
+     * Show the next tip for this robot fragment. The tips are displayed one after another when the
+     * user clicks on the screen
+     */
     protected void showNextTip() {
 
         if (currentTip == null) {

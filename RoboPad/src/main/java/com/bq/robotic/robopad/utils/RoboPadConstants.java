@@ -33,6 +33,7 @@ public class RoboPadConstants {
     
     public static enum robotType {POLLYWOG, BEETLE, RHINO, CRAB, GENERIC_ROBOT}
     public static final String ROBOT_TYPE_KEY = "robot_type_key";
+    public static enum robotState {MANUAL_CONTROL, LINE_FOLLOWER, LIGHT_FOLLOWER}
     
     
     /**
@@ -78,12 +79,20 @@ public class RoboPadConstants {
      * Common commands to send to the arduino
      */  
     //FIXME: Put in comments the correct pins
-    public static final String UP_COMMAND = "U"; // servo digital port both wheels, left[pin 4, value = 0], right[pin 7, value = 180]
-    public static final String DOWN_COMMAND = "D"; // servo digital port both wheels, left[pin 4, value = 180], right[pin 7, value = 0]
-    public static final String LEFT_COMMAND = "L"; // servo digital port both wheels, left[pin 4, value = 90], right[pin 7, value = 0] //with 90 it is stop
-    public static final String RIGHT_COMMAND = "R"; // servo digital port both wheels, left[pin 4, value = 0], right[pin 7, value = 90]
+    public static final String UP_COMMAND = "U"; // servo digital port both wheels, left[pin 6, value = 0], right[pin 9, value = 180]
+    public static final String DOWN_COMMAND = "D"; // servo digital port both wheels, left[pin 6, value = 180], right[pin 9, value = 0]
+    public static final String LEFT_COMMAND = "L"; // servo digital port both wheels, left[pin 6, value = 90], right[pin 9, value = 0] //with 90 it is stop
+    public static final String RIGHT_COMMAND = "R"; // servo digital port both wheels, left[pin 6, value = 0], right[pin 9, value = 90]
     public static final String STOP_COMMAND = "S"; //servo digital port both, stop both
-    
+
+
+    /**
+     * Default state modes of the robots
+     */
+    public static final String MANUAL_CONTROL_MODE_COMMAND = "M";
+    public static final String LINE_FOLLOWER_MODE_COMMAND = "I";
+    public static final String LIGHT_FOLLOWER_MODE_COMMAND = "G";
+
     
     /**
      * Rhino Robot

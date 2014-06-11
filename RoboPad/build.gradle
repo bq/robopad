@@ -3,10 +3,10 @@ apply plugin: 'maven'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.3"
+    buildToolsVersion "19.1.0"
 
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion 8
         targetSdkVersion 19
     }
 
@@ -29,7 +29,7 @@ android {
 }
 
 dependencies {
-    compile('com.bq.robotic:droid2ino:1.5@aar') {
+    compile('com.bq.robotic:droid2ino:+@aar') {
         transitive = true
     }
 
