@@ -81,7 +81,8 @@
         android:layout_marginLeft="@dimen/robot_state_button_margin"
         android:layout_alignParentBottom="true"
         android:background="@drawable/red_circle_btn_transparent_selector"
-        android:src="@drawable/ic_disconnected" />
+        android:src="@drawable/ic_disconnected"
+        android:visibility="gone"/>
 
     <ImageButton
         android:id="@+id/light_follower"
@@ -91,7 +92,8 @@
         android:layout_toRightOf="@id/line_follower"
         android:layout_alignParentBottom="true"
         android:background="@drawable/red_circle_btn_transparent_selector"
-        android:src="@drawable/ic_connected" />
+        android:src="@drawable/ic_connected"
+        android:visibility="gone"/>
 
     <com.nhaarman.supertooltips.ToolTipRelativeLayout
         android:id="@+id/activity_main_tooltipframelayout"
