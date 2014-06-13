@@ -12,7 +12,7 @@
  *    Android RoboPad app. 
  *     
  *   ****************************************************
- *   * Fecha: 04/03/2014                                *
+ *   * Fecha: 10/06/2014                                *
  *   * Autor:Estefana Sarasola Elvira                   *
  *   * Mail: diy@bq.com                                 *
  *   * Licencia: GNU General Public License v3 or later *
@@ -43,7 +43,7 @@
 #define pinSensorIRLeft         2   /*   Left infrared sensor     */ 
 #define pinSensorIRRight        3   /*   Right infrared sensor    */
 #define pinSensorLDRLeft       A2   /*   Left light sensor        */ 
-#define pinSensorLDRRight      A4   /*   Right light sensor       */
+#define pinSensorLDRRight      A3   /*   Right light sensor       */
 
 /* Definition of the values ​​that can take continuous rotation servo,
  that is, the wheels */

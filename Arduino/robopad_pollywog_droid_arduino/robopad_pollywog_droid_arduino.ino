@@ -12,7 +12,7 @@
  *    Android RoboPad app. 
  *     
  *   ****************************************************
- *   * Fecha: 05/03/2014                                *
+ *   * Fecha: 10/06/2014                                *
  *   * Autor:Estefana Sarasola Elvira                   *
  *   * Mail: diy@bq.com                                 *
  *   * Licencia: GNU General Public License v3 or later *
