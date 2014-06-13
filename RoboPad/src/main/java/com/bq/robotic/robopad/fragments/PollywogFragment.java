@@ -179,11 +179,6 @@ public class PollywogFragment extends RobotFragment {
                     PopupWindow popupWindow = (new RobotConnectionsPopupWindow(RoboPadConstants.robotType.POLLYWOG,
                             getActivity())).getPopupWindow();
 
-                    // Displaying the popup at the specified location, + offsets.
-//                    popupWindow.showAtLocation(getView(), Gravity.CENTER_VERTICAL | Gravity.LEFT,
-//                            pinExplanationButton.getRight() - pinExplanationButton.getPaddingRight(),
-//                            pinExplanationButton.getPaddingTop());
-
                     int offsetY = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12,
                             getActivity().getResources().getDisplayMetrics());
 
