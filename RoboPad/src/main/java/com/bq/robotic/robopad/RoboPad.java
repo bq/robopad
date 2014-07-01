@@ -47,7 +47,7 @@ import com.bq.robotic.robopad.fragments.RhinoFragment;
 import com.bq.robotic.robopad.fragments.RobotFragment;
 import com.bq.robotic.robopad.utils.RoboPadConstants;
 import com.bq.robotic.robopad.utils.RoboPadConstants.robotType;
-import com.bq.robotic.robopad.utils.RobotListener;
+import com.bq.robotic.robopad.listeners.RobotListener;
 
 
 /**

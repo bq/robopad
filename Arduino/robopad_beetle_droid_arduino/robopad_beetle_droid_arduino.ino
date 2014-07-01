@@ -53,6 +53,10 @@
 #define rightWheelFordwardValue   180
 #define rightWheelBackwardsValue  0
 
+/* Bauderate of the Bluetooth*/
+#define MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH    38400
+#define BQ_ZUM_BLUETOOTH                       19200
+
 /* Define the posible states of the state machine of the program */
 #define MANUAL_CONTROL_STATE    0
 #define LINE_FOLLOWER           1
@@ -282,7 +286,8 @@ void followTheLight() {
 void setup() {
   
   /* Open the Bluetooth Serial and empty it */
-  Serial.begin(38400); 
+  //Serial.begin(BQ_ZUM_BLUETOOTH);  
+  Serial.begin(MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH); 
   Serial.flush();     
   
   /* Define the appropiate pin to each object */

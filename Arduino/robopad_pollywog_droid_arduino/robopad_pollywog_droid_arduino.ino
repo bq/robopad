@@ -45,6 +45,10 @@
 #define MANUAL_CONTROL_STATE    0
 #define LINE_FOLLOWER           1
 
+/* Bauderate of the Bluetooth*/
+#define MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH    38400
+#define BQ_ZUM_BLUETOOTH                       19200
+
 /* Definition of the values ​​that can take continuous rotation servo,
  that is, the wheels */
 #define wheelStopValue            90
@@ -55,6 +59,9 @@
 
 /* Size of the received data buffer */
 #define bufferSize 1
+
+/* Default delay */
+#define defaultDelay        10
 
 /* Variable that controls the current state of the program */
 int currentState;
@@ -86,42 +93,42 @@ int numChar = 0;
 
 void stopWheels() {
   leftWheel.write(wheelStopValue);
-  delay(3);
+  delay(defaultDelay);
 
   rightWheel.write(wheelStopValue);
-  delay(3);
+  delay(defaultDelay);
 }
 
 void goForwards() {
   leftWheel.write(leftWheelFordwardValue);
-  delay(3);
+  delay(defaultDelay);
 
   rightWheel.write(rightWheelFordwardValue);
-  delay(3);
+  delay(defaultDelay);
 }
 
 void goBackwards() {
   leftWheel.write(leftWheelBackwardsValue);
-  delay(3);
+  delay(defaultDelay);
 
   rightWheel.write(rightWheelBackwardsValue);
-  delay(3);
+  delay(defaultDelay);
 }
 
 void goLeft() {
   leftWheel.write(wheelStopValue);
-  delay(3);
+  delay(defaultDelay);
 
   rightWheel.write(rightWheelFordwardValue);
-  delay(3);
+  delay(defaultDelay);
 }
 
 void goRight() {
   leftWheel.write(leftWheelFordwardValue);
-  delay(3);
+  delay(defaultDelay);
 
   rightWheel.write(wheelStopValue);
-  delay(3);
+  delay(defaultDelay);
 }
 
 /*
@@ -184,22 +191,22 @@ void followTheLine() {
      if it reads white, we turn to the left */
   if (rightIR == BLACK) {
     leftWheel.write(leftWheelFordwardValue);
-    delay(3);
+    delay(defaultDelay);
   
   } else {
     leftWheel.write(wheelStopValue);
-    delay(3);
+    delay(defaultDelay);
   }
   
   /* If the left sensor reads black, we go straight forward, else
     if it reads white, we turn to the right */
   if (leftIR == BLACK) {
     rightWheel.write(rightWheelFordwardValue);
-    delay(3);
+    delay(defaultDelay);
   
   } else {
     rightWheel.write(wheelStopValue);
-    delay((3));
+    delay((defaultDelay));
   }
 }
 
@@ -211,7 +218,8 @@ void followTheLine() {
 void setup(){
   
   /* Open the Bluetooth Serial and empty it */
-  Serial.begin(38400); 
+  //Serial.begin(BQ_ZUM_BLUETOOTH);  
+  Serial.begin(MI_PRIMER_KIT_DE_ROBOTICA_BLUETOOTH); 
   Serial.flush();     
   
   /* Define the appropiate pin to each object */

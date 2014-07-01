@@ -20,7 +20,7 @@
 
     <!-- Settings for Bluetooth -->
     <string name="pref_header_bluetooth">Bluetooth</string>
-    <string name="pref_summary_bluetooth">Administras las opciones del Bluetooth</string>
+    <string name="pref_summary_bluetooth">Administrar las opciones del Bluetooth</string>
     <string name="pref_title_automatic_bluetooth">Revocar el permiso del Bluetooth</string>
     <string name="pref_title_bluetooth">Habilitar/deshabilitar el Bluetooth</string>
     <string name="pref_summary_automatic_bluetooth">Revocar el permiso para habilitar y deshabilitar el Bluetooth automáticamente para ahorrar batería</string>

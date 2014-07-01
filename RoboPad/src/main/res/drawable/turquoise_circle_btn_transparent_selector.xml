@@ -26,6 +26,9 @@
     
     <item android:state_pressed="true"
         android:drawable="@drawable/turquoise_circle_default_button" />
+
+    <item android:state_selected="true"
+        android:drawable="@drawable/turquoise_circle_default_button" />
     
     <item android:state_focused="true" android:state_enabled="true"
         android:drawable="@drawable/turquoise_circle_default_button" />

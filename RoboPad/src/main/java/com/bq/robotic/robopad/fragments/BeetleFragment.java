@@ -36,12 +36,11 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import com.bq.robotic.robopad.R;
 import com.bq.robotic.robopad.utils.RoboPadConstants;
-import com.bq.robotic.robopad.utils.RoboPadConstants.robotState;
 import com.bq.robotic.robopad.utils.RoboPadConstants.Claw_next_state;
+import com.bq.robotic.robopad.utils.RoboPadConstants.robotState;
 import com.bq.robotic.robopad.utils.RobotConnectionsPopupWindow;
 import com.bq.robotic.robopad.utils.TipsFactory;
 import com.nhaarman.supertooltips.ToolTipView;
@@ -72,7 +71,7 @@ public class BeetleFragment extends RobotFragment {
 
     // Tips
     private tips currentTip;
-    private enum tips {PIN, BLUETOOTH, PAD, CLAWS}
+    private enum tips {PIN, BLUETOOTH, PAD, CLAWS, LINE_FOLLOWER, LIGHT_AVOIDER}
 
 
 	@Override
@@ -136,7 +135,7 @@ public class BeetleFragment extends RobotFragment {
         lineFollowerButton = (ImageButton) containerLayout.findViewById(R.id.line_follower);
         lineFollowerButton.setOnClickListener(onButtonClick);
 
-        lightFollowerButton = (ImageButton) containerLayout.findViewById(R.id.light_follower);
+        lightFollowerButton = (ImageButton) containerLayout.findViewById(R.id.light_avoider);
         lightFollowerButton.setOnClickListener(onButtonClick);
 	}
 
@@ -147,7 +146,7 @@ public class BeetleFragment extends RobotFragment {
         ((ImageView) getActivity().findViewById(R.id.bot_icon)).setImageResource(R.drawable.bot_beetle_connected);
         ((ImageView) getActivity().findViewById(R.id.robot_bg)).setImageResource(R.drawable.ic_beetle_bg_on);
 
-        state = robotState.MANUAL_CONTROL;
+        stateChanged(robotState.MANUAL_CONTROL);
 
         mClawPosition = RoboPadConstants.INIT_CLAW_POS; // default open 30 (values from 5 to 50)
         mOpenStepClawButton.setEnabled(true);
@@ -262,7 +261,7 @@ public class BeetleFragment extends RobotFragment {
 
                     break;
 
-                case R.id.light_follower:
+                case R.id.light_avoider:
                     if(!listener.onCheckIsConnected()) {
                         return;
                     }
@@ -292,29 +291,23 @@ public class BeetleFragment extends RobotFragment {
         switch (nextState) {
 
             case MANUAL_CONTROL:
-                lineFollowerButton.setPressed(false);
-                lightFollowerButton.setPressed(false);
+                lineFollowerButton.setSelected(false);
+                lightFollowerButton.setSelected(false);
                 state = robotState.MANUAL_CONTROL;
-                //FIXME
-                Toast.makeText(getActivity(), "Start manual control state!", Toast.LENGTH_SHORT).show();
                 listener.onSendMessage(RoboPadConstants.MANUAL_CONTROL_MODE_COMMAND);
                 break;
 
             case LINE_FOLLOWER:
-                lineFollowerButton.setPressed(true);
-                lightFollowerButton.setPressed(false);
+                lineFollowerButton.setSelected(true);
+                lightFollowerButton.setSelected(false);
                 state = robotState.LINE_FOLLOWER;
-                //FIXME
-                Toast.makeText(getActivity(), "Start line follower state!", Toast.LENGTH_SHORT).show();
                 listener.onSendMessage(RoboPadConstants.LINE_FOLLOWER_MODE_COMMAND);
                 break;
 
             case LIGHT_FOLLOWER:
-                lightFollowerButton.setPressed(true);
-                lineFollowerButton.setPressed(false);
+                lightFollowerButton.setSelected(true);
+                lineFollowerButton.setSelected(false);
                 state = robotState.LIGHT_FOLLOWER;
-                //FIXME
-                Toast.makeText(getActivity(), "Start light follower state!", Toast.LENGTH_SHORT).show();
                 listener.onSendMessage(RoboPadConstants.LIGHT_FOLLOWER_MODE_COMMAND);
                 break;
 
@@ -422,7 +415,7 @@ public class BeetleFragment extends RobotFragment {
 
         @Override
         public void onToolTipViewClicked(ToolTipView toolTipView) {
-            showNextTip();
+            onShowNextTip();
         }
     };
 
@@ -431,7 +424,7 @@ public class BeetleFragment extends RobotFragment {
      * Show the next tip for this robot fragment. The tips are displayed one after another when the
      * user clicks on the screen
      */
-    protected void showNextTip() {
+    public void onShowNextTip() {
 
         if (currentTip == null) {
             setIsLastTipToShow(false);
@@ -476,6 +469,22 @@ public class BeetleFragment extends RobotFragment {
         } else if (currentTip.equals(tips.CLAWS)) {
             mToolTipFrameLayout.removeAllViews();
 
+            mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.line_follower_text),
+                    getActivity().findViewById(R.id.line_follower)).setOnToolTipViewClickedListener(onToolTipClicked);
+
+            currentTip = tips.LINE_FOLLOWER;
+
+        } else if (currentTip.equals(tips.LINE_FOLLOWER)) {
+            mToolTipFrameLayout.removeAllViews();
+
+            mToolTipFrameLayout.showToolTipForView(TipsFactory.getTip(getActivity(), R.string.light_avoider_text),
+                    getActivity().findViewById(R.id.light_avoider)).setOnToolTipViewClickedListener(onToolTipClicked);
+
+            currentTip = tips.LIGHT_AVOIDER;
+
+        } else if (currentTip.equals(tips.LIGHT_AVOIDER)) {
+            mToolTipFrameLayout.removeAllViews();
+
             currentTip = null;
             setIsLastTipToShow(true);
             mToolTipFrameLayout.setOnClickListener(null);
@@ -484,8 +493,8 @@ public class BeetleFragment extends RobotFragment {
     }
 
     @Override
-    protected void setIsLastTipToShow(boolean isLastTipToShow) {
-        this.isLastTipToShow = isLastTipToShow;
+    public void setIsLastTipToShow(boolean isLastTipToShow) {
+        tipsManager.setLastTipToShow(isLastTipToShow);
     }
 
 
