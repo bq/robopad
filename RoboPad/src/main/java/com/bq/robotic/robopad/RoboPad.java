@@ -41,6 +41,7 @@ import com.bq.robotic.droid2ino.activities.BaseBluetoothSendOnlyActivity;
 import com.bq.robotic.droid2ino.utils.Droid2InoConstants;
 import com.bq.robotic.robopad.fragments.BeetleFragment;
 import com.bq.robotic.robopad.fragments.CrabFragment;
+import com.bq.robotic.robopad.fragments.EvolutionFragment;
 import com.bq.robotic.robopad.fragments.GenericRobotFragment;
 import com.bq.robotic.robopad.fragments.PollywogFragment;
 import com.bq.robotic.robopad.fragments.RhinoFragment;
@@ -98,6 +99,10 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
 
             case BEETLE:
                 ft.replace(R.id.game_pad_container, new BeetleFragment());
+                break;
+
+            case EVOLUTION:
+                ft.replace(R.id.game_pad_container, new EvolutionFragment());
                 break;
 
             case RHINO:

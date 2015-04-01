@@ -29,7 +29,7 @@ Features
 
 #. 6 buttons in the generic robot mode for use as you want in your Arduino code
 
-#. Specific controls for the Pollywog, Beetle, Rhino and Crab PrintBots of bq
+#. Specific controls for the Pollywog, Beetle, Evolution, Rhino and Crab PrintBots of bq. Now some of them can also change into the line follower mode, the light avoider mode or the obstacles avoider mode.
 
 #. Management of the Bluetooth connection for battery saving
 

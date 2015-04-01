@@ -29,7 +29,7 @@ Características
 
 #. 6 botones en el tipo de robot genérico para usar en tus propios robots
 
-#. Mandos de control específicos para los PrintBots Renacuajo, Escarabajo, Rhino y Cangrejo de bq. Ahora, algunos también pueden activar el modo siguelíneas o el modo huye luz.
+#. Mandos de control específicos para los PrintBots Renacuajo, Escarabajo, Evolution, Rhino y Cangrejo de bq. Ahora, algunos también pueden activar el modo siguelíneas, el modo huye luz o el modo esquiva obstáculos.
 
 #. Administración de la conexión Bluetooth para ahorrar batería
 

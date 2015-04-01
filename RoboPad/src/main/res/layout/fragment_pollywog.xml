@@ -36,9 +36,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/bot_icon"
+        android:layout_alignLeft="@id/bot_icon"
         android:background="@drawable/orange_circle_btn_transparent_selector"
-        android:layout_marginLeft="@dimen/robot_state_button_margin"
+        android:layout_marginLeft="@dimen/claw_buttons_margin"
         android:layout_marginBottom="15dp"
         android:src="@drawable/line_follower_selector"/>
 

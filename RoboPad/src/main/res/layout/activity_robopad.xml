@@ -46,7 +46,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dp"
-        android:src="@drawable/bq_logo" />
+        android:src="@drawable/bq_logo"
+        android:visibility="gone"/>
 
     <FrameLayout
         android:id="@+id/game_pad_container"

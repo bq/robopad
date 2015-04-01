@@ -25,6 +25,7 @@ package com.bq.robotic.robopad.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -54,6 +55,7 @@ public abstract class RobotFragment extends Fragment implements TipsManagerListe
 
 	protected boolean mIsClick;
 	protected boolean mIsConnected = false;
+    private boolean lastStateWasManualMode = true;
 
 	protected RobotListener listener;
 
@@ -157,14 +159,16 @@ public abstract class RobotFragment extends Fragment implements TipsManagerListe
 
 			final View view = v;
 
-			Thread sendActionThread;
-
 			switch (event.getAction()) {
 
 				case MotionEvent.ACTION_DOWN:
 
                     if(state != RoboPadConstants.robotState.MANUAL_CONTROL) {
                         stateChanged(RoboPadConstants.robotState.MANUAL_CONTROL);
+                        lastStateWasManualMode = false;
+
+                    } else {
+                        lastStateWasManualMode = true;
                     }
 	
 					if(listener != null && !listener.onCheckIsConnected()) {
@@ -173,10 +177,18 @@ public abstract class RobotFragment extends Fragment implements TipsManagerListe
 					} else {
 						mIsConnected = true;
 					}
-	
-					mIsClick = false;					
-					sendActionThread = createSendActionThread(view.getId());										
-					sendActionThread.start();
+
+                    if(!lastStateWasManualMode) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                initSendActionThread(view.getId());
+                            }
+                        }, 100);
+
+                    } else {
+                        initSendActionThread(view.getId());
+                    }
 	
 					break;
 	
@@ -186,11 +198,24 @@ public abstract class RobotFragment extends Fragment implements TipsManagerListe
 					if(!mIsConnected) {
 						break;
 					}
-	
-					mIsClick = true;
-					if (listener != null) {
-						listener.onSendMessage(RoboPadConstants.STOP_COMMAND);
-					}
+
+                    if(!lastStateWasManualMode) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mIsClick = true;
+                                if (listener != null) {
+                                    listener.onSendMessage(RoboPadConstants.STOP_COMMAND);
+                                }
+                            }
+                        }, 100);
+
+                    } else {
+                        mIsClick = true;
+                        if (listener != null) {
+                            listener.onSendMessage(RoboPadConstants.STOP_COMMAND);
+                        }
+                    }
 	
 					break;
 
@@ -201,6 +226,12 @@ public abstract class RobotFragment extends Fragment implements TipsManagerListe
 
 	};
 
+
+    private void initSendActionThread(final int actionId) {
+        mIsClick = false;
+        Thread sendActionThread = createSendActionThread(actionId);
+        sendActionThread.start();
+    }
 
 
 	/**

@@ -42,5 +42,6 @@
     <string name="claws_tip_text">Si nos pulsas, controlaremos las pinzas del robot</string>
     <string name="line_follower_text">Si me pulsas, activaré o desactivaré el modo siguelíneas</string>
     <string name="light_avoider_text">Si me pulsas, activaré o desactivaré el modo huye luz</string>
+    <string name="obstacles_avoider_text">Si me pulsas, activaré o desactivaré el modo esquiva objetos</string>
 
 </resources>
