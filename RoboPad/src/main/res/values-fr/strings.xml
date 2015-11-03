@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">RoboPad</string>
+    <string name="settings">Ajustes</string>
+
+    <string name="pollywog">Renacuajo</string>
+    <string name="beetle">Escarabajo</string>
+    <string name="rhino">Rhino</string>
+    <string name="crab">Cangrejo</string>
+    <string name="generic_robot">Robot générique</string>
+
+    <string name="exit_robot_control_dialog">La connexion avec le robot va être perdue. Veux-tu choisir un nouveau type de robot ?</string>
+    <string name="exit_robot_control_dialog_title">Déconnexion du robot</string>
+
+    <!-- Rhino robot -->
+    <string name="charge">Attaquer</string>
+
+    <!-- Generic robot -->
+    <string name="command_1">1</string>
+    <string name="command_2">2</string>
+    <string name="command_3">3</string>
+    <string name="command_4">4</string>
+    <string name="command_5">5</string>
+    <string name="command_6">6</string>
+
+    <!-- Crab robot -->
+    <!--<string name="amplitude">Amplitude</string>-->
+    <string name="step_size">Tamaño de los pasos</string>
+    <string name="left_amplitude">Amplitude gauche : </string>
+    <string name="right_amplitude">Amplitude droite : </string>
+    <string name="speed">Vitesse</string>
+    <string name="period">Période :</string>
+    <string name="legs_coordination">"Coordination\nentre jambes"</string>
+    <string name="phase_difference">Différence de phase : </string>
+    <string name="reset">Réinitialiser</string>
+
+    <!-- Tips -->
+    <string name="pin_explanation_tip_text">Si tu me presses, je t\'enseignerais comment connecter mes broches</string>
+    <string name="bluetooth_tip_text">Si tu me presses, je me connecterais ou déconnecterais du robot</string>
+    <string name="pad_tip_text">Si tu nous presses, nous controlerons le robot</string>
+    <string name="claws_tip_text">Si tu nous presses, nous controlerons les pinces du robot</string>
+    <string name="line_follower_text">Si tu me presses, j\'activerais ou désactiverais le mode de suivi de ligne</string>
+    <string name="light_avoider_text">Si tu me presses, j\'activerais ou désactiverais le mode de fuite de la lumière</string>
+    <string name="obstacles_avoider_text">Si tu me presses, j\'activerais ou désactiverais le mode d\'évitement des objets</string>
+
+</resources>

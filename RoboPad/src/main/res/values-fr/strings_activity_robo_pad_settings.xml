@@ -1,0 +1,28 @@
+<resources>
+        <string name="title_activity_robo_pad_sttings">Réglages</string>
+
+    <!-- Strings related to Settings -->
+    <!-- Settings for help options -->
+    <string name="pref_header_help_options">Aide</string>
+    <string name="pref_summary_help_options">Afficher les messages d\'aide sur l\'usage de l\'application</string>
+
+    <string name="pref_title_help_options">Afficher les messages d\'aide</string>
+    <string-array name="pref_help_options_titles">
+        <item>Jamais</item>
+        <item>Seulement la première fois</item>
+        <item>Toujours</item>
+    </string-array>
+    <string-array name="pref_help_options_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <!-- Settings for Bluetooth -->
+    <string name="pref_header_bluetooth">Bluetooth</string>
+    <string name="pref_summary_bluetooth">Administrer les options Bluetooth</string>
+    <string name="pref_title_automatic_bluetooth">Supprimer l\'autorisation du Bluetooth</string>
+    <string name="pref_title_bluetooth">Activer/désactiver le Bluetooth</string>
+    <string name="pref_summary_automatic_bluetooth">Supprimer l\'autorisation d\'activer ou de désactiver le Bluetooth automatiquement pour économiser la batterie</string>
+
+</resources>
