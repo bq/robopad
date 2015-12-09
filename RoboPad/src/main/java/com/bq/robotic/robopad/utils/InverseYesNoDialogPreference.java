@@ -17,7 +17,6 @@ public class InverseYesNoDialogPreference extends DialogPreference {
 
     public InverseYesNoDialogPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-
     }
 
 

@@ -16,10 +16,18 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bq.robotic.robopad.utils.CustomPreferenceCategory;
 import com.bq.robotic.robopad.utils.RoboPadConstants;
 
 import java.util.List;
@@ -45,14 +53,28 @@ public class RoboPadSettings extends PreferenceActivity implements SharedPrefere
     private static final boolean ALWAYS_SIMPLE_PREFS = false;
 
     private static Integer bluetoothFragmentId;
+    private AppCompatDelegate mCompatDelegate;
 
     // Debugging
     private static final String LOG_TAG = "RoboPadSettings";
 
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
+        return false;
+    }
+
+    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        getDelegate().onPostCreate(savedInstanceState);
 
         setupSimplePreferencesScreen();
 
@@ -80,9 +102,17 @@ public class RoboPadSettings extends PreferenceActivity implements SharedPrefere
     @Override
     protected void onResume() {
         super.onResume();
+
+        if (isSimplePreferences(this)) {
+            int padding = getResources().getDimensionPixelSize(R.dimen.activity_vertical_margin);
+            ((View) getListView().getParent()).setPadding(padding, padding, padding, padding);
+            getListView().setPadding(0, 0, 0, 0);
+        }
+
+        getListView().setDivider(null);
+
         PreferenceManager.getDefaultSharedPreferences(this)
                 .registerOnSharedPreferenceChangeListener(this);
-
 
         /**
          * Manage the switch or checkbox state depending on the current Bluetooth state of the device
@@ -216,19 +246,14 @@ public class RoboPadSettings extends PreferenceActivity implements SharedPrefere
         PreferenceScreen root = getPreferenceManager().createPreferenceScreen(this);
         setPreferenceScreen(root);
 
-        PreferenceCategory fakeHeader = new PreferenceCategory(this);
-        fakeHeader.setTitle(R.string.settings);
-        fakeHeader.setLayoutResource(R.layout.settings_screen_title);
-        getPreferenceScreen().addPreference(fakeHeader);
-
         // Add 'bluetooth' preferences, and a corresponding header.
-        fakeHeader = new PreferenceCategory(this);
+        PreferenceCategory fakeHeader = new CustomPreferenceCategory(this);
         fakeHeader.setTitle(R.string.pref_header_bluetooth);
         getPreferenceScreen().addPreference(fakeHeader);
         addPreferencesFromResource(R.xml.pref_bluetooth);
 
         // Add 'data and sync' preferences, and a corresponding header.
-        fakeHeader = new PreferenceCategory(this);
+        fakeHeader = new CustomPreferenceCategory(this);
         fakeHeader.setTitle(R.string.pref_header_help_options);
         getPreferenceScreen().addPreference(fakeHeader);
         addPreferencesFromResource(R.xml.pref_help);
@@ -346,11 +371,15 @@ public class RoboPadSettings extends PreferenceActivity implements SharedPrefere
         }
 
         @Override
-        public void onResume() {
-            super.onResume();
+        public void onActivityCreated(Bundle savedInstanceState) {
+            super.onActivityCreated(savedInstanceState);
 
             View grandParent = (View) getView().getParent().getParent();
             grandParent.setBackgroundResource(R.color.preferences_background);
+
+            View title = grandParent.findViewById(android.R.id.title);
+            if(title != null)
+                title.setVisibility(View.GONE);
 
             if (grandParent.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
                 ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) grandParent.getLayoutParams();
@@ -358,6 +387,13 @@ public class RoboPadSettings extends PreferenceActivity implements SharedPrefere
                 p.setMargins(0, margin, 0, margin);
                 grandParent.requestLayout();
             }
+
+            ((RoboPadSettings) getActivity()).getSupportActionBar().setTitle(R.string.title_activity_robo_pad_sttings);
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
 
             // Take care of the switch state
             BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -392,11 +428,15 @@ public class RoboPadSettings extends PreferenceActivity implements SharedPrefere
         }
 
         @Override
-        public void onResume() {
-            super.onResume();
+        public void onActivityCreated(Bundle savedInstanceState) {
+            super.onActivityCreated(savedInstanceState);
 
             View grandParent = (View) getView().getParent().getParent();
             grandParent.setBackgroundResource(R.color.preferences_background);
+
+            View title = grandParent.findViewById(android.R.id.title);
+            if(title != null)
+                title.setVisibility(View.GONE);
 
             if (grandParent.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
                 ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) grandParent.getLayoutParams();
@@ -405,7 +445,103 @@ public class RoboPadSettings extends PreferenceActivity implements SharedPrefere
                 grandParent.requestLayout();
             }
 
+            ((RoboPadSettings) getActivity()).getSupportActionBar().setTitle(R.string.title_activity_robo_pad_sttings);
         }
+
+    }
+
+
+    /**
+     * Compat delegate methods
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        getDelegate().installViewFactory();
+        getDelegate().onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
+
+        getSupportActionBar().show();
+    }
+
+    public ActionBar getSupportActionBar() {
+        return getDelegate().getSupportActionBar();
+    }
+
+    public void setSupportActionBar(@Nullable Toolbar toolbar) {
+        getDelegate().setSupportActionBar(toolbar);
+    }
+
+    @Override
+    public MenuInflater getMenuInflater() {
+        return getDelegate().getMenuInflater();
+    }
+
+    @Override
+    public void setContentView(@LayoutRes int layoutResID) {
+        getDelegate().setContentView(layoutResID);
+    }
+
+    @Override
+    public void setContentView(View view) {
+        getDelegate().setContentView(view);
+    }
+
+    @Override
+    public void setContentView(View view, ViewGroup.LayoutParams params) {
+        getDelegate().setContentView(view, params);
+    }
+
+    @Override
+    public void addContentView(View view, ViewGroup.LayoutParams params) {
+        getDelegate().addContentView(view, params);
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        getDelegate().onPostResume();
+    }
+
+    @Override
+    protected void onTitleChanged(CharSequence title, int color) {
+        super.onTitleChanged(title, color);
+        getDelegate().setTitle(title);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        getDelegate().onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        getDelegate().onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        getSupportActionBar().hide();
+
+        super.onDestroy();
+        getDelegate().onDestroy();
+    }
+
+    public void invalidateOptionsMenu() {
+        getDelegate().invalidateOptionsMenu();
+    }
+
+    private AppCompatDelegate getDelegate() {
+        if (mCompatDelegate == null) {
+            mCompatDelegate = AppCompatDelegate.create(this, null);
+        }
+        return mCompatDelegate;
+    }
+
+    protected boolean isValidFragment(String fragmentName) {
+        return BluetoothPreferenceFragment.class.getName().equals(fragmentName) ||
+                TipsPreferenceFragment.class.getName().equals(fragmentName);
     }
 
 }
