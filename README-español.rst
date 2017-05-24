@@ -19,6 +19,8 @@ Estos 6 botones mandan el siguiente carácter a la placa Arduino:
 | Botón 5 - '5'
 | Botón 6 - '6'
 
+Las opciones de robot genérico, Cangrejo y Rhino estás ocultas ya que su UI no está terminada. Puedes hacerlos visibles en el layout ``activity_select_robot.xml``.
+
 Si tienes alguna duda puedes consultarnos mandando un correo a diy@bq.com.
 
 
@@ -78,7 +80,7 @@ Requisitos
     sudo apt-get update
     sudo apt-get install maven
 
-- `Gradle <http://www.gradle.org/downloads>`_ recommended version 2.2.1
+- `Gradle <http://www.gradle.org/downloads>`_ versión 3.3
   
 - `Arduino IDE <http://arduino.cc/en/Main/Software#.UzBT5HX5Pj4>`_ 
 

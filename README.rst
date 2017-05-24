@@ -8,7 +8,7 @@ Right now, the type of robot that you can choose are the PrintBots designed in t
 
 You can use a 3D printer to create your printbot (Pollywog, Beetle and Rhino). You can find the printable parts and the code of each one in http://diwo.bq.com/tag/printbot/
 
-You can use the generic robot controller if you create your own robot with its own Arduino code or if you wants to add more functionality to the other ones, through the buttons 1 to 6.
+You can use the generic robot controller if you create your own robot with its own Arduino code or if you wants to add more functionality to the other ones, through the buttons 1 to 6
 
 The buttons send the following character to the Arduino board: 
 
@@ -18,6 +18,8 @@ The buttons send the following character to the Arduino board:
 | Button 4 - '4'
 | Button 5 - '5'
 | Button 6 - '6'
+
+The generic robot, Crab and Rhino options are hidden as their UI is not finished. Make them visible in the ``activity_select_robot.xml`` layout.
 
 If you have any questions you can contact us by sending an email to diy@bq.com.
 
@@ -78,7 +80,7 @@ Requirements
     sudo apt-get update
     sudo apt-get install maven
 
-- `Gradle <http://www.gradle.org/downloads>`_ recommended version 2.2.1
+- `Gradle <http://www.gradle.org/downloads>`_ version 3.3
   
 - `Arduino IDE <http://arduino.cc/en/Main/Software#.UzBT5HX5Pj4>`_ 
 
