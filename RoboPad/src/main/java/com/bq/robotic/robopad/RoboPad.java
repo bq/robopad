@@ -23,13 +23,14 @@
 
 package com.bq.robotic.robopad;
 
-import android.app.AlertDialog;
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -50,289 +51,348 @@ import com.bq.robotic.robopad.utils.RoboPadConstants;
 import com.bq.robotic.robopad.utils.RoboPadConstants.robotType;
 import com.bq.robotic.robopad.listeners.RobotListener;
 
+import java.util.List;
+
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
+
 
 /**
- * Main activity of the app that contains the different fragments to show to the user 
+ * Main activity of the app that contains the different fragments to show to the user
  */
 
-public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListener {
-	
-	// Debugging
-    private static final String LOG_TAG = "RoboPad";
+public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListener, EasyPermissions.PermissionCallbacks {
 
-    private static final String SAVE_FRAGMENT_STATE_KEY = "current_fragment_key";
-    private FragmentManager mFragmentManager;
+   // Debugging
+   private static final String LOG_TAG = "RoboPad";
 
-    private ImageButton connectButton;
-    private ImageButton disconnectButton;
+   private static final String SAVE_FRAGMENT_STATE_KEY = "current_fragment_key";
+   private FragmentManager mFragmentManager;
 
-    private Animation anim;
-    
+   private ImageButton connectButton;
+   private ImageButton disconnectButton;
 
-    @Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_robopad);
+   private Animation anim;
 
-        robotType robotTypeSelected = (robotType) getIntent().getSerializableExtra(RoboPadConstants.ROBOT_SELECTED_KEY);
-		
-		mFragmentManager = getSupportFragmentManager();
-
-        connectButton = (ImageButton) findViewById(R.id.connect_button);
-        disconnectButton = (ImageButton) findViewById(R.id.disconnect_button);
-        anim = AnimationUtils.loadAnimation(this, R.anim.bluetooth_spiner);
-
-        // If we're being restored from a previous state,
-        // then we don't need to do anything and should return or else
-        // we could end up with overlapping fragments.
-        if (savedInstanceState != null) {
-            return;
-        }
-
-        // Show the selected robot fragment
-        FragmentTransaction ft = mFragmentManager.beginTransaction();
-        switch (robotTypeSelected) {
-
-            case POLLYWOG:
-                ft.replace(R.id.game_pad_container, new PollywogFragment());
-                break;
-
-            case BEETLE:
-                ft.replace(R.id.game_pad_container, new BeetleFragment());
-                break;
-
-            case EVOLUTION:
-                ft.replace(R.id.game_pad_container, new EvolutionFragment());
-                break;
-
-            case RHINO:
-                ft.replace(R.id.game_pad_container, new RhinoFragment());
-                break;
-
-            case CRAB:
-                ft.replace(R.id.game_pad_container, new CrabFragment());
-                break;
-
-            case GENERIC_ROBOT:
-                ft.replace(R.id.game_pad_container, new GenericRobotFragment());
-                break;
-
-        }
-
-		ft.commit();
-			
-	}
+   // Permissions
+   // Location permission is now needed in order to scan for near bluetooth devices
+   private static final int RC_LOCATION_PERM = 124;
 
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // Store values between instances here
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = preferences.edit();
+   @Override
+   public void onCreate(Bundle savedInstanceState) {
+      super.onCreate(savedInstanceState);
+      setContentView(R.layout.activity_robopad);
 
-        editor.putBoolean(RoboPadConstants.WAS_ENABLING_BLUETOOTH_ALLOWED_KEY, wasEnableBluetoothAllowed); // value to store
-        // Commit to storage
-        editor.commit();
-    }
+      robotType robotTypeSelected = (robotType) getIntent().getSerializableExtra(RoboPadConstants.ROBOT_SELECTED_KEY);
+
+      mFragmentManager = getSupportFragmentManager();
+
+      connectButton = (ImageButton) findViewById(R.id.connect_button);
+      disconnectButton = (ImageButton) findViewById(R.id.disconnect_button);
+      anim = AnimationUtils.loadAnimation(this, R.anim.bluetooth_spiner);
+
+      // If we're being restored from a previous state,
+      // then we don't need to do anything and should return or else
+      // we could end up with overlapping fragments.
+      if (savedInstanceState != null) {
+         return;
+      }
+
+      // Show the selected robot fragment
+      FragmentTransaction ft = mFragmentManager.beginTransaction();
+      switch (robotTypeSelected) {
+
+         case POLLYWOG:
+            ft.replace(R.id.game_pad_container, new PollywogFragment());
+            break;
+
+         case BEETLE:
+            ft.replace(R.id.game_pad_container, new BeetleFragment());
+            break;
+
+         case EVOLUTION:
+            ft.replace(R.id.game_pad_container, new EvolutionFragment());
+            break;
+
+         case RHINO:
+            ft.replace(R.id.game_pad_container, new RhinoFragment());
+            break;
+
+         case CRAB:
+            ft.replace(R.id.game_pad_container, new CrabFragment());
+            break;
+
+         case GENERIC_ROBOT:
+            ft.replace(R.id.game_pad_container, new GenericRobotFragment());
+            break;
+
+      }
+
+      ft.commit();
+
+   }
 
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // Store values between instances here
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        wasEnableBluetoothAllowed = preferences.getBoolean(RoboPadConstants.WAS_ENABLING_BLUETOOTH_ALLOWED_KEY, false);
-    }
+   @Override
+   protected void onPause() {
+      super.onPause();
+      // Store values between instances here
+      SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+      SharedPreferences.Editor editor = preferences.edit();
+
+      editor.putBoolean(RoboPadConstants.WAS_ENABLING_BLUETOOTH_ALLOWED_KEY, wasEnableBluetoothAllowed); // value to store
+      // Commit to storage
+      editor.commit();
+   }
 
 
-    /**
-     * Callback for the changes of the bluetooth connection status
-     * 
-     * @param connectionState The state of the bluetooth connection
-     */
-    @Override
-    public void onConnectionStatusUpdate(int connectionState) {
+   @Override
+   protected void onStart() {
+      super.onStart();
+      // Store values between instances here
+      SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+      wasEnableBluetoothAllowed = preferences.getBoolean(RoboPadConstants.WAS_ENABLING_BLUETOOTH_ALLOWED_KEY, false);
+   }
+
+
+   /**
+    * Callback for the changes of the bluetooth connection status
+    *
+    * @param connectionState The state of the bluetooth connection
+    */
+   @Override
+   public void onConnectionStatusUpdate(int connectionState) {
       switch (connectionState) {
-        case Droid2InoConstants.STATE_CONNECTED:
+         case Droid2InoConstants.STATE_CONNECTED:
             ((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothConnected();
 
             // If connected is because the Bluetooth enabling was allowed
             break;
 
-        case Droid2InoConstants.STATE_CONNECTING:
+         case Droid2InoConstants.STATE_CONNECTING:
             break;
 
-        case Droid2InoConstants.STATE_LISTEN:
-        case Droid2InoConstants.STATE_NONE:
+         case Droid2InoConstants.STATE_LISTEN:
+         case Droid2InoConstants.STATE_NONE:
             if (mFragmentManager.findFragmentById(R.id.game_pad_container) != null) {
-                ((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothDisconnected();
+               ((RobotFragment) mFragmentManager.findFragmentById(R.id.game_pad_container)).onBluetoothDisconnected();
             }
             break;
       }
-        changeViewsVisibility(connectionState);
-    }
+      changeViewsVisibility(connectionState);
+   }
 
 
-    /**
-     * Change the visibility of some views as the connect/disconnect button depending on the
-     * bluetooth connection state The state of the bluetooth connection
-     *
-     * @param connectionState the state of the current bluetooth connection
-     */
-    private void changeViewsVisibility(int connectionState) {
+   /**
+    * Change the visibility of some views as the connect/disconnect button depending on the
+    * bluetooth connection state The state of the bluetooth connection
+    *
+    * @param connectionState the state of the current bluetooth connection
+    */
+   private void changeViewsVisibility(int connectionState) {
 
-        switch (connectionState) {
+      switch (connectionState) {
 
-            case Droid2InoConstants.STATE_CONNECTED:
-                findViewById(R.id.bluetooth_spinner_view).setVisibility(View.INVISIBLE);
-                findViewById(R.id.bluetooth_spinner_view).clearAnimation();
+         case Droid2InoConstants.STATE_CONNECTED:
+            findViewById(R.id.bluetooth_spinner_view).setVisibility(View.INVISIBLE);
+            findViewById(R.id.bluetooth_spinner_view).clearAnimation();
 
-                connectButton.setVisibility(View.GONE);
-                disconnectButton.setVisibility(View.VISIBLE);
-                break;
+            connectButton.setVisibility(View.GONE);
+            disconnectButton.setVisibility(View.VISIBLE);
+            break;
 
-            case Droid2InoConstants.STATE_CONNECTING:
+         case Droid2InoConstants.STATE_CONNECTING:
 
-                if(anim != null) {
-                    anim.setInterpolator(new Interpolator() {
-                        private final int frameCount = 8;
+            if (anim != null) {
+               anim.setInterpolator(new Interpolator() {
+                  private final int frameCount = 8;
 
-                        @Override
-                        public float getInterpolation(float input) {
-                            return (float) Math.floor(input * frameCount) / frameCount;
-                        }
-                    });
+                  @Override
+                  public float getInterpolation(float input) {
+                     return (float) Math.floor(input * frameCount) / frameCount;
+                  }
+               });
 
-                    findViewById(R.id.bluetooth_spinner_view).setVisibility(View.VISIBLE);
-                    findViewById(R.id.bluetooth_spinner_view).startAnimation(anim);
-                } else {
-                    Log.e(LOG_TAG, "Anim null!!!");
-                }
+               findViewById(R.id.bluetooth_spinner_view).setVisibility(View.VISIBLE);
+               findViewById(R.id.bluetooth_spinner_view).startAnimation(anim);
+            } else {
+               Log.e(LOG_TAG, "Anim null!!!");
+            }
 
-                break;
+            break;
 
-            case Droid2InoConstants.STATE_LISTEN:
-            case Droid2InoConstants.STATE_NONE:
-                findViewById(R.id.bluetooth_spinner_view).setVisibility(View.INVISIBLE);
-                findViewById(R.id.bluetooth_spinner_view).clearAnimation();
+         case Droid2InoConstants.STATE_LISTEN:
+         case Droid2InoConstants.STATE_NONE:
+            findViewById(R.id.bluetooth_spinner_view).setVisibility(View.INVISIBLE);
+            findViewById(R.id.bluetooth_spinner_view).clearAnimation();
 
-                connectButton.setVisibility(View.VISIBLE);
-                disconnectButton.setVisibility(View.GONE);
+            connectButton.setVisibility(View.VISIBLE);
+            disconnectButton.setVisibility(View.GONE);
 
-                break;
-        }
-    }
-
-
-    /**
-     * Callback for the connect and disconnect buttons
-     * @param v view pressed
-     */
-    public void onChangeConnection(View v) {
-
-        switch (v.getId()) {
-
-            case R.id.connect_button:
-                requestDeviceConnection();
-                break;
-
-            case R.id.disconnect_button:
-                stopBluetoothConnection();
-                break;
-        }
-    }
+            break;
+      }
+   }
 
 
-    /**
-     * Needed to override the callback when the user clicks the back button because if the activity
-     * has an active Bluetooth connection with a robot, the user must confirm that want to loose that
-     * connection
-     */
-    @Override
-    public void onBackPressed() {
+   /**
+    * Callback for the connect and disconnect buttons
+    *
+    * @param v view pressed
+    */
+   public void onChangeConnection(View v) {
 
-        if(!isConnectedWithoutToast()) {
-            super.onBackPressed();
+      switch (v.getId()) {
 
-        } else {
+         case R.id.connect_button:
+            tryConnectToDevice();
+            break;
 
-            // Show a dialog to confirm that the user wants to choose a new robot type
-            // and to inform that the connection with the current robot will be lost
-            new AlertDialog.Builder(this)
-                    .setMessage(getResources().getString(R.string.exit_robot_control_dialog))
-                    .setTitle(R.string.exit_robot_control_dialog_title)
-                    .setCancelable(true)
-                    .setNegativeButton(android.R.string.no, null)
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+         case R.id.disconnect_button:
+            stopBluetoothConnection();
+            break;
+      }
+   }
 
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            stopBluetoothConnection();
-
-                            RoboPad.super.onBackPressed();
-                        }
-                    })
-
-                    .create()
-                    .show();
-
-        }
-
-    }
+   /**
+    * Connect to the device
+    */
+   @AfterPermissionGranted(RC_LOCATION_PERM)
+   private void tryConnectToDevice() {
+      String[] perms = {Manifest.permission.ACCESS_COARSE_LOCATION};
+      if (EasyPermissions.hasPermissions(this, perms)) {
+         requestDeviceConnection();
+      } else {
+         // Do not have permissions, request them now
+         EasyPermissions.requestPermissions(this, getString(R.string.permission_location),
+            RC_LOCATION_PERM, perms);
+      }
+   }
 
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
+   /**
+    * Needed to override the callback when the user clicks the back button because if the activity
+    * has an active Bluetooth connection with a robot, the user must confirm that want to loose that
+    * connection
+    */
+   @Override
+   public void onBackPressed() {
 
-        //Save the fragment's instance
-        mFragmentManager.putFragment(outState, SAVE_FRAGMENT_STATE_KEY, mFragmentManager.findFragmentById(R.id.game_pad_container));
+      if (!isConnectedWithoutToast()) {
+         super.onBackPressed();
 
-        super.onSaveInstanceState(outState);
+      } else {
 
-    }
+         // Show a dialog to confirm that the user wants to choose a new robot type
+         // and to inform that the connection with the current robot will be lost
+         new AlertDialog.Builder(this)
+            .setMessage(getResources().getString(R.string.exit_robot_control_dialog))
+            .setTitle(R.string.exit_robot_control_dialog_title)
+            .setCancelable(true)
+            .setNegativeButton(android.R.string.no, null)
+            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 
-	
-	
-	/**************************************************************************************
-	 **************************   ROBOTLISTENER CALLBACKS   *******************************
-	 **************************************************************************************/
-	
-	/**
-	 * Callback from the RobotFragment for checking if the device is connected to an Arduino 
-	 * through the bluetooth connection.
-	 * If the device is not connected it warns the user of it through a Toast.
-	 * 
-	 * @return true if is connected or false if not
-	 */
-	@Override
-	public boolean onCheckIsConnected() {
-		return isConnected();
-	}
-	
-	
-	/**
-	 * Callback from the RobotFragment for checking if the device is connected to an Arduino 
-	 * through the bluetooth connection
-	 * without the warning toast if is not connected. 
-	 * 
-	 * @return true if is connected or false if not
-	 */
-	public boolean onCheckIsConnectedWithoutToast() {
-		return isConnectedWithoutToast();
-	}
-	
-	
-	/**
-	 * Callback from the RobotFragment for sending a message to the Arduino through the bluetooth 
-	 * connection. 
-	 * 
-	 * @param message to be send to the Arduino
-	 */
-	@Override
-	public void onSendMessage(String message) {
+               @Override
+               public void onClick(DialogInterface dialog, int which) {
+                  stopBluetoothConnection();
+
+                  RoboPad.super.onBackPressed();
+               }
+            })
+
+            .create()
+            .show();
+
+      }
+
+   }
+
+
+   @Override
+   public void onSaveInstanceState(Bundle outState) {
+
+      //Save the fragment's instance
+      mFragmentManager.putFragment(outState, SAVE_FRAGMENT_STATE_KEY, mFragmentManager.findFragmentById(R.id.game_pad_container));
+
+      super.onSaveInstanceState(outState);
+
+   }
+
+
+   /**************************************************************************************
+    **************************   ROBOTLISTENER CALLBACKS   *******************************
+    **************************************************************************************/
+
+   /**
+    * Callback from the RobotFragment for checking if the device is connected to an Arduino
+    * through the bluetooth connection.
+    * If the device is not connected it warns the user of it through a Toast.
+    *
+    * @return true if is connected or false if not
+    */
+   @Override
+   public boolean onCheckIsConnected() {
+      return isConnected();
+   }
+
+
+   /**
+    * Callback from the RobotFragment for checking if the device is connected to an Arduino
+    * through the bluetooth connection
+    * without the warning toast if is not connected.
+    *
+    * @return true if is connected or false if not
+    */
+   public boolean onCheckIsConnectedWithoutToast() {
+      return isConnectedWithoutToast();
+   }
+
+
+   /**
+    * Callback from the RobotFragment for sending a message to the Arduino through the bluetooth
+    * connection.
+    *
+    * @param message to be send to the Arduino
+    */
+   @Override
+   public void onSendMessage(String message) {
 //		Log.e(LOG_TAG, "message to send to arduino: " + message);
-		sendMessage(message);
-	}
+      sendMessage(message);
+   }
+
+
+   /**************************************************************************************
+    ********************************   PERMISSIONS   *************************************
+    **************************************************************************************/
+   @Override
+   public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+      super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+      // Forward results to EasyPermissions
+      EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+   }
+
+   @Override
+   public void onPermissionsGranted(int requestCode, List<String> perms) {
+   }
+
+   @Override
+   public void onPermissionsDenied(int requestCode, List<String> perms) {
+      Log.d(LOG_TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size());
+
+      // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
+      // This will display a dialog warning the user that the app will be able to connect only
+      // to paired devices, but show it only when the permission is not permanently denied, as the
+      // app is still functional without it
+      if (!EasyPermissions.permissionPermanentlyDenied(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+         new AlertDialog.Builder(this)
+            .setMessage(getString(R.string.rationale_location))
+            .setPositiveButton(android.R.string.ok, null)
+            .create()
+            .show();
+      } else if (EasyPermissions.permissionPermanentlyDenied(this, Manifest.permission.ACCESS_COARSE_LOCATION)){
+         requestDeviceConnection();
+      }
+   }
 
 }

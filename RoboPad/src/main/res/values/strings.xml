@@ -48,4 +48,9 @@
     <string name="light_avoider_text">If you click on me, I will enable or disable the light avoider mode</string>
     <string name="obstacles_avoider_text">If you click on me, I will enable or disable the obstacles avoider mode</string>
 
+    <!--Permissions-->
+    <string name="permission_location">Location permission is needed to search for the robots near you to connect to them</string>
+    <string name="rationale_location">Location permission is needed to search for the robots near you to connect to them.
+        You will only be able to connect to paired robots</string>
+
 </resources>

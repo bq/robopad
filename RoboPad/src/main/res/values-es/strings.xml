@@ -44,4 +44,9 @@
     <string name="light_avoider_text">Si me pulsas, activaré o desactivaré el modo huye luz</string>
     <string name="obstacles_avoider_text">Si me pulsas, activaré o desactivaré el modo esquiva objetos</string>
 
+    <!--Permissions-->
+    <string name="permission_location">Se necesita el permiso de localización para buscar los robots cerca de ti y conectarte a ellos</string>
+    <string name="rationale_location">Se necesita el permiso de localización para buscar los robots cerca de ti y conectarte a ellos.
+        Sólo podrás conectarte a robots ya emparejados</string>
+
 </resources>
