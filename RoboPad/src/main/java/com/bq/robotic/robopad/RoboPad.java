@@ -387,7 +387,11 @@ public class RoboPad extends BaseBluetoothSendOnlyActivity implements RobotListe
       if (!EasyPermissions.permissionPermanentlyDenied(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
          new AlertDialog.Builder(this)
             .setMessage(getString(R.string.rationale_location))
-            .setPositiveButton(android.R.string.ok, null)
+            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+               @Override public void onClick(DialogInterface dialogInterface, int i) {
+                  requestDeviceConnection();
+               }
+            })
             .create()
             .show();
       } else if (EasyPermissions.permissionPermanentlyDenied(this, Manifest.permission.ACCESS_COARSE_LOCATION)){
